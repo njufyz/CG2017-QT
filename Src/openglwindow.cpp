@@ -4,13 +4,12 @@
 #include<cmath>
 #include<QVector>
 #include<memory>
+
 using namespace std;
 
 QVector<shared_ptr<Graph>> graph;
 
-int select = LINE;
-
-bool mouseclick = 0;
+int SELECT = LINE;
 
 static Point start;
 static Point last;
@@ -29,7 +28,7 @@ openglwindow::~openglwindow()
 void openglwindow::initializeGL()
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 0.0, 0.0);
     glPointSize(4.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -44,7 +43,7 @@ void openglwindow::paintGL()
         g->draw();
     }
 
-    switch (select)
+    switch (SELECT)
     {
         case LINE:Line(start, last).draw();  break;
 
@@ -87,12 +86,12 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
     last.y = y;
     if (Qt ::LeftButton == e->button())
     {
-        if(select == LINE)
+        if(SELECT == LINE)
          {
             shared_ptr<Graph> p(new Line(start, last));
             graph.push_back(p);
         }
-        else if(select == CIRCLE)
+        else if(SELECT == CIRCLE)
         {
             shared_ptr<Graph> p(new Circle(start, distance(start, last)));
             graph.push_back(p);
@@ -112,4 +111,11 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     last.y = y;
 
     update();
+}
+
+void openglwindow::changecolor(QColor color)
+{
+   float r = color.redF(), g = color.greenF(), b = color.blueF();
+   glColor3f(r, g, b);
+
 }

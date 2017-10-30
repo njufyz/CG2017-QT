@@ -1,7 +1,7 @@
 #include "Circle.h"
 #include"common.h"
 
-void Midpoint_circle(int x0, int y0, int R)
+void Midpoint_circle(int x0, int y0, int R, QColor &c)
 {
 
    int  x = 0;
@@ -12,7 +12,7 @@ void Midpoint_circle(int x0, int y0, int R)
 
    for(; x <= y; x++)
    {
-       setpixel_8(x0, y0, x, y);
+       setpixel_8(x0, y0, x, y, c);
        if(d < 0)
        {
            d += deltax;

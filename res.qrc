@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/ images">
+        <file>pic/circle.png</file>
+        <file>pic/line.png</file>
+        <file>pic/undo.png</file>
+        <file>pic/clear.png</file>
+        <file>pic/save.png</file>
+    </qresource>
+</RCC>

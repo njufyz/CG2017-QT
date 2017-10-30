@@ -2,9 +2,9 @@
 using namespace std;
 #include"common.h"
 #include"Line.h"
-#include<QDebug>
+
  
-void DDALine(int x1, int y1, int x2, int y2)
+void DDALine(int x1, int y1, int x2, int y2, QColor &c)
 {
 	int dx = x2 - x1;
 	int dy = y2 - y1;
@@ -15,19 +15,19 @@ void DDALine(int x1, int y1, int x2, int y2)
 	GLfloat x = x1;
 	GLfloat y = y1;
 
-	setpixel(x, y);
+    setpixel(x, y, c);
 
 	for (int k = 1; k <= steps; k++)
 	{
 		x += delta_x;
 		y += delta_y;
-		setpixel(x, y);
+        setpixel(x, y, c);
 	}
 	glFlush();
 
 }
 
-void BresenhamLine(int x0, int y0, int x1, int y1)
+void BresenhamLine(int x0, int y0, int x1, int y1, QColor &c)
 {
 
    int x = x0;
@@ -56,7 +56,7 @@ void BresenhamLine(int x0, int y0, int x1, int y1)
        int p = 2 * dy - dx;
        for(;x != x1; x += stepx)
       {
-          setpixel(x, y);
+          setpixel(x, y, c);
           if (p >= 0)
           {
              y += stepy;
@@ -74,7 +74,7 @@ void BresenhamLine(int x0, int y0, int x1, int y1)
        int p = 2 * dx - dy;
        for (; y != y1; y += stepy)
        {
-           setpixel(x, y);
+           setpixel(x, y, c);
            if (p >= 0)
            {
                x += stepx;
@@ -89,7 +89,7 @@ void BresenhamLine(int x0, int y0, int x1, int y1)
 
 }
 
-void bresenham_line(int x1, int y1, int x2, int y2)
+void bresenham_line(int x1, int y1, int x2, int y2, QColor &c)
 {
 	int x = x1;
 	int y = y1;
@@ -98,7 +98,7 @@ void bresenham_line(int x1, int y1, int x2, int y2)
 	int p = 2 * dy - dx;
 	for (; x <= x2; x++)
 	{
-		setpixel(x, y);
+        setpixel(x, y, c);
 		if (p >= 0)
 		{
 			y++;

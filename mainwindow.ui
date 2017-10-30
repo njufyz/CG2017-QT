@@ -19,61 +19,152 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>500</width>
+      <width>590</width>
       <height>500</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>597</x>
+      <y>10</y>
+      <width>36</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="toolTip">
+     <string>Line</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/line.png</normaloff>:/ images/pic/line.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_2">
+    <property name="geometry">
+     <rect>
+      <x>597</x>
+      <y>60</y>
+      <width>36</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Circle</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/circle.png</normaloff>:/ images/pic/circle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>50</y>
-      <width>113</width>
-      <height>32</height>
+      <x>597</x>
+      <y>450</y>
+      <width>36</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="text">
-     <string>Line</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/clear.png</normaloff>:/ images/pic/clear.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>100</y>
-      <width>113</width>
-      <height>32</height>
+      <x>597</x>
+      <y>400</y>
+      <width>36</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="text">
-     <string>Circle</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/undo.png</normaloff>:/ images/pic/undo.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>420</y>
-      <width>113</width>
-      <height>32</height>
+      <x>597</x>
+      <y>300</y>
+      <width>36</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="text">
-     <string>Clear</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>370</y>
-      <width>113</width>
-      <height>32</height>
+      <x>597</x>
+      <y>350</y>
+      <width>36</width>
+      <height>36</height>
      </rect>
     </property>
     <property name="text">
-     <string>Undo</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/save.png</normaloff>:/ images/pic/save.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
     </property>
    </widget>
   </widget>
@@ -87,6 +178,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

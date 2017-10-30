@@ -1,11 +1,24 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "common.h"
+#include<QColorDialog>
+#include<QMessageBox>
+#include<QFileDialog>
+
+QColor Pcolor = Qt::black;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
+    setFixedSize(this->width(), this->height());
+
+    setWindowTitle("CG2017-151220026");
+    ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
+    ui->toolButton->setChecked(true);
+
 }
 
 MainWindow::~MainWindow()
@@ -13,25 +26,54 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_toolButton_clicked()
+{
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton->setChecked(true);
+    SELECT = LINE;
+}
+
+void MainWindow::on_toolButton_2_clicked()
+{
+    ui->toolButton_2->setChecked(true);
+    ui->toolButton->setChecked(false);
+    SELECT = CIRCLE;
+}
+
 void MainWindow::on_pushButton_clicked()
-{
-    select = LINE;
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    select = CIRCLE;
-}
-
-void MainWindow::on_pushButton_3_clicked()
 {
     graph.clear();
     ui->widget->update();
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_pushButton_2_clicked()
 {
     if(!graph.empty())
         graph.pop_back();
     ui->widget->update();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    Pcolor = QColorDialog::getColor(Pcolor, this);
+
+    ui->pushButton_3->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(QString::number(Pcolor.red()),
+                                                                QString::number(Pcolor.green()),
+                                                                QString::number(Pcolor.blue())));
+    if(Pcolor.isValid())
+        ui->widget->changecolor(Pcolor);
+
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            QString("Save"),
+            QCoreApplication::applicationDirPath(),
+            tr("Config Files (*.jpg)"));
+    if(fileName.isNull()) return;
+    QPixmap pixmap = ui->widget->grab();
+    pixmap.save(QString(fileName),"JPG");
+
 }

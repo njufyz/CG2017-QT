@@ -3,7 +3,10 @@
 
 #include<glu.h>
 #include<QVector>
+#include<QColor>
 #include<memory>
+
+extern QColor Pcolor;
 
 #include "Point.h"
 #include "graph.h"
@@ -13,7 +16,8 @@
 #define HEIGHT 500
 #define WIDTH 500
 
-extern int select;
+extern int SELECT;
+
 extern QVector<std::shared_ptr<Graph>> graph;
 enum TYPE{LINE, CIRCLE};
 

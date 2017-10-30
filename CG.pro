@@ -28,3 +28,6 @@ HEADERS  += Include/Circle.h \
     Include/Point.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    res.qrc
