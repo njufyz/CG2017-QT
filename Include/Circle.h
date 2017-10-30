@@ -4,7 +4,7 @@
 #include "graph.h"
 #include "common.h"
 
-void bresenham_circle(int cx, int cy, double r);
+void Midpoint_circle(int cx, int cy, int r);
 
 class Circle :
 	public Graph
@@ -25,10 +25,9 @@ public:
 
 	void draw()
 	{
-		bresenham_circle(cc.x, cc.y, r);
+        Midpoint_circle(cc.x, cc.y, r);
 	}
 
-	friend void bresenham_circle(int cx, int cy, int r);
 };
 
 #endif
