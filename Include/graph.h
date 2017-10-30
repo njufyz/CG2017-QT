@@ -6,12 +6,11 @@
 class  Graph
 { 
 public:
+
     QColor color;
 	Graph() {}
 	virtual void draw() = 0;
 
-protected:
-	int type;
 
 };
 

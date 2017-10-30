@@ -10,7 +10,7 @@ class Circle :
 	public Graph
 {
 	Point cc;
-    double r;
+    int r;
 
 public:
 	Circle() {}
