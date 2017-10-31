@@ -12,15 +12,14 @@ class Circle :
 
 public:
 	Circle() {}
-
-    Circle(Point cc, double r)
+    Circle(Point cc, int r)
     {
         this->property = gproperty;
         this->cc = cc;
         this->r = r;
     }
 
-    Circle(int cx, int cy, double r)
+    Circle(int cx, int cy, int r)
 	{
         this->property = gproperty;
 		cc = Point(cx, cy);

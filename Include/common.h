@@ -1,7 +1,13 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#ifdef __APPLE__
 #include<glu.h>
+#else
+#include<Windows.h>
+#include<gl/glut.h>
+#endif
+
 #include<QVector>
 #include<QColor>
 #include<memory>

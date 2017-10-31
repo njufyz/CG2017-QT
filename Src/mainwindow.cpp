@@ -12,10 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
 
     setWindowTitle("CG2017-151220026");
+
     ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
     ui->toolButton->setChecked(true);
 
@@ -71,10 +73,11 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
-            QString("Save"),
-            QCoreApplication::applicationDirPath(),
-            tr("Config Files (*.jpg)"));
+    QString fileName =
+    QFileDialog::getSaveFileName(this,
+                                 QString("Save"),
+                                 QCoreApplication::applicationDirPath(),
+                                 tr("Config Files (*.jpg)"));
     if(fileName.isNull()) return;
 
     QPixmap pixmap = ui->widget->grab();

@@ -22,7 +22,7 @@ public:
     void mouseReleaseEvent(QMouseEvent * event);
     void mouseMoveEvent(QMouseEvent * event);
 
-    void changecolor(QColor color);
+    void changecolor(QColor &color);
 };
 
 #endif // OPENGLWINDOW_H

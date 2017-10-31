@@ -122,7 +122,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     update();
 }
 
-void openglwindow::changecolor(QColor color)
+void openglwindow::changecolor(QColor &color)
 {
    float r = color.redF(), g = color.greenF(), b = color.blueF();
    glColor3f(r, g, b);

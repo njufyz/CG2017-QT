@@ -1,7 +1,14 @@
 #include"graph.h"
 
+#ifdef __APPLE__
 #include<glu.h>
+#else
+#include<Windows.h>
+#include<gl/glut.h>
+#endif
+
 #include<QColor>
+
 
 void Graph::setpixel(int x, int y)
 {
