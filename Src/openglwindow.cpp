@@ -1,7 +1,7 @@
 #include "openglwindow.h"
 #include"common.h"
 #include<iostream>
-#include<cmath>
+
 #include<QVector>
 #include<memory>
 
@@ -45,6 +45,7 @@ void openglwindow::paintGL()
 
     switch (SELECT)
     {
+
         case LINE:Line(start, last).draw();  break;
 
         case CIRCLE:Line(start, last).draw();
@@ -65,7 +66,7 @@ void openglwindow::resizeGL(int width, int height)
 }
 
 
-
+//记录起点
 void openglwindow::mousePressEvent(QMouseEvent *e)
 {
     int x = e->x();
@@ -84,20 +85,26 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
     int y = HEIGHT - e-> y();
     last.x = x;
     last.y = y;
+
     if (Qt ::LeftButton == e->button())
     {
         if(SELECT == LINE)
          {
+
             shared_ptr<Graph> p(new Line(start, last));
             graph.push_back(p);
         }
+
+
         else if(SELECT == CIRCLE)
         {
+
             shared_ptr<Graph> p(new Circle(start, distance(start, last)));
             graph.push_back(p);
 
         }
     }
+
     start = last = Point(0, 0);
     update();
 }
@@ -107,8 +114,10 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     int x = e->x();
     int y = HEIGHT - e-> y();
 
+
     last.x = x;
     last.y = y;
+
 
     update();
 }

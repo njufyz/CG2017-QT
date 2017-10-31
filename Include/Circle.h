@@ -4,8 +4,6 @@
 #include "graph.h"
 #include "common.h"
 
-void Midpoint_circle(int cx, int cy, int r, QColor &c);
-
 class Circle :
 	public Graph
 {
@@ -15,18 +13,26 @@ class Circle :
 public:
 	Circle() {}
 
-    Circle(Point cc, double r) { this->color = Pcolor; this->cc = cc; this->r = r; }
+    Circle(Point cc, double r)
+    {
+        this->property = gproperty;
+        this->cc = cc;
+        this->r = r;
+    }
 
     Circle(int cx, int cy, double r)
 	{
-        this->color = Pcolor;
+        this->property = gproperty;
 		cc = Point(cx, cy);
 		this->r = r;
 	}
 
+    void MidpointCircle();
+
+    //override
 	void draw()
 	{
-        Midpoint_circle(cc.x, cc.y, r, this->color);
+        MidpointCircle();
 	}
 
 };

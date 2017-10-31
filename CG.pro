@@ -17,7 +17,8 @@ SOURCES += Src/Circle.cpp \
     Src/Line.cpp \
     Src/main.cpp \
     Src/mainwindow.cpp \
-    Src/openglwindow.cpp
+    Src/openglwindow.cpp \
+    Src/graph.cpp
 
 HEADERS  += Include/Circle.h \
     Include/common.h \
@@ -25,7 +26,8 @@ HEADERS  += Include/Circle.h \
     Include/Line.h \
     Include/mainwindow.h \
     Include/openglwindow.h \
-    Include/Point.h
+    Include/Point.h \
+    Include/property.h
 
 FORMS    += mainwindow.ui
 

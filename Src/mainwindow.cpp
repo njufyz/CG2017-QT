@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "common.h"
+
 #include<QColorDialog>
-#include<QMessageBox>
 #include<QFileDialog>
 
-QColor Pcolor = Qt::black;
+Property gproperty;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("CG2017-151220026");
     ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
     ui->toolButton->setChecked(true);
+
+
+    //Note: Icon pictures all loaded in mainwindow.ui
 
 }
 
@@ -56,13 +59,13 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    Pcolor = QColorDialog::getColor(Pcolor, this);
+    gproperty.color = QColorDialog::getColor(gproperty.color, this);
 
-    ui->pushButton_3->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(QString::number(Pcolor.red()),
-                                                                QString::number(Pcolor.green()),
-                                                                QString::number(Pcolor.blue())));
-    if(Pcolor.isValid())
-        ui->widget->changecolor(Pcolor);
+    ui->pushButton_3->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(QString::number(gproperty.color.red()),
+                                                                QString::number(gproperty.color.green()),
+                                                                QString::number(gproperty.color.blue())));
+    if(gproperty.color.isValid())
+        ui->widget->changecolor(gproperty.color);
 
 }
 
@@ -73,6 +76,7 @@ void MainWindow::on_pushButton_4_clicked()
             QCoreApplication::applicationDirPath(),
             tr("Config Files (*.jpg)"));
     if(fileName.isNull()) return;
+
     QPixmap pixmap = ui->widget->grab();
     pixmap.save(QString(fileName),"JPG");
 

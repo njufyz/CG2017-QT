@@ -6,15 +6,17 @@
 #include<QColor>
 #include<memory>
 
-extern QColor Pcolor;
-
 #include "Point.h"
+#include "property.h"
+extern Property gproperty;
+
 #include "graph.h"
 #include "Line.h"
 #include "Circle.h"
 
 #define HEIGHT 500
 #define WIDTH 500
+
 
 extern int SELECT;
 
