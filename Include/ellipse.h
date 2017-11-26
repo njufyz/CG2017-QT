@@ -27,6 +27,9 @@ public:
         MidpointEllipse();
     }
 
+    void drawborder();
+
+
 private:
     void MidpointEllipse();
     int fEllipse(double x, double y);

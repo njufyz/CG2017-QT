@@ -25,13 +25,18 @@ public:
 		end = Point(x1, y1);
 	}
 
-    void BresenhamLine();
-
      //override
-	void draw()
+    void draw()
 	{
         BresenhamLine();
 	}
+
+    void drawborder();
+
+
+
+private:
+     void BresenhamLine();
 };
 
 #endif

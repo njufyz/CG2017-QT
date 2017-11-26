@@ -4,7 +4,7 @@
 
 #include<QVector>
 #include<memory>
-
+#include<QPainter>
 using namespace std;
 
 QVector<shared_ptr<Graph>> graph;
@@ -28,16 +28,18 @@ openglwindow::~openglwindow()
 void openglwindow::initializeGL()
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
-    glColor3f(1.0, 0.0, 0.0);
-    glPointSize(4.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glPointSize(2.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, WIDTH, 0.0, HEIGHT);
     glMatrixMode(GL_MODELVIEW);
+
 }
 
 void openglwindow::paintGL()
 {
+
     foreach (auto g, graph)
     {
         g->draw();

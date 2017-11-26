@@ -4,6 +4,11 @@ using namespace std;
 #include"common.h"
 #include"Line.h"
 
+void Line::drawborder()
+{
+
+}
+
 void Line::BresenhamLine()
 {
     int x0 = this->start.x;

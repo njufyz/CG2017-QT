@@ -1,6 +1,11 @@
 #include "ellipse.h"
 #include"common.h"
 
+void Ellipse::drawborder()
+{
+
+}
+
 void Ellipse::MidpointEllipse()
 {
     if(rx ==0 || ry == 0)
@@ -24,7 +29,7 @@ void Ellipse::MidpointEllipse()
         }
         else
         {
-            setpixel_4(cx, cy, x + 1, y + 1);
+            setpixel_4(cx, cy, x + 1, y - 1);
             y--;
         }
     }

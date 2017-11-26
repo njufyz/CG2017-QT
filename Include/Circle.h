@@ -29,10 +29,13 @@ public:
     void MidpointCircle();
 
     //override
-	void draw()
+    void draw()
 	{
         MidpointCircle();
 	}
+
+    void drawborder();
+
 
 };
 

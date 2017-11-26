@@ -1,6 +1,7 @@
 #include "Circle.h"
 #include"common.h"
 
+
 void Circle::MidpointCircle()
 {
     int x0 = this->cc.x;
@@ -33,5 +34,22 @@ void Circle::MidpointCircle()
             y--;
          }
 
-     }
+    }
+
+    if(isSelected)
+        drawborder();
+}
+
+void Circle::drawborder()
+{
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    glEnable( GL_LINE_STIPPLE);
+    glLineStipple( 4.0f, 0x0F0F0F0F);
+
+    glBegin(GL_POLYGON);
+        glVertex3f(cc.x - r - 1,cc.y - r - 1, 0);
+        glVertex3f(cc.x + r + 1,cc.y - r - 1, 0);
+        glVertex3f(cc.x + r + 1,cc.y + r + 1, 0);
+        glVertex3f(cc.x - r - 1,cc.y + r + 1, 0);
+    glEnd();
 }

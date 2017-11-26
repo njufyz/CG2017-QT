@@ -1,16 +1,22 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include"property.h"
+#include <QVector>
 
+#include "Point.h"
+#include"property.h"
 
 class  Graph
 {
 public:
     Graph() {}
+
     virtual void draw() = 0;
+    virtual void drawborder() = 0;
 
 protected:
+    bool isSelected;
+
     Property property;
 
     void setpixel(int x, int y);
