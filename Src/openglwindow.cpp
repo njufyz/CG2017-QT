@@ -50,6 +50,12 @@ void openglwindow::paintGL()
 
         case CIRCLE:Line(start, last).draw();
                     Circle(start, distance(start, last)).draw(); break;
+
+        case ELLIPSE: Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
+                              abs((last.x - start.x)/2),
+                              abs((start.y-last.y)/2)).draw(); break;
+
+
     }
 
 }
@@ -71,6 +77,7 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
 {
     int x = e->x();
     int y = HEIGHT - e-> y();
+
     if (Qt ::LeftButton == e->button())
     {
       start.x = x;
@@ -90,19 +97,26 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
     {
         if(SELECT == LINE)
          {
-
             shared_ptr<Graph> p(new Line(start, last));
             graph.push_back(p);
-        }
+         }
 
 
         else if(SELECT == CIRCLE)
         {
-
             shared_ptr<Graph> p(new Circle(start, distance(start, last)));
             graph.push_back(p);
-
         }
+
+        else if(SELECT == ELLIPSE)
+        {
+            shared_ptr<Graph> p(new Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
+                                            abs((last.x - start.x)/2),
+                                            abs((start.y-last.y)/2)));
+            graph.push_back(p);
+        }
+
+
     }
 
     start = last = Point(0, 0);

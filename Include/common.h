@@ -19,6 +19,7 @@ extern Property gproperty;
 #include "graph.h"
 #include "Line.h"
 #include "Circle.h"
+#include "ellipse.h"
 
 #define HEIGHT 500
 #define WIDTH 500
@@ -27,7 +28,7 @@ extern Property gproperty;
 extern int SELECT;
 
 extern QVector<std::shared_ptr<Graph>> graph;
-enum TYPE{LINE, CIRCLE};
+enum TYPE{LINE, CIRCLE, ELLIPSE};
 
 
 #endif

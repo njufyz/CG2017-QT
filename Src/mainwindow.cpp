@@ -35,16 +35,27 @@ MainWindow::~MainWindow()
 void MainWindow::on_toolButton_clicked()
 {
     ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(false);
     ui->toolButton->setChecked(true);
     SELECT = LINE;
 }
 
 void MainWindow::on_toolButton_2_clicked()
 {
-    ui->toolButton_2->setChecked(true);
     ui->toolButton->setChecked(false);
+    ui->toolButton_3->setChecked(false);
+    ui->toolButton_2->setChecked(true);
     SELECT = CIRCLE;
 }
+
+void MainWindow::on_toolButton_3_clicked()
+{
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(true);
+    SELECT = ELLIPSE;
+}
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -84,3 +95,4 @@ void MainWindow::on_pushButton_4_clicked()
     pixmap.save(QString(fileName),"JPG");
 
 }
+

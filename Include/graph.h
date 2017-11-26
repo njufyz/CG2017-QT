@@ -17,6 +17,7 @@ protected:
 
     void setpixel_8(int cx, int cy, int x, int y);
 
+    void setpixel_4(int cx, int cy, int x, int y);
 
 };
 
