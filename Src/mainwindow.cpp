@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
     ui->toolButton->setChecked(true);
-
+    STATE = DRAW;
 
     //Note: Icon pictures all loaded in mainwindow.ui
 
@@ -34,26 +34,54 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_toolButton_clicked()
 {
+    ClearSelect();
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(false);
     ui->toolButton->setChecked(true);
+    STATE = DRAW;
     SELECT = LINE;
 }
 
 void MainWindow::on_toolButton_2_clicked()
 {
+    ClearSelect();
     ui->toolButton->setChecked(false);
     ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(false);
     ui->toolButton_2->setChecked(true);
+    STATE = DRAW;
     SELECT = CIRCLE;
 }
 
 void MainWindow::on_toolButton_3_clicked()
 {
+    ClearSelect();
     ui->toolButton->setChecked(false);
     ui->toolButton_2->setChecked(false);
+    ui->toolButton_4->setChecked(false);
     ui->toolButton_3->setChecked(true);
+    STATE = DRAW;
     SELECT = ELLIPSE;
+}
+
+void MainWindow::on_toolButton_4_clicked()
+{
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(true);
+
+    STATE = CHOOSE;
+}
+
+void MainWindow::ClearSelect()
+{
+    foreach (auto g, graph)
+    {
+      g->setSelect(false);
+    }
+    ui->widget->update();
 }
 
 
@@ -95,4 +123,3 @@ void MainWindow::on_pushButton_4_clicked()
     pixmap.save(QString(fileName),"JPG");
 
 }
-

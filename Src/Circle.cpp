@@ -40,11 +40,14 @@ void Circle::MidpointCircle()
         drawborder();
 }
 
+//画边框
 void Circle::drawborder()
 {
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
-    glLineStipple( 4.0f, 0x0F0F0F0F);
+    glLineStipple( 2.0, 0x0F0F);
+    glColor3f(0.0, 0.0, 0.0);
+
 
     glBegin(GL_POLYGON);
         glVertex3f(cc.x - r - 1,cc.y - r - 1, 0);
@@ -52,4 +55,13 @@ void Circle::drawborder()
         glVertex3f(cc.x + r + 1,cc.y + r + 1, 0);
         glVertex3f(cc.x - r - 1,cc.y + r + 1, 0);
     glEnd();
+
+    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    glColor3f(r, g, b);
+
+}
+
+bool Circle::containsPoint(int x, int y)
+{
+    return  (abs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
 }

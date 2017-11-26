@@ -16,6 +16,7 @@ public:
     Ellipse()   {}
     Ellipse(Point c, int ra, int rb)
     {
+        isSelected = true;
         this->c = c;
         this->rx=ra;
         this->ry=rb;
@@ -28,6 +29,9 @@ public:
     }
 
     void drawborder();
+
+    bool containsPoint(int x, int y);
+
 
 
 private:

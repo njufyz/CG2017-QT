@@ -25,11 +25,12 @@ extern Property gproperty;
 #define WIDTH 500
 
 
-extern int SELECT;
-
 extern QVector<std::shared_ptr<Graph>> graph;
 enum TYPE{LINE, CIRCLE, ELLIPSE};
+enum STAT{DRAW, CHOOSE};
 
+extern TYPE SELECT;
+extern STAT STATE;
 
 #endif
 

@@ -6,6 +6,22 @@ using namespace std;
 
 void Line::drawborder()
 {
+    glPointSize(gproperty.point_size + 10);
+    glColor3f(1.0, 0, 0);
+
+    glBegin(GL_POINTS);
+
+    glVertex3f(start.x, start.y, 0);
+    glVertex3f(end.x, end.y, 0);
+
+    glEnd();
+    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    glColor3f(r, g, b);
+    glPointSize(gproperty.point_size);
+}
+
+bool Line::containsPoint(int x, int y)
+{
 
 }
 
@@ -73,6 +89,8 @@ void Line::BresenhamLine()
             }
         }
     }
+    if(isSelected)
+        drawborder();
 }
 
 

@@ -14,6 +14,7 @@ public:
 	Circle() {}
     Circle(Point cc, int r)
     {
+        isSelected = true;
         this->property = gproperty;
         this->cc = cc;
         this->r = r;
@@ -21,6 +22,7 @@ public:
 
     Circle(int cx, int cy, int r)
 	{
+        isSelected = true;
         this->property = gproperty;
 		cc = Point(cx, cy);
 		this->r = r;
@@ -36,6 +38,7 @@ public:
 
     void drawborder();
 
+    bool containsPoint(int x, int y);
 
 };
 

@@ -4,12 +4,13 @@
 
 #include<QVector>
 #include<memory>
-#include<QPainter>
+#include<QDebug>
 using namespace std;
 
 QVector<shared_ptr<Graph>> graph;
 
-int SELECT = LINE;
+TYPE SELECT = LINE;
+STAT STATE = DRAW;
 
 static Point start;
 static Point last;
@@ -35,6 +36,9 @@ void openglwindow::initializeGL()
     gluOrtho2D(0.0, WIDTH, 0.0, HEIGHT);
     glMatrixMode(GL_MODELVIEW);
 
+    gproperty.point_size = 2;
+    gproperty.color = Qt::black;
+
 }
 
 void openglwindow::paintGL()
@@ -45,8 +49,10 @@ void openglwindow::paintGL()
         g->draw();
     }
 
-    switch (SELECT)
+    if(STATE == DRAW)
     {
+        switch (SELECT)
+      {
 
         case LINE:Line(start, last).draw();  break;
 
@@ -58,7 +64,9 @@ void openglwindow::paintGL()
                               abs((start.y-last.y)/2)).draw(); break;
 
 
+        }
     }
+
 
 }
 
@@ -80,10 +88,33 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
     int x = e->x();
     int y = HEIGHT - e-> y();
 
-    if (Qt ::LeftButton == e->button())
+    if(STATE == DRAW)
     {
-      start.x = x;
-      start.y = y;
+        if (Qt ::LeftButton == e->button())
+        {
+            start.x = x;
+            start.y = y;
+         }
+    }
+
+    else if(STATE == CHOOSE)
+    {
+
+        foreach (auto g, graph)
+        {
+            g->setSelect(false);
+        }
+
+        for(auto g = graph.end()-1; g >= graph.begin(); g--)
+        {
+            if((*g)->containsPoint(x, y))
+             {
+                (*g)->setSelect(true);
+                break;
+             }
+
+        }
+
     }
 
 }
@@ -95,11 +126,14 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
     last.x = x;
     last.y = y;
 
-    if (Qt ::LeftButton == e->button())
-    {
+    if(STATE == DRAW)
+   {
+        if (Qt ::LeftButton == e->button())
+      {
         if(SELECT == LINE)
          {
             shared_ptr<Graph> p(new Line(start, last));
+            p->setSelect(false);
             graph.push_back(p);
          }
 
@@ -107,6 +141,7 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
         else if(SELECT == CIRCLE)
         {
             shared_ptr<Graph> p(new Circle(start, distance(start, last)));
+            p->setSelect(false);
             graph.push_back(p);
         }
 
@@ -115,11 +150,12 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
             shared_ptr<Graph> p(new Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
                                             abs((last.x - start.x)/2),
                                             abs((start.y-last.y)/2)));
+            p->setSelect(false);
             graph.push_back(p);
+
         }
-
-
     }
+   }
 
     start = last = Point(0, 0);
     update();

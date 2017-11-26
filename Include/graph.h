@@ -14,16 +14,22 @@ public:
     virtual void draw() = 0;
     virtual void drawborder() = 0;
 
+    void setSelect(bool set){
+        isSelected = set;
+    }
+    virtual bool containsPoint(int x, int y) = 0;
+
+
 protected:
     bool isSelected;
-
     Property property;
 
     void setpixel(int x, int y);
-
     void setpixel_8(int cx, int cy, int x, int y);
-
     void setpixel_4(int cx, int cy, int x, int y);
+
+
+
 
 };
 

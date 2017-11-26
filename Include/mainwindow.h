@@ -31,8 +31,11 @@ private slots:
 
     void on_toolButton_3_clicked();
 
+    void on_toolButton_4_clicked();
+
 private:
     Ui::MainWindow *ui;
+    void  ClearSelect();
 };
 
 #endif // MAINWINDOW_H

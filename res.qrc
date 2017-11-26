@@ -6,5 +6,6 @@
         <file>pic/clear.png</file>
         <file>pic/save.png</file>
         <file>pic/ellipse.png</file>
+        <file>pic/hand.png</file>
     </qresource>
 </RCC>

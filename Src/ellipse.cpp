@@ -1,10 +1,6 @@
 #include "ellipse.h"
 #include"common.h"
-
-void Ellipse::drawborder()
-{
-
-}
+#include<QDebug>
 
 void Ellipse::MidpointEllipse()
 {
@@ -34,8 +30,6 @@ void Ellipse::MidpointEllipse()
         }
     }
 
-    setpixel_4(cx, cy, x + 1, y);
-
     for(; y>=0; y--)
     {
         k = fEllipse(x + 0.5 , y - 1);
@@ -49,6 +43,9 @@ void Ellipse::MidpointEllipse()
             x++;
         }
     }
+
+    if(isSelected)
+        drawborder();
 
 }
 
@@ -64,4 +61,46 @@ int Ellipse::fEllipse(double x, double y)
 
     else
         return 1;
+}
+
+//画边框
+void Ellipse::drawborder()
+{
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    glEnable( GL_LINE_STIPPLE);
+    glLineStipple( 2.0, 0x0F0F);
+    glLineWidth(2.5);
+    glColor3f(0.0, 0.0, 0.0);
+
+
+    glBegin(GL_POLYGON);
+        glVertex3f(c.x - rx - 1,c.y - ry - 1, 0);
+        glVertex3f(c.x + rx + 1,c.y - ry - 1, 0);
+        glVertex3f(c.x + rx + 1,c.y + ry + 1, 0);
+        glVertex3f(c.x - rx - 1,c.y + ry + 1, 0);
+    glEnd();
+
+    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    glColor3f(r, g, b);
+
+
+}
+
+
+bool Ellipse::containsPoint(int x, int y)
+{
+    double a2 = rx * rx;
+    double b2 = ry * ry;
+    double x2 = (x - c.x) * (x - c.x);
+    double y2 = (y - c.y) * (y - c.y);
+
+    if(rx >= ry)
+    {
+       return  (abs(x2/a2 + y2/b2 - 1) <= 0.05) ;
+    }
+    else
+    {
+       return  (abs(x2/b2 + y2/a2 - 1) <= 0.05) ;
+    }
+
 }
