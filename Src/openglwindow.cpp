@@ -20,17 +20,21 @@ static Point last;
 static Point tran_first;
 static Point tran_last;
 
+static Point rotate_point;
+
 static QVector<Point> points_for_polygon;
 bool polygon_start = 0;
 
 void mousePress_OnDraw(int x, int y);
 void mousePress_OnChoose(int x, int y);
 void mousePress_OnTranslate(int x, int y);
+void mousePress_OnRotate(int x, int y);
 
 void mouseMove_OnTranslate(int x, int y);
 
 void mouseRelease_OnDraw(int x, int y);
 void mouseRelease_OnTranslate(int x, int y);
+
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -90,6 +94,11 @@ void openglwindow::paintGL()
         }
     }
 
+    else if(STATE == ROTATE)
+    {
+        drawControlPoint(rotate_point);
+    }
+
 
 }
 
@@ -118,7 +127,8 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
     {
          case DRAW :        mousePress_OnDraw(x, y);        break;
          case CHOOSE:       mousePress_OnChoose(x, y);      break;
-         case TRANSLATE:  mousePress_OnTranslate(x, y); break;
+         case TRANSLATE:    mousePress_OnTranslate(x, y);   break;
+         case ROTATE:       mousePress_OnRotate(x, y);      break;
     }
 
 }
@@ -277,4 +287,10 @@ void mouseRelease_OnTranslate(int x, int y)
     Q_UNUSED(y);
     if(current==nullptr)
         return;
+}
+
+void mousePress_OnRotate(int x, int y)
+{
+   rotate_point = Point(x, y);
+   drawControlPoint(rotate_point);
 }

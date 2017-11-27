@@ -70,6 +70,11 @@ int Ellipse::fEllipse(double x, double y)
 //画边框
 void Ellipse::drawborder()
 {
+    drawControlPoint(lb);
+    drawControlPoint(lt);
+    drawControlPoint(rb);
+    drawControlPoint(rt);
+
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
     glLineStipple( 2.0, 0x0F0F);

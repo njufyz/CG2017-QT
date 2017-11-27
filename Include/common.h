@@ -35,8 +35,11 @@ enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE};
 extern TYPE SELECT;
 extern STAT STATE;
 
+
 #define MAX(a,b)        (((a) > (b)) ? (a) : (b))
 #define MIN(a,b)        (((a) < (b)) ? (a) : (b))
+
+
 
 #endif
 

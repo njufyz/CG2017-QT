@@ -33,6 +33,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//line
 void MainWindow::on_toolButton_clicked()
 {
     ClearSelect();
@@ -41,11 +42,15 @@ void MainWindow::on_toolButton_clicked()
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
     ui->toolButton_6->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton->setChecked(true);
+
 
     STATE = DRAW;
     SELECT = LINE;
 }
 
+//circle
 void MainWindow::on_toolButton_2_clicked()
 {
     ClearSelect();
@@ -54,11 +59,15 @@ void MainWindow::on_toolButton_2_clicked()
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
     ui->toolButton_6->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton_2->setChecked(true);
+
 
     STATE = DRAW;
     SELECT = CIRCLE;
 }
 
+//elliipse
 void MainWindow::on_toolButton_3_clicked()
 {
     ClearSelect();
@@ -67,11 +76,14 @@ void MainWindow::on_toolButton_3_clicked()
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
     ui->toolButton_6->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton_3->setChecked(true);
 
     STATE = DRAW;
     SELECT = ELLIPSE;
 }
 
+//choose
 void MainWindow::on_toolButton_4_clicked()
 {
     ClearSelect();
@@ -80,10 +92,14 @@ void MainWindow::on_toolButton_4_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_5->setChecked(false);
     ui->toolButton_6->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton_4->setChecked(true);
 
     STATE = CHOOSE;
 }
 
+
+//polygon
 void MainWindow::on_toolButton_5_clicked()
 {
     ClearSelect();
@@ -92,31 +108,59 @@ void MainWindow::on_toolButton_5_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_6->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton_5->setChecked(true);
+
 
     STATE = DRAW;
     SELECT = POLYGON;
 }
 
+
+//translate
 void MainWindow::on_toolButton_6_clicked()
 {
+    if(current == nullptr)
+    {
+       on_toolButton_4_clicked();
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+
     ui->toolButton->setChecked(false);
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+    ui->toolButton_6->setChecked(true);
 
+    STATE = TRANSLATE;
+
+}
+
+
+//rotate
+void MainWindow::on_toolButton_7_clicked()
+{
     if(current == nullptr)
     {
-       ui->toolButton_4->setChecked(true);
-       STATE = CHOOSE;
-       ui->toolButton_6->setChecked(false);
+       on_toolButton_4_clicked();
        QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
        return;
     }
-    else
-    {
-        STATE = TRANSLATE;
-    }
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(false);
+    ui->toolButton_5->setChecked(false);
+    ui->toolButton_6->setChecked(false);
+
+    ui->toolButton_7->setChecked(true);
+
+    STATE = ROTATE;
+
+
 }
 
 void MainWindow::ClearSelect()
@@ -168,6 +212,7 @@ void MainWindow::on_pushButton_4_clicked()
     pixmap.save(QString(fileName),"JPG");
 
 }
+
 
 
 

@@ -276,7 +276,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>translation</string>
+     <string>Translate</string>
     </property>
     <property name="text">
      <string/>
@@ -284,6 +284,35 @@
     <property name="icon">
      <iconset resource="res.qrc">
       <normaloff>:/ images/pic/translation.png</normaloff>:/ images/pic/translation.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_7">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>300</y>
+      <width>36</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Rotate</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/rorate.png</normaloff>:/ images/pic/rorate.png</iconset>
     </property>
     <property name="iconSize">
      <size>

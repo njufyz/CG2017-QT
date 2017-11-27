@@ -36,6 +36,7 @@ protected:
 
 };
 
+void drawControlPoint(Point &a);
 
 
 #endif
