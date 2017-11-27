@@ -12,6 +12,12 @@ void Ellipse::MidpointEllipse()
     int x = 0;
     int y = ry;
 
+    if(isSelected)
+    {
+      drawborder();
+      glPointSize(gproperty.point_size + 4);
+    }
+
     setpixel_4(cx, cy, x, y);
     setpixel_4(cx, cy, rx, 0);
 
@@ -44,9 +50,7 @@ void Ellipse::MidpointEllipse()
         }
     }
 
-    if(isSelected)
-        drawborder();
-
+    glPointSize(gproperty.point_size);
 }
 
 int Ellipse::fEllipse(double x, double y)

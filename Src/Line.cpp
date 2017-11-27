@@ -3,27 +3,7 @@ using namespace std;
 
 #include"common.h"
 #include"Line.h"
-
-void Line::drawborder()
-{
-    glPointSize(gproperty.point_size + 10);
-    glColor3f(1.0, 0, 0);
-
-    glBegin(GL_POINTS);
-
-    glVertex3f(start.x, start.y, 0);
-    glVertex3f(end.x, end.y, 0);
-
-    glEnd();
-    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
-    glColor3f(r, g, b);
-    glPointSize(gproperty.point_size);
-}
-
-bool Line::containsPoint(int x, int y)
-{
-
-}
+#include<QDebug>
 
 void Line::BresenhamLine()
 {
@@ -41,6 +21,7 @@ void Line::BresenhamLine()
     int dx = x1 - x0;
     int dy = y1 - y0;
 
+
     if (dx < 0)
     {
         dx = -dx;
@@ -51,6 +32,12 @@ void Line::BresenhamLine()
     {
         dy = -dy;
         stepy = -1;
+    }
+
+    if(isSelected)
+    {
+      drawborder();
+      glPointSize(gproperty.point_size + 2);
     }
 
     if (dx > dy)
@@ -89,10 +76,42 @@ void Line::BresenhamLine()
             }
         }
     }
-    if(isSelected)
-        drawborder();
+    glPointSize(gproperty.point_size);
 }
 
+
+void Line::drawborder()
+{
+    glPointSize(gproperty.point_size + 10);
+    glColor3f(1.0, 0, 0);
+
+    glBegin(GL_POINTS);
+
+    glVertex3f(start.x, start.y, 0);
+    glVertex3f(end.x, end.y, 0);
+
+    glEnd();
+    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    glColor3f(r, g, b);
+    glPointSize(gproperty.point_size);
+}
+
+bool Line::containsPoint(int x, int y)
+{
+    if(start.x == end.x)
+    {
+        return (abs(x-start.x) < 4 && y>= MIN(start.y, end.y) && y <= MAX(start.y, end.y));
+    }
+    else
+    {
+        int  a = end.y - start.y;
+        int  b = start.x - end.x;
+        int  c = end.x * start.y - start.x * end.y;
+        double dis = 1.0 * (a * x + b * y + c)/sqrt(a * a + b * b);
+
+        return fabs(dis) < 4;
+    }
+}
 
 //basic, not use
 /*void bresenham_line(int x1, int y1, int x2, int y2, QColor &c)

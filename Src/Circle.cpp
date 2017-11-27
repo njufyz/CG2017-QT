@@ -14,6 +14,12 @@ void Circle::MidpointCircle()
     int  deltax = 3;
     int  deltay = 5 - 2 * R;
 
+    if(isSelected)
+    {
+      drawborder();
+      glPointSize(gproperty.point_size + 4);
+    }
+
     for(; x <= y; x++)
     {
         setpixel_8(x0, y0, x, y);
@@ -35,9 +41,8 @@ void Circle::MidpointCircle()
          }
 
     }
+     glPointSize(gproperty.point_size);
 
-    if(isSelected)
-        drawborder();
 }
 
 //画边框
