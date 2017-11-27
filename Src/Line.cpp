@@ -113,6 +113,15 @@ bool Line::containsPoint(int x, int y)
     }
 }
 
+void Line::translation(int x, int y)
+{
+    start.x += x;
+    start.y += y;
+
+    end.x += x;
+    end.y += y;
+}
+
 //basic, not use
 /*void bresenham_line(int x1, int y1, int x2, int y2, QColor &c)
 {

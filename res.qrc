@@ -8,5 +8,6 @@
         <file>pic/ellipse.png</file>
         <file>pic/hand.png</file>
         <file>pic/polygon.png</file>
+        <file>pic/translation.png</file>
     </qresource>
 </RCC>

@@ -70,3 +70,14 @@ bool Circle::containsPoint(int x, int y)
 {
     return  (abs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
 }
+
+void Circle::translation(int x, int y)
+{
+    cc.x += x;
+    cc.y += y;
+}
+
+bool Circle::isPointInRect(int x, int y)
+{
+    return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
+}

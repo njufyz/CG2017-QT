@@ -4,6 +4,7 @@
 
 #include<QColorDialog>
 #include<QFileDialog>
+#include<QMessageBox>
 
 Property gproperty;
 
@@ -40,6 +41,7 @@ void MainWindow::on_toolButton_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
+    ui->toolButton_6->setChecked(false);
 
     STATE = DRAW;
     SELECT = LINE;
@@ -52,6 +54,7 @@ void MainWindow::on_toolButton_2_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
+    ui->toolButton_6->setChecked(false);
 
     STATE = DRAW;
     SELECT = CIRCLE;
@@ -64,6 +67,7 @@ void MainWindow::on_toolButton_3_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
+    ui->toolButton_6->setChecked(false);
 
     STATE = DRAW;
     SELECT = ELLIPSE;
@@ -75,6 +79,7 @@ void MainWindow::on_toolButton_4_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_5->setChecked(false);
+    ui->toolButton_6->setChecked(false);
 
     STATE = CHOOSE;
 }
@@ -86,11 +91,33 @@ void MainWindow::on_toolButton_5_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
+    ui->toolButton_6->setChecked(false);
 
     STATE = DRAW;
     SELECT = POLYGON;
 }
 
+void MainWindow::on_toolButton_6_clicked()
+{
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(false);
+    ui->toolButton_5->setChecked(false);
+
+    if(current == nullptr)
+    {
+       ui->toolButton_4->setChecked(true);
+       STATE = CHOOSE;
+       ui->toolButton_6->setChecked(false);
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+    else
+    {
+        STATE = TRANSLATION;
+    }
+}
 
 void MainWindow::ClearSelect()
 {
@@ -98,6 +125,7 @@ void MainWindow::ClearSelect()
     {
       g->setSelect(false);
     }
+    current = nullptr;
     ui->widget->update();
 }
 
@@ -140,4 +168,6 @@ void MainWindow::on_pushButton_4_clicked()
     pixmap.save(QString(fileName),"JPG");
 
 }
+
+
 

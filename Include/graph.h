@@ -14,10 +14,13 @@ public:
     virtual void draw() = 0;
     virtual void drawborder() = 0;
     virtual bool containsPoint(int x, int y) = 0;
+    virtual bool isPointInRect(int x, int y) = 0;
 
     void setSelect(bool set){
         isSelected = set;
     }
+
+    virtual void translation(int x, int y) = 0;
 
 
 protected:

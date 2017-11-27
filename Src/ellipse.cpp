@@ -108,3 +108,14 @@ bool Ellipse::containsPoint(int x, int y)
     }
 
 }
+
+void Ellipse::translation(int x, int y)
+{
+    c.x += x;
+    c.y += y;
+}
+
+bool Ellipse::isPointInRect(int x, int y)
+{
+    return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
+}

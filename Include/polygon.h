@@ -57,6 +57,10 @@ public:
     }
 
     void drawborder(){}
+
+    void translation(int x, int y);
+
+    bool isPointInRect(int x, int y);
 };
 
 #endif // POLYGON_H
