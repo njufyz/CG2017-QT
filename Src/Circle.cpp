@@ -52,6 +52,7 @@ void Circle::drawborder()
     drawControlPoint(lt);
     drawControlPoint(rb);
     drawControlPoint(rt);
+    drawControlPoint(cc);
 
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
@@ -95,4 +96,18 @@ void Circle::translate(int x, int y)
 bool Circle::isPointInRect(int x, int y)
 {
     return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
+}
+
+void Circle::rotate(int xr, int yr, double theta)
+{
+    double x2 = xr + (cc.x - xr) * cos(theta) - (cc.y - yr) * sin(theta);
+    double y2 = yr + (cc.x - xr) * sin(theta) + (cc.y - yr) * cos(theta);
+
+    cc.x = x2;
+    cc.y = y2;
+
+    lb = Point(cc.x - r -1, cc.y - r - 1);
+    rb = Point(cc.x + r + 1,cc.y - r - 1);
+    rt = Point(cc.x + r + 1,cc.y + r + 1);
+    lt = Point(cc.x - r - 1,cc.y + r + 1);
 }

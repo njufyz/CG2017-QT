@@ -122,6 +122,21 @@ void Line::translate(int x, int y)
     end.y += y;
 }
 
+void Line::rotate(int x, int y, double theta)
+{
+    double x2 = x + (start.x - x) * cos(theta) - (start.y - y) * sin(theta);
+    double y2 = y + (start.x - x) * sin(theta) + (start.y - y) * cos(theta);
+
+    start.x = x2;
+    start.y = y2;
+
+    x2 = x + (end.x - x) * cos(theta) - (end.y - y) * sin(theta);
+    y2 = y + (end.x - x) * sin(theta) + (end.y - y) * cos(theta);
+
+    end.x = x2;
+    end.y = y2;
+}
+
 //basic, not use
 /*void bresenham_line(int x1, int y1, int x2, int y2, QColor &c)
 {

@@ -74,6 +74,7 @@ void Ellipse::drawborder()
     drawControlPoint(lt);
     drawControlPoint(rb);
     drawControlPoint(rt);
+    drawControlPoint(c);
 
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
@@ -132,4 +133,9 @@ void Ellipse::translate(int x, int y)
 bool Ellipse::isPointInRect(int x, int y)
 {
     return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
+}
+
+void Ellipse::rotate(int x, int y, double theta)
+{
+
 }

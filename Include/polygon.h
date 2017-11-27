@@ -61,6 +61,8 @@ public:
     void translate(int x, int y);
 
     bool isPointInRect(int x, int y);
+
+    void rotate(int x, int y, double theta);
 };
 
 #endif // POLYGON_H

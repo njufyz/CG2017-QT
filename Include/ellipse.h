@@ -44,6 +44,8 @@ public:
 
     bool isPointInRect(int x, int y);
 
+    void rotate(int x, int y, double theta);
+
 
 private:
     void MidpointEllipse();

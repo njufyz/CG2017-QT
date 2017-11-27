@@ -293,4 +293,5 @@ void mousePress_OnRotate(int x, int y)
 {
    rotate_point = Point(x, y);
    drawControlPoint(rotate_point);
+   current->rotate(x, y, 30.0/360*2*3.1415926);
 }

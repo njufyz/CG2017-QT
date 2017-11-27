@@ -21,6 +21,7 @@ public:
     }
 
     virtual void translate(int x, int y) = 0;
+    virtual void rotate(int x, int y, double theta) = 0;
 
 
 protected:

@@ -44,6 +44,8 @@ public:
         return containsPoint(x, y);
     }
 
+    void rotate(int x, int y, double theta);
+
 private:
      void BresenhamLine();
 };
