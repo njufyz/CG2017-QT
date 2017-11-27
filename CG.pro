@@ -19,7 +19,8 @@ SOURCES += Src/Circle.cpp \
     Src/mainwindow.cpp \
     Src/openglwindow.cpp \
     Src/graph.cpp \
-    Src/ellipse.cpp
+    Src/ellipse.cpp \
+    Src/polygon.cpp
 
 HEADERS  += Include/Circle.h \
     Include/common.h \
@@ -29,7 +30,8 @@ HEADERS  += Include/Circle.h \
     Include/openglwindow.h \
     Include/Point.h \
     Include/property.h \
-    Include/ellipse.h
+    Include/ellipse.h \
+    Include/polygon.h
 
 FORMS    += mainwindow.ui
 

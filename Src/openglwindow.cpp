@@ -15,6 +15,9 @@ STAT STATE = DRAW;
 static Point start;
 static Point last;
 
+static QVector<Point> points_for_polygon;
+bool polygon_start = 0;
+
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
 {
@@ -43,7 +46,6 @@ void openglwindow::initializeGL()
 
 void openglwindow::paintGL()
 {
-
     foreach (auto g, graph)
     {
         g->draw();
@@ -63,7 +65,16 @@ void openglwindow::paintGL()
                               abs((last.x - start.x)/2),
                               abs((start.y-last.y)/2)).draw(); break;
 
+        case POLYGON: if(points_for_polygon.size() >=2)
+                        {
+                            for(auto i = points_for_polygon.begin(), j = i + 1; j != points_for_polygon.end(); i++, j++)
+                                {
+                                    Line(*i, *j).draw();
+                                }
+                        }
+                    break;
 
+        default: break;
         }
     }
 
@@ -94,7 +105,34 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
         {
             start.x = x;
             start.y = y;
+
+            if(SELECT == POLYGON)
+            {
+                if(polygon_start == 1)
+                {
+                    if((abs(start.x - points_for_polygon[0].x) <= 4 ) && (abs(start.y - points_for_polygon[0].y) <= 4))
+                    {
+                        start = points_for_polygon[0];
+                        points_for_polygon.push_back(start);
+                        polygon_start = 0;
+                        shared_ptr<Graph> p(new Polygon(points_for_polygon));
+                        p->setSelect(false);
+                        graph.push_back(p);
+                        points_for_polygon.clear();
+                    }
+                    else
+                        points_for_polygon.push_back(start);
+                }
+                else //(polygon_start == 0)
+                {
+                    polygon_start = 1;
+                    points_for_polygon.clear();
+                    points_for_polygon.push_back(start);
+                }
+
+            }
          }
+
     }
 
     else if(STATE == CHOOSE)
@@ -154,6 +192,8 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
             graph.push_back(p);
 
         }
+
+
     }
    }
 
@@ -166,12 +206,11 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     int x = e->x();
     int y = HEIGHT - e-> y();
 
+     last.x = x;
+     last.y = y;
 
-    last.x = x;
-    last.y = y;
+     update();
 
-
-    update();
 }
 
 void openglwindow::changecolor(QColor &color)

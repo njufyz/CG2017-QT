@@ -5,12 +5,12 @@
 class Line :
 	public Graph
 {
-
 	Point start;
 	Point end;
+
 public:
 	Line() {}
-
+    ~Line() {}
 	Line(Point x, Point y) 
 	{ 
         isSelected = true;

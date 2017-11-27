@@ -177,7 +177,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>Circle</string>
+     <string>Ellipse</string>
     </property>
     <property name="text">
      <string/>
@@ -214,6 +214,32 @@
     <property name="icon">
      <iconset resource="res.qrc">
       <normaloff>:/ images/pic/hand.png</normaloff>:/ images/pic/hand.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_5">
+    <property name="geometry">
+     <rect>
+      <x>597</x>
+      <y>160</y>
+      <width>36</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="res.qrc">
+      <normaloff>:/ images/pic/polygon.png</normaloff>:/ images/pic/polygon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
