@@ -55,10 +55,10 @@ void Circle::drawborder()
 
 
     glBegin(GL_POLYGON);
-        glVertex3f(cc.x - r - 1,cc.y - r - 1, 0);
-        glVertex3f(cc.x + r + 1,cc.y - r - 1, 0);
-        glVertex3f(cc.x + r + 1,cc.y + r + 1, 0);
-        glVertex3f(cc.x - r - 1,cc.y + r + 1, 0);
+        glVertex3f(lb.x,lb.y, 0);
+        glVertex3f(rb.x,rb.y, 0);
+        glVertex3f(rt.x,rt.y, 0);
+        glVertex3f(lt.x,lt.y, 0);
     glEnd();
 
     float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
@@ -71,10 +71,20 @@ bool Circle::containsPoint(int x, int y)
     return  (abs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
 }
 
-void Circle::translation(int x, int y)
+void Circle::translate(int x, int y)
 {
     cc.x += x;
     cc.y += y;
+
+    lb.x += x;
+    lb.y += y;
+    rb.x += x;
+    rb.y += y;
+    rt.x += x;
+    rt.y += y;
+    lt.x += x;
+    lt.y += y;
+
 }
 
 bool Circle::isPointInRect(int x, int y)

@@ -78,10 +78,10 @@ void Ellipse::drawborder()
 
 
     glBegin(GL_POLYGON);
-        glVertex3f(c.x - rx - 1,c.y - ry - 1, 0);
-        glVertex3f(c.x + rx + 1,c.y - ry - 1, 0);
-        glVertex3f(c.x + rx + 1,c.y + ry + 1, 0);
-        glVertex3f(c.x - rx - 1,c.y + ry + 1, 0);
+        glVertex3f(lb.x,lb.y, 0);
+        glVertex3f(rb.x,rb.y, 0);
+        glVertex3f(rt.x,rt.y, 0);
+        glVertex3f(lt.x,lt.y, 0);
     glEnd();
 
     float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
@@ -109,10 +109,19 @@ bool Ellipse::containsPoint(int x, int y)
 
 }
 
-void Ellipse::translation(int x, int y)
+void Ellipse::translate(int x, int y)
 {
     c.x += x;
     c.y += y;
+
+    lb.x += x;
+    lb.y += y;
+    rb.x += x;
+    rb.y += y;
+    rt.x += x;
+    rt.y += y;
+    lt.x += x;
+    lt.y += y;
 }
 
 bool Ellipse::isPointInRect(int x, int y)

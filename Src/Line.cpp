@@ -113,7 +113,7 @@ bool Line::containsPoint(int x, int y)
     }
 }
 
-void Line::translation(int x, int y)
+void Line::translate(int x, int y)
 {
     start.x += x;
     start.y += y;

@@ -37,7 +37,7 @@ public:
 
     bool containsPoint(int x, int y);
 
-    void translation(int x, int y);
+    void translate(int x, int y);
 
     bool isPointInRect(int x, int y)
     {

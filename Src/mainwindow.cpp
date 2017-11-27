@@ -33,7 +33,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_toolButton_clicked()
 {
     ClearSelect();
@@ -75,6 +74,7 @@ void MainWindow::on_toolButton_3_clicked()
 
 void MainWindow::on_toolButton_4_clicked()
 {
+    ClearSelect();
     ui->toolButton->setChecked(false);
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
@@ -115,7 +115,7 @@ void MainWindow::on_toolButton_6_clicked()
     }
     else
     {
-        STATE = TRANSLATION;
+        STATE = TRANSLATE;
     }
 }
 

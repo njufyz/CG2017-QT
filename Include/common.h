@@ -30,7 +30,7 @@ extern QVector<std::shared_ptr<Graph>> graph;
 extern std::shared_ptr<Graph> current;
 
 enum TYPE{LINE, CIRCLE, ELLIPSE, POLYGON};
-enum STAT{DRAW, CHOOSE, TRANSLATION};
+enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE};
 
 extern TYPE SELECT;
 extern STAT STATE;

@@ -9,5 +9,6 @@
         <file>pic/hand.png</file>
         <file>pic/polygon.png</file>
         <file>pic/translation.png</file>
+        <file>pic/rorate.png</file>
     </qresource>
 </RCC>

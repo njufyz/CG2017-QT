@@ -5,7 +5,7 @@ Polygon::Polygon()
 
 }
 
-void Polygon::translation(int x, int y)
+void Polygon::translate(int x, int y)
 {
     for(auto i = points.begin(); i != points.end();i++)
     {

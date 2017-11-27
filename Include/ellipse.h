@@ -11,6 +11,8 @@ class Ellipse:
     int   rx;
     int   ry;
 
+    Point lb, rb, rt, lt;
+
 public:
 
     Ellipse()   {}
@@ -21,6 +23,12 @@ public:
         this->rx=ra;
         this->ry=rb;
         this->property = gproperty;
+
+        this->lb = Point(c.x - rx - 1,c.y - ry - 1);
+        this->rb = Point(c.x + rx + 1,c.y - ry - 1);
+        this->rt = Point(c.x + rx + 1,c.y + ry + 1);
+        this->lt = Point(c.x - rx - 1,c.y + ry + 1);
+
     }
     //override
     void draw()
@@ -32,7 +40,7 @@ public:
 
     bool containsPoint(int x, int y);
 
-    void translation(int x, int y);
+    void translate(int x, int y);
 
     bool isPointInRect(int x, int y);
 

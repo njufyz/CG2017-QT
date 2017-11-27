@@ -23,26 +23,22 @@ static Point tran_last;
 static QVector<Point> points_for_polygon;
 bool polygon_start = 0;
 
-bool translation_start = 0;
-
 void mousePress_OnDraw(int x, int y);
 void mousePress_OnChoose(int x, int y);
-void mousePress_OnTranslation(int x, int y);
+void mousePress_OnTranslate(int x, int y);
 
-void mouseMove_OnTranslation(int x, int y);
+void mouseMove_OnTranslate(int x, int y);
 
 void mouseRelease_OnDraw(int x, int y);
-
+void mouseRelease_OnTranslate(int x, int y);
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
 {
-
 }
 
 openglwindow::~openglwindow()
 {
-
 }
 
 void openglwindow::initializeGL()
@@ -122,7 +118,7 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
     {
          case DRAW :        mousePress_OnDraw(x, y);        break;
          case CHOOSE:       mousePress_OnChoose(x, y);      break;
-         case TRANSLATION:  mousePress_OnTranslation(x, y); break;
+         case TRANSLATE:  mousePress_OnTranslate(x, y); break;
     }
 
 }
@@ -140,7 +136,10 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
    {        
        mouseRelease_OnDraw(x, y);
    }
-
+    if(STATE == TRANSLATE)
+    {
+        mouseRelease_OnTranslate(x, y);
+    }
     start = last = Point(0, 0);
     update();
 }
@@ -153,8 +152,8 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     last.x = x;
     last.y = y;
 
-    if(STATE == TRANSLATION)
-        mouseMove_OnTranslation(x, y);
+    if(STATE == TRANSLATE)
+        mouseMove_OnTranslate(x, y);
 
     update();
 
@@ -252,20 +251,16 @@ void mousePress_OnChoose(int x, int y)
     current = nullptr;
 }
 
-void mousePress_OnTranslation(int x, int y)
+void mousePress_OnTranslate(int x, int y)
 {
-    if(current->isPointInRect(x, y) == 0)
-        translation_start = false;
-    else
-    {
-        translation_start = true;
-        tran_first = Point(x, y);
-    }
+    if(current==nullptr)
+        return;
+    tran_first = Point(x, y);
 }
 
-void mouseMove_OnTranslation(int x, int y)
+void mouseMove_OnTranslate(int x, int y)
 {
-    if(!translation_start)
+    if(current==nullptr)
         return;
 
     tran_last = Point(x, y);
@@ -273,6 +268,13 @@ void mouseMove_OnTranslation(int x, int y)
     y = tran_last.y - tran_first.y;
     tran_first = tran_last;
 
-    current->translation(x, y);
+    current->translate(x, y);
 }
 
+void mouseRelease_OnTranslate(int x, int y)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if(current==nullptr)
+        return;
+}

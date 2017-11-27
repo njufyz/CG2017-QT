@@ -20,7 +20,7 @@ public:
         isSelected = set;
     }
 
-    virtual void translation(int x, int y) = 0;
+    virtual void translate(int x, int y) = 0;
 
 
 protected:
