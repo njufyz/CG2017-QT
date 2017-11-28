@@ -140,6 +140,7 @@ void MainWindow::on_toolButton_6_clicked()
 }
 
 
+extern bool rotate_start;
 //rotate
 void MainWindow::on_toolButton_7_clicked()
 {
@@ -159,6 +160,7 @@ void MainWindow::on_toolButton_7_clicked()
     ui->toolButton_7->setChecked(true);
 
     STATE = ROTATE;
+    rotate_start = false;
 
 
 }

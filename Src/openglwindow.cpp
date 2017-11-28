@@ -21,9 +21,12 @@ static Point tran_first;
 static Point tran_last;
 
 static Point rotate_point;
+static Point rotate_first;
+static Point rotate_last;
+bool rotate_start = false;
 
 static QVector<Point> points_for_polygon;
-bool polygon_start = 0;
+static bool polygon_start = false;
 
 void mousePress_OnDraw(int x, int y);
 void mousePress_OnChoose(int x, int y);
@@ -165,6 +168,9 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     if(STATE == TRANSLATE)
         mouseMove_OnTranslate(x, y);
 
+    else if(STATE == ROTATE)
+        mouseMove_OnTranslate(x, y);
+
     update();
 
 }
@@ -265,6 +271,7 @@ void mousePress_OnTranslate(int x, int y)
 {
     if(current==nullptr)
         return;
+
     tran_first = Point(x, y);
 }
 
@@ -291,7 +298,23 @@ void mouseRelease_OnTranslate(int x, int y)
 
 void mousePress_OnRotate(int x, int y)
 {
-   rotate_point = Point(x, y);
-   drawControlPoint(rotate_point);
-   current->rotate(x, y, 30.0/360*2*3.1415926);
+   if(rotate_start == false)
+   {
+       rotate_point = Point(x, y);
+       rotate_start = true;
+   }
+   else
+       rotate_first = Point(x, y);
+}
+
+void mouseMove_OnRotate(int x, int y)
+{
+    if(current==nullptr)
+        return;
+
+    rotate_last = Point(x, y);
+    double theta = 0;
+    tran_first = tran_last;
+
+    current->rotate(rotate_point.x, rotate_point.y, theta);
 }

@@ -2,6 +2,11 @@
 #include"common.h"
 
 
+void Circle::generateVertexes()
+{
+    MidpointCircle();
+}
+
 void Circle::MidpointCircle()
 {
     int x0 = this->cc.x;
@@ -13,12 +18,6 @@ void Circle::MidpointCircle()
     int  d = 1 - R;
     int  deltax = 3;
     int  deltay = 5 - 2 * R;
-
-    if(isSelected)
-    {
-      drawborder();
-      glPointSize(gproperty.point_size + 4);
-    }
 
     for(; x <= y; x++)
     {
@@ -41,7 +40,6 @@ void Circle::MidpointCircle()
          }
 
     }
-     glPointSize(gproperty.point_size);
 
 }
 
@@ -59,7 +57,6 @@ void Circle::drawborder()
     glLineStipple( 2.0, 0x0F0F);
     glColor3f(0.0, 0.0, 0.0);
 
-
     glBegin(GL_POLYGON);
         glVertex3f(lb.x,lb.y, 0);
         glVertex3f(rb.x,rb.y, 0);
@@ -72,12 +69,12 @@ void Circle::drawborder()
 
 }
 
-bool Circle::containsPoint(int x, int y)
+bool Circle::containsPoint(float x, float y)
 {
-    return  (abs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
+    return  (fabs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
 }
 
-void Circle::translate(int x, int y)
+void Circle::translate(float x, float y)
 {
     cc.x += x;
     cc.y += y;
@@ -91,23 +88,25 @@ void Circle::translate(int x, int y)
     lt.x += x;
     lt.y += y;
 
+    vertexes.clear();
+    generateVertexes();
+
 }
 
-bool Circle::isPointInRect(int x, int y)
+bool Circle::isPointInRect(float x, float y)
 {
     return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
 }
 
-void Circle::rotate(int xr, int yr, double theta)
+void Circle::rotate(float xr, float yr, double theta)
 {
-    double x2 = xr + (cc.x - xr) * cos(theta) - (cc.y - yr) * sin(theta);
-    double y2 = yr + (cc.x - xr) * sin(theta) + (cc.y - yr) * cos(theta);
-
-    cc.x = x2;
-    cc.y = y2;
+    cc = Rotate(cc, xr, yr, theta);
 
     lb = Point(cc.x - r -1, cc.y - r - 1);
     rb = Point(cc.x + r + 1,cc.y - r - 1);
     rt = Point(cc.x + r + 1,cc.y + r + 1);
     lt = Point(cc.x - r - 1,cc.y + r + 1);
+
+    vertexes.clear();
+    generateVertexes();
 }

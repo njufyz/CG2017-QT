@@ -1,11 +1,20 @@
 #include "polygon.h"
+#include "common.h"
+
+void Polygon::generateVertexes()
+{
+    for(auto i = lines.begin(); i!= lines.end(); i++)
+    {
+
+    }
+}
 
 Polygon::Polygon()
 {
 
 }
 
-void Polygon::translate(int x, int y)
+void Polygon::translate(float x, float y)
 {
     for(auto i = points.begin(); i != points.end();i++)
     {
@@ -20,20 +29,16 @@ void Polygon::translate(int x, int y)
     }
 }
 
-bool Polygon::isPointInRect(int x, int y)
+bool Polygon::isPointInRect(float x, float y)
 {
     return containsPoint(x, y);
 }
 
-void Polygon::rotate(int x, int y, double theta)
+void Polygon::rotate(float x, float y, double theta)
 {
     for(auto cc = points.begin(); cc!=points.end();cc++)
     {
-        double x2 = x + (cc->x - x) * cos(theta) - (cc->y - y) * sin(theta);
-        double y2 = y + (cc->x - x) * sin(theta) + (cc->y - y) * cos(theta);
-
-        cc->x = x2;
-        cc->y = y2;
+        *cc = Rotate(*cc, x, y, theta);
     }
 
     lines.clear();

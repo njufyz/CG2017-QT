@@ -8,6 +8,8 @@ class Line :
 	Point start;
 	Point end;
 
+    void generateVertexes();
+
 public:
 	Line() {}
     ~Line() {}
@@ -17,6 +19,8 @@ public:
         this->property = gproperty;
 		start = x;
 		end = y;
+
+        generateVertexes();
 	}
 
 	Line(int x0, int y0, int x1, int y1)
@@ -25,26 +29,24 @@ public:
         this->property = gproperty;
 		start = Point(x0, y0);
 		end = Point(x1, y1);
+
+         generateVertexes();
 	}
 
      //override
-    void draw()
-	{
-        BresenhamLine();
-	}
 
     void drawborder();
 
-    bool containsPoint(int x, int y);
+    bool containsPoint(float x, float y);
 
-    void translate(int x, int y);
+    void translate(float x, float y);
 
-    bool isPointInRect(int x, int y)
+    bool isPointInRect(float x, float y)
     {
         return containsPoint(x, y);
     }
 
-    void rotate(int x, int y, double theta);
+    void rotate(float x, float y, double theta);
 
 private:
      void BresenhamLine();

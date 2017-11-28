@@ -3,7 +3,12 @@ using namespace std;
 
 #include"common.h"
 #include"Line.h"
-#include<QDebug>
+
+
+void Line::generateVertexes()
+{
+    BresenhamLine();
+}
 
 void Line::BresenhamLine()
 {
@@ -32,12 +37,6 @@ void Line::BresenhamLine()
     {
         dy = -dy;
         stepy = -1;
-    }
-
-    if(isSelected)
-    {
-      drawborder();
-      glPointSize(gproperty.point_size + 2);
     }
 
     if (dx > dy)
@@ -76,9 +75,7 @@ void Line::BresenhamLine()
             }
         }
     }
-    glPointSize(gproperty.point_size);
 }
-
 
 void Line::drawborder()
 {
@@ -86,17 +83,16 @@ void Line::drawborder()
     glColor3f(1.0, 0, 0);
 
     glBegin(GL_POINTS);
-
-    glVertex3f(start.x, start.y, 0);
-    glVertex3f(end.x, end.y, 0);
-
+        glVertex3f(start.x, start.y, 0);
+        glVertex3f(end.x, end.y, 0);
     glEnd();
+
     float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
     glColor3f(r, g, b);
     glPointSize(gproperty.point_size);
 }
 
-bool Line::containsPoint(int x, int y)
+bool Line::containsPoint(float x, float y)
 {
     if(start.x == end.x)
     {
@@ -113,28 +109,26 @@ bool Line::containsPoint(int x, int y)
     }
 }
 
-void Line::translate(int x, int y)
+void Line::translate(float x, float y)
 {
     start.x += x;
     start.y += y;
 
     end.x += x;
     end.y += y;
+
+    vertexes.clear();
+    generateVertexes();
+
 }
 
-void Line::rotate(int x, int y, double theta)
+void Line::rotate(float x, float y, double theta)
 {
-    double x2 = x + (start.x - x) * cos(theta) - (start.y - y) * sin(theta);
-    double y2 = y + (start.x - x) * sin(theta) + (start.y - y) * cos(theta);
+   start = Rotate(start, x, y, theta);
+   end = Rotate(end, x, y, theta);
 
-    start.x = x2;
-    start.y = y2;
-
-    x2 = x + (end.x - x) * cos(theta) - (end.y - y) * sin(theta);
-    y2 = y + (end.x - x) * sin(theta) + (end.y - y) * cos(theta);
-
-    end.x = x2;
-    end.y = y2;
+    vertexes.clear();
+    generateVertexes();
 }
 
 //basic, not use

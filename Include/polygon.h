@@ -10,8 +10,11 @@ class Polygon : public Graph
     QVector<Point> points;
     QVector<Line> lines;
 
+    void generateVertexes();
+
 public:
     Polygon();
+
     Polygon(QVector<Point> &p): points(p)
     {
         isSelected = true;
@@ -46,7 +49,7 @@ public:
         }
     }
 
-    bool containsPoint(int x, int y)
+    bool containsPoint(float x, float y)
     {
         for(auto i = lines.begin(); i!=lines.end();i++)
         {
@@ -58,11 +61,11 @@ public:
 
     void drawborder(){}
 
-    void translate(int x, int y);
+    void translate(float x, float y);
 
-    bool isPointInRect(int x, int y);
+    bool isPointInRect(float x, float y);
 
-    void rotate(int x, int y, double theta);
+    void rotate(float x, float y, double theta);
 };
 
 #endif // POLYGON_H

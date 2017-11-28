@@ -1,6 +1,11 @@
 #include "ellipse.h"
 #include"common.h"
-#include<QDebug>
+
+
+void Ellipse::generateVertexes()
+{
+    MidpointEllipse();
+}
 
 void Ellipse::MidpointEllipse()
 {
@@ -11,12 +16,6 @@ void Ellipse::MidpointEllipse()
     int cy = c.y;
     int x = 0;
     int y = ry;
-
-    if(isSelected)
-    {
-      drawborder();
-      glPointSize(gproperty.point_size + 4);
-    }
 
     setpixel_4(cx, cy, x, y);
     setpixel_4(cx, cy, rx, 0);
@@ -49,8 +48,6 @@ void Ellipse::MidpointEllipse()
             x++;
         }
     }
-
-    glPointSize(gproperty.point_size);
 }
 
 int Ellipse::fEllipse(double x, double y)
@@ -67,7 +64,8 @@ int Ellipse::fEllipse(double x, double y)
         return 1;
 }
 
-//画边框
+
+
 void Ellipse::drawborder()
 {
     drawControlPoint(lb);
@@ -97,7 +95,7 @@ void Ellipse::drawborder()
 }
 
 
-bool Ellipse::containsPoint(int x, int y)
+bool Ellipse::containsPoint(float x, float y)
 {
     double a2 = rx * rx;
     double b2 = ry * ry;
@@ -106,16 +104,16 @@ bool Ellipse::containsPoint(int x, int y)
 
     if(rx >= ry)
     {
-       return  (abs(x2/a2 + y2/b2 - 1) <= 0.05) ;
+       return  (fabs(x2/a2 + y2/b2 - 1) <= 0.05) ;
     }
     else
     {
-       return  (abs(x2/b2 + y2/a2 - 1) <= 0.05) ;
+       return  (fabs(x2/b2 + y2/a2 - 1) <= 0.05) ;
     }
 
 }
 
-void Ellipse::translate(int x, int y)
+void Ellipse::translate(float x, float y)
 {
     c.x += x;
     c.y += y;
@@ -128,14 +126,24 @@ void Ellipse::translate(int x, int y)
     rt.y += y;
     lt.x += x;
     lt.y += y;
+
+    vertexes.clear();
+    generateVertexes();
 }
 
-bool Ellipse::isPointInRect(int x, int y)
+bool Ellipse::isPointInRect(float x, float y)
 {
     return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
 }
 
-void Ellipse::rotate(int x, int y, double theta)
+void Ellipse::rotate(float x, float y, double theta)
 {
+    c = Rotate(c, x, y, theta);
+    lb = Rotate(lb, x, y, theta);
+    lt = Rotate(lt, x, y, theta);
+    rb = Rotate(rb, x, y, theta);
+    rt = Rotate(rt, x, y, theta);
 
+    for(auto &i : vertexes)
+        i = Rotate(i, x, y, theta);
 }

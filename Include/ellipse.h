@@ -13,6 +13,8 @@ class Ellipse:
 
     Point lb, rb, rt, lt;
 
+    void generateVertexes();
+
 public:
 
     Ellipse()   {}
@@ -29,22 +31,20 @@ public:
         this->rt = Point(c.x + rx + 1,c.y + ry + 1);
         this->lt = Point(c.x - rx - 1,c.y + ry + 1);
 
+         generateVertexes();
+
     }
     //override
-    void draw()
-    {
-        MidpointEllipse();
-    }
 
     void drawborder();
 
-    bool containsPoint(int x, int y);
+    bool containsPoint(float x, float y);
 
-    void translate(int x, int y);
+    void translate(float x, float y);
 
-    bool isPointInRect(int x, int y);
+    bool isPointInRect(float x, float y);
 
-    void rotate(int x, int y, double theta);
+    void rotate(float x, float y, double theta);
 
 
 private:
