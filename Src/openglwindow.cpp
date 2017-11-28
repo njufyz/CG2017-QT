@@ -34,6 +34,7 @@ void mousePress_OnTranslate(int x, int y);
 void mousePress_OnRotate(int x, int y);
 
 void mouseMove_OnTranslate(int x, int y);
+void mouseMove_OnRotate(int x, int y);
 
 void mouseRelease_OnDraw(int x, int y);
 void mouseRelease_OnTranslate(int x, int y);
@@ -169,7 +170,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
         mouseMove_OnTranslate(x, y);
 
     else if(STATE == ROTATE)
-        mouseMove_OnTranslate(x, y);
+        mouseMove_OnRotate(x, y);
 
     update();
 
@@ -177,7 +178,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
 
 void openglwindow::changecolor(QColor &color)
 {
-   float r = color.redF(), g = color.greenF(), b = color.blueF();
+   double r = color.redF(), g = color.greenF(), b = color.blueF();
    glColor3f(r, g, b);
 
 }
@@ -307,14 +308,28 @@ void mousePress_OnRotate(int x, int y)
        rotate_first = Point(x, y);
 }
 
+double rotate_angle(Point c, Point x1, Point x2)
+{
+    x1.x -= c.x;
+    x1.y -= c.y;
+    x2.x -= c.x;
+    x2.y -= c.y;
+
+    double angle1 = atan2(x1.y, x1.x);
+    double angle2 = atan2(x2.y, x2.x);
+
+    return angle2 - angle1;
+}
+
 void mouseMove_OnRotate(int x, int y)
 {
     if(current==nullptr)
         return;
 
     rotate_last = Point(x, y);
-    double theta = 0;
-    tran_first = tran_last;
+    double theta = rotate_angle(rotate_point, rotate_first, rotate_last);
+    rotate_first = rotate_last;
 
     current->rotate(rotate_point.x, rotate_point.y, theta);
+
 }

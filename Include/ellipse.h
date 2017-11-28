@@ -10,8 +10,8 @@ class Ellipse:
     Point c;
     int   rx;
     int   ry;
-
     Point lb, rb, rt, lt;
+    double angle;
 
     void generateVertexes();
 
@@ -21,9 +21,11 @@ public:
     Ellipse(Point c, int ra, int rb)
     {
         isSelected = true;
+        isFilled   = true;
+
         this->c = c;
-        this->rx=ra;
-        this->ry=rb;
+        this->rx = ra;
+        this->ry = rb;
         this->property = gproperty;
 
         this->lb = Point(c.x - rx - 1,c.y - ry - 1);
@@ -38,13 +40,14 @@ public:
 
     void drawborder();
 
-    bool containsPoint(float x, float y);
+    bool containsPoint(double x, double y);
 
-    void translate(float x, float y);
+    void translate(double x, double y);
 
-    bool isPointInRect(float x, float y);
+    bool isPointInRect(double x, double y);
 
-    void rotate(float x, float y, double theta);
+    void rotate(double x, double y, double theta);
+
 
 
 private:

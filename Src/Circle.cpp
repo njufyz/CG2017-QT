@@ -22,6 +22,13 @@ void Circle::MidpointCircle()
     for(; x <= y; x++)
     {
         setpixel_8(x0, y0, x, y);
+
+        if(isFilled)
+        {
+            for(int i = 0; i < y; i++)
+                 setpixel_8(x0, y0, x, i);
+        }
+
         if(d < 0)
         {
             d += deltax;
@@ -64,17 +71,17 @@ void Circle::drawborder()
         glVertex3f(lt.x,lt.y, 0);
     glEnd();
 
-    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
     glColor3f(r, g, b);
 
 }
 
-bool Circle::containsPoint(float x, float y)
+bool Circle::containsPoint(double x, double y)
 {
     return  (fabs( (x-cc.x)*(x-cc.x) + (y-cc.y)*(y-cc.y) - r*r ) <= 1000);
 }
 
-void Circle::translate(float x, float y)
+void Circle::translate(double x, double y)
 {
     cc.x += x;
     cc.y += y;
@@ -93,12 +100,12 @@ void Circle::translate(float x, float y)
 
 }
 
-bool Circle::isPointInRect(float x, float y)
+bool Circle::isPointInRect(double x, double y)
 {
     return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
 }
 
-void Circle::rotate(float xr, float yr, double theta)
+void Circle::rotate(double xr, double yr, double theta)
 {
     cc = Rotate(cc, xr, yr, theta);
 
@@ -110,3 +117,4 @@ void Circle::rotate(float xr, float yr, double theta)
     vertexes.clear();
     generateVertexes();
 }
+

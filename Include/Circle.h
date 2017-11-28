@@ -20,6 +20,7 @@ public:
     Circle(Point cc, int r)
     {
         isSelected = true;
+        isFilled   = true;
         this->property = gproperty;
         this->cc = cc;
         this->r = r;
@@ -35,6 +36,7 @@ public:
     Circle(int cx, int cy, int r)
 	{
         isSelected = true;
+        isFilled   = true;
         this->property = gproperty;
 		cc = Point(cx, cy);
 		this->r = r;
@@ -53,13 +55,15 @@ public:
 
     void drawborder();
 
-    bool containsPoint(float x, float y);
+    bool containsPoint(double x, double y);
 
-    void translate(float x, float y);
+    void translate(double x, double y);
 
-    bool isPointInRect(float x, float y);
+    bool isPointInRect(double x, double y);
 
-    void rotate(float x, float y, double theta);
+    void rotate(double x, double y, double theta);
+
+
 
 
 };

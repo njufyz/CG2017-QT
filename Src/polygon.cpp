@@ -14,7 +14,7 @@ Polygon::Polygon()
 
 }
 
-void Polygon::translate(float x, float y)
+void Polygon::translate(double x, double y)
 {
     for(auto i = points.begin(); i != points.end();i++)
     {
@@ -29,12 +29,12 @@ void Polygon::translate(float x, float y)
     }
 }
 
-bool Polygon::isPointInRect(float x, float y)
+bool Polygon::isPointInRect(double x, double y)
 {
     return containsPoint(x, y);
 }
 
-void Polygon::rotate(float x, float y, double theta)
+void Polygon::rotate(double x, double y, double theta)
 {
     for(auto cc = points.begin(); cc!=points.end();cc++)
     {
@@ -48,5 +48,10 @@ void Polygon::rotate(float x, float y, double theta)
         Line* p = new Line(*i, *j);
         lines.push_back(*p);
     }
+
+}
+
+void Polygon::fill()
+{
 
 }

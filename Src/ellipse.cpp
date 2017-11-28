@@ -24,6 +24,13 @@ void Ellipse::MidpointEllipse()
     for(; ry * ry * x <= rx * rx * y; x++ )
     {
         k = fEllipse(x + 1 , y - 0.5);
+
+        if(isFilled)
+        {
+            for(int i = 0; i < y; i++)
+                 setpixel_4(cx, cy, x, i);
+        }
+
         if(k < 0)
         {
             setpixel_4(cx, cy, x + 1, y);
@@ -37,6 +44,12 @@ void Ellipse::MidpointEllipse()
 
     for(; y>=0; y--)
     {
+        if(isFilled)
+        {
+            for(int i = 0; i < y; i++)
+                 setpixel_4(cx, cy, x, i);
+        }
+
         k = fEllipse(x + 0.5 , y - 1);
         if(k > 0)
         {
@@ -47,6 +60,7 @@ void Ellipse::MidpointEllipse()
             setpixel_4(cx, cy, x + 1, y - 1);
             x++;
         }
+
     }
 }
 
@@ -88,14 +102,14 @@ void Ellipse::drawborder()
         glVertex3f(lt.x,lt.y, 0);
     glEnd();
 
-    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
     glColor3f(r, g, b);
 
 
 }
 
 
-bool Ellipse::containsPoint(float x, float y)
+bool Ellipse::containsPoint(double x, double y)
 {
     double a2 = rx * rx;
     double b2 = ry * ry;
@@ -113,7 +127,7 @@ bool Ellipse::containsPoint(float x, float y)
 
 }
 
-void Ellipse::translate(float x, float y)
+void Ellipse::translate(double x, double y)
 {
     c.x += x;
     c.y += y;
@@ -131,12 +145,12 @@ void Ellipse::translate(float x, float y)
     generateVertexes();
 }
 
-bool Ellipse::isPointInRect(float x, float y)
+bool Ellipse::isPointInRect(double x, double y)
 {
     return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
 }
 
-void Ellipse::rotate(float x, float y, double theta)
+void Ellipse::rotate(double x, double y, double theta)
 {
     c = Rotate(c, x, y, theta);
     lb = Rotate(lb, x, y, theta);
@@ -146,4 +160,6 @@ void Ellipse::rotate(float x, float y, double theta)
 
     for(auto &i : vertexes)
         i = Rotate(i, x, y, theta);
+
+    angle += theta;
 }

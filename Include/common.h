@@ -11,6 +11,7 @@
 #include<QVector>
 #include<QColor>
 #include<memory>
+#include<cmath>
 
 #include "Point.h"
 #include "property.h"
@@ -25,12 +26,11 @@ extern Property gproperty;
 #define HEIGHT 500
 #define WIDTH 500
 
-
 extern QVector<std::shared_ptr<Graph>> graph;
 extern std::shared_ptr<Graph> current;
 
 enum TYPE{LINE, CIRCLE, ELLIPSE, POLYGON};
-enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE};
+enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE, FILL};
 
 extern TYPE SELECT;
 extern STAT STATE;
@@ -39,7 +39,7 @@ extern STAT STATE;
 #define MAX(a,b)        (((a) > (b)) ? (a) : (b))
 #define MIN(a,b)        (((a) < (b)) ? (a) : (b))
 
-
+void drawControlPoint(Point &a);
 
 #endif
 

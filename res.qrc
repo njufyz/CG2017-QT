@@ -10,5 +10,6 @@
         <file>pic/polygon.png</file>
         <file>pic/translation.png</file>
         <file>pic/rorate.png</file>
+        <file>pic/fill.png</file>
     </qresource>
 </RCC>

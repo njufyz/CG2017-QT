@@ -18,6 +18,7 @@ public:
     Polygon(QVector<Point> &p): points(p)
     {
         isSelected = true;
+        isFilled   = false;
         this->property = gproperty;
 
         for(auto i = points.begin(), j = i + 1; j != points.end(); i++, j++)
@@ -49,7 +50,7 @@ public:
         }
     }
 
-    bool containsPoint(float x, float y)
+    bool containsPoint(double x, double y)
     {
         for(auto i = lines.begin(); i!=lines.end();i++)
         {
@@ -61,11 +62,13 @@ public:
 
     void drawborder(){}
 
-    void translate(float x, float y);
+    void translate(double x, double y);
 
-    bool isPointInRect(float x, float y);
+    bool isPointInRect(double x, double y);
 
-    void rotate(float x, float y, double theta);
+    void rotate(double x, double y, double theta);
+
+    void fill();
 };
 
 #endif // POLYGON_H

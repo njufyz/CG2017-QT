@@ -87,12 +87,12 @@ void Line::drawborder()
         glVertex3f(end.x, end.y, 0);
     glEnd();
 
-    float r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
     glColor3f(r, g, b);
     glPointSize(gproperty.point_size);
 }
 
-bool Line::containsPoint(float x, float y)
+bool Line::containsPoint(double x, double y)
 {
     if(start.x == end.x)
     {
@@ -109,7 +109,7 @@ bool Line::containsPoint(float x, float y)
     }
 }
 
-void Line::translate(float x, float y)
+void Line::translate(double x, double y)
 {
     start.x += x;
     start.y += y;
@@ -122,7 +122,7 @@ void Line::translate(float x, float y)
 
 }
 
-void Line::rotate(float x, float y, double theta)
+void Line::rotate(double x, double y, double theta)
 {
    start = Rotate(start, x, y, theta);
    end = Rotate(end, x, y, theta);
@@ -161,10 +161,10 @@ void Line::rotate(float x, float y, double theta)
     int dy = y2 - y1;
     int steps = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
 
-    GLfloat delta_x = (GLfloat)dx / (GLfloat)steps;
-    GLfloat delta_y = (GLfloat)dy / (GLfloat)steps;
-    GLfloat x = x1;
-    GLfloat y = y1;
+    GLdouble delta_x = (GLdouble)dx / (GLdouble)steps;
+    GLdouble delta_y = (GLdouble)dy / (GLdouble)steps;
+    GLdouble x = x1;
+    GLdouble y = y1;
 
     setpixel(x, y, c);
 

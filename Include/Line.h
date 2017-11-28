@@ -16,6 +16,7 @@ public:
 	Line(Point x, Point y) 
 	{ 
         isSelected = true;
+        isFilled   = false;
         this->property = gproperty;
 		start = x;
 		end = y;
@@ -37,16 +38,17 @@ public:
 
     void drawborder();
 
-    bool containsPoint(float x, float y);
+    bool containsPoint(double x, double y);
 
-    void translate(float x, float y);
+    void translate(double x, double y);
 
-    bool isPointInRect(float x, float y)
+    bool isPointInRect(double x, double y)
     {
         return containsPoint(x, y);
     }
 
-    void rotate(float x, float y, double theta);
+    void rotate(double x, double y, double theta);
+
 
 private:
      void BresenhamLine();

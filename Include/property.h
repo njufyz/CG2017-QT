@@ -5,11 +5,11 @@
 struct Property{
 
     QColor color;
-    float  point_size;
+    double  point_size;
 
     Property() {    color = Qt::black;  point_size = 4.0;}
 
-    Property(QColor &color, float size)
+    Property(QColor &color, double size)
     {
         this->color = color;
         point_size = size;

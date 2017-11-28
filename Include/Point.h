@@ -4,17 +4,23 @@
 
 struct Point
 {
-    float x;
-    float y;
+    double x;
+    double y;
 	Point() { x = 0; y = 0; }
-    Point(float x, float y) { this->x = x; this->y = y; }
+    Point(double x, double y) { this->x = x; this->y = y; }
 
 };
 
-static inline float distance(Point &x0, Point &x1)
+static inline double distance(Point &x0, Point &x1)
 {
    return  sqrt ( (x1.x - x0.x) *  (x1.x - x0.x) + (x1.y - x0.y) *  (x1.y - x0.y));
 }
+
+static inline double distance2(Point &x0, Point &x1)
+{
+   return  ( (x1.x - x0.x) *  (x1.x - x0.x) + (x1.y - x0.y) *  (x1.y - x0.y));
+}
+
 
 //static inline Point operator+(Point &a, Point &b)
 //{
