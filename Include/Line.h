@@ -2,11 +2,13 @@
 #define LINE_H
 #include"common.h"
 
+namespace fyz{
+
 class Line :
-	public Graph
+    public Graph
 {
-	Point start;
-	Point end;
+    Point start;
+    Point end;
 
     void generateVertexes();
 
@@ -54,4 +56,5 @@ private:
      void BresenhamLine();
 };
 
+}
 #endif

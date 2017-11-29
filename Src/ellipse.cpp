@@ -1,6 +1,8 @@
 #include "ellipse.h"
 #include"common.h"
 
+using fyz::Ellipse;
+
 void Ellipse::generateVertexes()
 {
     MidpointEllipse();

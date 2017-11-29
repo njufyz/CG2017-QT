@@ -5,6 +5,7 @@
 #include <QtAlgorithms>
 #include <QDebug>
 
+using fyz::Polygon;
 
 void Polygon::translate(double x, double y)
 {
@@ -75,7 +76,7 @@ void Polygon::InitNewEdgeTable(QVector<QList<Edge> > &Net)
     int num = points.size();
     Point tmp = points[num - 1];
     points.pop_back();
-    num = (int)points.size();
+    num = points.size();
     for(int m = 0; m < num; m++)
     {
         Point pre, cur_start, cur_end, post;
@@ -111,17 +112,6 @@ void Polygon::InitNewEdgeTable(QVector<QList<Edge> > &Net)
         }
 
     }
-
-    for(int k = 0; k < Net.size(); k++)
-    {
-        if(Net[k].isEmpty() == 0)
-            std::sort(Net[k].begin(), Net[k].end(), [](Edge &a, Edge &b)->bool
-            {
-                if(a.xi <= b.xi)        return true;
-                else                    return false;
-             });
-
-    }
     points.push_back(tmp);
 }
 
@@ -131,12 +121,6 @@ void Polygon::ProcessScanLineFill(QVector<QList<Edge> > &Net)
     for(int i = ymin; i <= ymax; i++)
     {
         InsertAet(Net[i - ymin], Aet);
-       /* std::sort(Aet.begin(), Aet.end(), [](Edge &a, Edge &b)->bool
-        {
-            if(a.xi <= b.xi)        return true;
-            else                    return false;
-         });
-        */
         FillAetScanLine(Aet, i);
         RemoveEdge(Aet, i);
         UpdateAet(Aet);

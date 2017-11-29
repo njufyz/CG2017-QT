@@ -5,6 +5,9 @@
 #include "common.h"
 #include <QVector>
 
+namespace fyz{
+
+
 struct Edge
 {
     double xi;
@@ -103,5 +106,5 @@ public:
     void fill();
 };
 
-
+}
 #endif // POLYGON_H

@@ -4,6 +4,8 @@
 #include "graph.h"
 #include "common.h"
 
+namespace fyz {
+
 class Ellipse:
         public Graph
 {
@@ -57,4 +59,5 @@ private:
     int fEllipse(double x, double y);
 };
 
+}
 #endif // ELLIPSE_H

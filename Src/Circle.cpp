@@ -1,6 +1,7 @@
 #include "Circle.h"
 #include"common.h"
 
+using fyz::Circle;
 
 void Circle::generateVertexes()
 {
@@ -46,7 +47,6 @@ void Circle::MidpointCircle()
     }
 }
 
-//画边框
 void Circle::drawborder()
 {
     drawControlPoint(lb);

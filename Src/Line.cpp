@@ -1,9 +1,9 @@
 #include<iostream>
-using namespace std;
 
 #include"common.h"
 #include"Line.h"
 
+using fyz::Line;
 
 void Line::generateVertexes()
 {

@@ -5,8 +5,12 @@
 #include<QVector>
 #include<memory>
 
-
-using namespace std;
+using std::shared_ptr;
+using fyz::Ellipse;
+using fyz::Polygon;
+using fyz::Circle;
+using fyz::Line;
+using fyz::Point;
 
 QVector<shared_ptr<Graph>> graph;
 shared_ptr<Graph> current(nullptr);
@@ -81,9 +85,8 @@ void openglwindow::paintGL()
         case CIRCLE:Line(start, last).draw();
                     Circle(start, distance(start, last)).draw(); break;
 
-        case ELLIPSE: Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
-                              abs((last.x - start.x)/2),
-                              abs((start.y-last.y)/2)).draw(); break;
+        case ELLIPSE: Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2), abs((last.x - start.x)/2),abs((start.y-last.y)/2)).draw();
+                     break;
 
         case POLYGON: if(points_for_polygon.size() >=2)
                         {

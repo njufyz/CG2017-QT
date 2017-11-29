@@ -59,6 +59,7 @@ protected:
     virtual void generateVertexes() = 0;
 };
 
+
 static inline Point Rotate(Point cc, double xr, double yr, double theta)
 {
      double x2 = xr + (cc.x - xr) * cos(theta) - (cc.y - yr) * sin(theta);
@@ -66,6 +67,7 @@ static inline Point Rotate(Point cc, double xr, double yr, double theta)
 
      return Point(x2, y2);
 }
+
 
 #endif
 

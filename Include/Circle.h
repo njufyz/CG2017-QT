@@ -4,6 +4,8 @@
 #include "graph.h"
 #include "common.h"
 
+namespace fyz{
+
 class Circle :
 	public Graph
 {
@@ -65,4 +67,5 @@ public:
 
 };
 
+}
 #endif
