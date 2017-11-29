@@ -102,9 +102,8 @@ void Ellipse::drawborder()
         glVertex3f(lt.x,lt.y, 0);
     glEnd();
 
-    double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+    double r = property.color.redF(), g = property.color.greenF(), b = property.color.blueF();
     glColor3f(r, g, b);
-
 
 }
 

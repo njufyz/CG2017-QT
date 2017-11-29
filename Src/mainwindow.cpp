@@ -215,6 +215,16 @@ void MainWindow::on_pushButton_4_clicked()
 
 }
 
-
-
-
+void MainWindow::on_toolButton_8_clicked()
+{
+    if(current == nullptr)
+    {
+       on_toolButton_4_clicked();
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+    current->setFill(true);
+    current->setColor(gproperty.color);
+    current->regenerateVertexes();
+    ui->widget->update();
+}

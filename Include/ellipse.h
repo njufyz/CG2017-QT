@@ -21,7 +21,7 @@ public:
     Ellipse(Point c, int ra, int rb)
     {
         isSelected = true;
-        isFilled   = true;
+        isFilled   = false;
 
         this->c = c;
         this->rx = ra;
@@ -47,6 +47,8 @@ public:
     bool isPointInRect(double x, double y);
 
     void rotate(double x, double y, double theta);
+
+    //void draw();
 
 
 

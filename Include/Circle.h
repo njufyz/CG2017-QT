@@ -20,7 +20,7 @@ public:
     Circle(Point cc, int r)
     {
         isSelected = true;
-        isFilled   = true;
+        isFilled   = false;
         this->property = gproperty;
         this->cc = cc;
         this->r = r;
@@ -36,7 +36,7 @@ public:
     Circle(int cx, int cy, int r)
 	{
         isSelected = true;
-        isFilled   = true;
+        isFilled   = false;
         this->property = gproperty;
 		cc = Point(cx, cy);
 		this->r = r;
@@ -62,9 +62,6 @@ public:
     bool isPointInRect(double x, double y);
 
     void rotate(double x, double y, double theta);
-
-
-
 
 };
 

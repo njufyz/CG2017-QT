@@ -133,6 +133,7 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
          case CHOOSE:       mousePress_OnChoose(x, y);      break;
          case TRANSLATE:    mousePress_OnTranslate(x, y);   break;
          case ROTATE:       mousePress_OnRotate(x, y);      break;
+         default:                                           break;
     }
 
 }
