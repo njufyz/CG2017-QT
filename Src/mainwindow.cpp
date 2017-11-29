@@ -225,6 +225,5 @@ void MainWindow::on_toolButton_8_clicked()
     }
     current->setFill(true);
     current->setColor(gproperty.color);
-    current->regenerateVertexes();
     ui->widget->update();
 }

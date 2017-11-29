@@ -21,15 +21,21 @@ void Graph::draw()
       glPointSize(gproperty.point_size + 4);
     }
 
-    if(isFilled)
-        glPointSize(gproperty.point_size + 4);
-
     glBegin(GL_POINTS);
     for(auto i:vertexes)
     {
          glVertex3f(i.x, i.y, 0);
     }
     glEnd();
+
+    if(isFilled)
+    {
+         glPointSize(gproperty.point_size + 10);
+         glBegin(GL_POINTS);
+         for(auto i:vertexes_inside)
+              glVertex3f(i.x, i.y, 0);
+         glEnd();
+    }
 
 
     glPointSize(gproperty.point_size);
@@ -38,6 +44,11 @@ void Graph::draw()
 void Graph::setpixel(int x, int y)
 {
     vertexes.push_back(Point(x, y));
+}
+
+void Graph::setpixel_inside(int x, int y)
+{
+    vertexes_inside.push_back(Point(x, y));
 }
 
 void Graph::setpixel_8(int cx, int cy, int x, int y)
@@ -53,12 +64,32 @@ void Graph::setpixel_8(int cx, int cy, int x, int y)
 
 }
 
+void Graph::setpixel_8_inside(int cx, int cy, int x, int y)
+{
+    vertexes_inside.push_back(Point(x + cx, y + cy));
+    vertexes_inside.push_back(Point(x + cx, -y + cy));
+    vertexes_inside.push_back(Point(y + cx, x + cy));
+    vertexes_inside.push_back(Point(y + cx, -x + cy));
+    vertexes_inside.push_back(Point(-x + cx, -y + cy));
+    vertexes_inside.push_back(Point(-x + cx, y + cy));
+    vertexes_inside.push_back(Point(-y + cx, -x + cy));
+    vertexes_inside.push_back(Point(-y + cx, x + cy));
+}
+
 void Graph::setpixel_4(int cx, int cy, int x, int y)
 {
     vertexes.push_back(Point(x + cx, y + cy));
     vertexes.push_back(Point(-x + cx, y + cy));
     vertexes.push_back(Point(x + cx, -y + cy));
     vertexes.push_back(Point(-x + cx, -y + cy));
+}
+
+void Graph::setpixel_4_inside(int cx, int cy, int x, int y)
+{
+    vertexes_inside.push_back(Point(x + cx, y + cy));
+    vertexes_inside.push_back(Point(-x + cx, y + cy));
+    vertexes_inside.push_back(Point(x + cx, -y + cy));
+    vertexes_inside.push_back(Point(-x + cx, -y + cy));
 }
 
 void Graph::drawpixel_4(int cx, int cy, int x, int y, int point_size)

@@ -27,11 +27,6 @@ public:
         isFilled = set;
     }
 
-    void regenerateVertexes(){
-        vertexes.clear();
-        generateVertexes();
-    }
-
     void setColor(QColor c)
     {
         property.color = c;
@@ -40,7 +35,7 @@ public:
 protected:
 
     QVector<Point> vertexes;
-    QVector<Point> inside_v;
+    QVector<Point> vertexes_inside;
 
     bool isSelected;
     bool isFilled;
@@ -48,12 +43,13 @@ protected:
     Property property;
 
     void setpixel(int x, int y);
+    void setpixel_inside(int x, int y);
 
     void setpixel_8(int cx, int cy, int x, int y);
     void setpixel_8_inside(int cx, int cy, int x, int y);
 
     void setpixel_4(int cx, int cy, int x, int y);
-    void setpixel_4_indise(int cx, int cy, int x, int y);
+    void setpixel_4_inside(int cx, int cy, int x, int y);
 
     void drawpixel_4(int cx, int cy, int x, int y, int size);
 

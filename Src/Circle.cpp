@@ -23,18 +23,17 @@ void Circle::MidpointCircle()
     {
         setpixel_8(x0, y0, x, y);
 
-        if(isFilled)
-        {
+        //if(isFilled)
+        //{
             for(int i = 0; i < y; i++)
-                 setpixel_8(x0, y0, x, i);
-        }
+                 setpixel_8_inside(x0, y0, x, i);
+        //}
 
         if(d < 0)
         {
             d += deltax;
             deltax += 2;
             deltay += 2;
-
         }
 
         else
@@ -42,7 +41,6 @@ void Circle::MidpointCircle()
             d += deltay;
             deltax += 2;
             deltay += 4;
-
             y--;
          }
     }
@@ -94,6 +92,7 @@ void Circle::translate(double x, double y)
     lt.y += y;
 
     vertexes.clear();
+    vertexes_inside.clear();
     generateVertexes();
 
 }
@@ -113,6 +112,7 @@ void Circle::rotate(double xr, double yr, double theta)
     lt = Point(cc.x - r - 1,cc.y + r + 1);
 
     vertexes.clear();
+    vertexes_inside.clear();
     generateVertexes();
 }
 

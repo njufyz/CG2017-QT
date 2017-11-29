@@ -25,16 +25,14 @@ void Ellipse::MidpointEllipse()
     {
         k = fEllipse(x + 1 , y - 0.5);
 
-        if(isFilled)
-        {
-            for(int i = 0; i < y; i++)
-                 setpixel_4(cx, cy, x, i);
-        }
+        for(int i = 0; i < y; i++)
+            setpixel_4_inside(cx, cy, x, i);
 
         if(k < 0)
         {
             setpixel_4(cx, cy, x + 1, y);
         }
+
         else
         {
             setpixel_4(cx, cy, x + 1, y - 1);
@@ -44,11 +42,8 @@ void Ellipse::MidpointEllipse()
 
     for(; y>=0; y--)
     {
-        if(isFilled)
-        {
-            for(int i = 0; i < y; i++)
-                 setpixel_4(cx, cy, x, i);
-        }
+        for(int i = 0; i < y; i++)
+            setpixel_4_inside(cx, cy, x, i);
 
         k = fEllipse(x + 0.5 , y - 1);
         if(k > 0)
@@ -141,6 +136,7 @@ void Ellipse::translate(double x, double y)
     lt.y += y;
 
     vertexes.clear();
+    vertexes_inside.clear();
     generateVertexes();
 }
 
@@ -151,13 +147,16 @@ bool Ellipse::isPointInRect(double x, double y)
 
 void Ellipse::rotate(double x, double y, double theta)
 {
-    c = Rotate(c, x, y, theta);
+    c =  Rotate(c, x, y, theta);
     lb = Rotate(lb, x, y, theta);
     lt = Rotate(lt, x, y, theta);
     rb = Rotate(rb, x, y, theta);
     rt = Rotate(rt, x, y, theta);
 
     for(auto &i : vertexes)
+        i = Rotate(i, x, y, theta);
+
+    for(auto &i : vertexes_inside)
         i = Rotate(i, x, y, theta);
 
     angle += theta;
