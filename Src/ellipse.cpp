@@ -1,6 +1,6 @@
 #include "ellipse.h"
 #include"common.h"
-
+#include<QDebug>
 
 void Ellipse::generateVertexes()
 {
@@ -105,6 +105,11 @@ void Ellipse::drawborder()
 
 bool Ellipse::containsPoint(double x, double y)
 {
+    Point p = Rotate(Point(x, y), c.x, c.y, -angle);
+
+    x = p.x;
+    y = p.y;
+
     double a2 = rx * rx;
     double b2 = ry * ry;
     double x2 = (x - c.x) * (x - c.x);

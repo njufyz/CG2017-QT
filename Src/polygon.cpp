@@ -3,10 +3,7 @@
 
 void Polygon::generateVertexes()
 {
-    for(auto i = lines.begin(); i!= lines.end(); i++)
-    {
 
-    }
 }
 
 Polygon::Polygon()

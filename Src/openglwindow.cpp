@@ -92,6 +92,8 @@ void openglwindow::paintGL()
                                     Line(*i, *j).draw();
                                 }
                         }
+                      else if(!points_for_polygon.isEmpty())
+                                drawControlPoint(points_for_polygon[0]);
                     break;
 
         default: break;

@@ -22,7 +22,7 @@ public:
     {
         isSelected = true;
         isFilled   = false;
-
+        angle = 0;
         this->c = c;
         this->rx = ra;
         this->ry = rb;
