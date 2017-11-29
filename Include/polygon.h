@@ -5,15 +5,33 @@
 #include "common.h"
 #include <QVector>
 
+struct Edge
+{
+    double xi;
+    double dx;
+    double ymax;
+};
+
 class Polygon : public Graph
 {
     QVector<Point> points;
     QVector<Line> lines;
 
-    void generateVertexes();
+    double ymax;
+    double ymin;
+
+    void generateVertexes() {}
+
+    void getMax_and_Min();
+    void InitNewEdgeTable(QVector<QList<Edge>> &Net);
+    void ProcessScanLineFill(QVector<QList<Edge>> &Net);
+    void InsertAet(QList<Edge> &Net, QList<Edge> &Aet);
+    void RemoveEdge(QList<Edge> &Aet, double y);
+    void FillAetScanLine(QList<Edge> &Aet, int y);
+    void UpdateAet(QList<Edge> &Aet);
 
 public:
-    Polygon();
+    Polygon() {}
 
     Polygon(QVector<Point> &p): points(p)
     {
@@ -26,12 +44,15 @@ public:
             Line* p = new Line(*i, *j);
             lines.push_back(*p);
         }
+        getMax_and_Min();
+        fill();
     }
 
     bool isStartPoint(Point &a)
     {
         return (abs(a.x - points[0].x) <= 4 ) && (abs(a.y - points[0].y) <= 4);
     }
+
 
     void draw()
     {
@@ -48,6 +69,17 @@ public:
                 i->draw();
             }
         }
+
+        if(isFilled)
+        {
+             glPointSize(gproperty.point_size + 5);
+             glBegin(GL_POINTS);
+             for(auto i:vertexes_inside)
+                  glVertex3f(i.x, i.y, 0);
+             glEnd();
+        }
+
+        glPointSize(gproperty.point_size);
     }
 
     bool containsPoint(double x, double y)
@@ -70,5 +102,6 @@ public:
 
     void fill();
 };
+
 
 #endif // POLYGON_H

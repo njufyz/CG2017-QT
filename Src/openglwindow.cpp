@@ -4,7 +4,7 @@
 
 #include<QVector>
 #include<memory>
-#include<QDebug>
+
 
 using namespace std;
 

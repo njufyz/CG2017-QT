@@ -1,6 +1,5 @@
 #include "ellipse.h"
 #include"common.h"
-#include<QDebug>
 
 void Ellipse::generateVertexes()
 {

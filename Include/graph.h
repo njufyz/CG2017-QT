@@ -7,8 +7,6 @@
 
 class  Graph
 {
-
-
 public:
     Graph() {}
     virtual ~Graph() {}
@@ -30,6 +28,11 @@ public:
     void setColor(QColor c)
     {
         property.color = c;
+    }
+
+    bool getFill()
+    {
+        return isFilled;
     }
 
 protected:

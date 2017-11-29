@@ -223,7 +223,9 @@ void MainWindow::on_toolButton_8_clicked()
        QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
        return;
     }
-    current->setFill(true);
+
+    current->setFill(!current->getFill());
+
     current->setColor(gproperty.color);
     ui->widget->update();
 }
