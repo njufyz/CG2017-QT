@@ -16,16 +16,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
-
     setWindowTitle("CG2017-151220026");
-
     ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
     ui->toolButton->setChecked(true);
 
+    ui->widget->setMouseTracking(true);
     STATE = DRAW;
+    //Notice: Icon pictures all loaded in mainwindow.ui
 
-    //Note: Icon pictures all loaded in mainwindow.ui
-
+    connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_toolButton_4_clicked()));
+    connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
 }
 
 MainWindow::~MainWindow()
@@ -41,7 +41,7 @@ void MainWindow::on_toolButton_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
     ui->toolButton_7->setChecked(false);
     ui->toolButton->setChecked(true);
 
@@ -58,7 +58,7 @@ void MainWindow::on_toolButton_2_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
     ui->toolButton_7->setChecked(false);
     ui->toolButton_2->setChecked(true);
 
@@ -75,7 +75,7 @@ void MainWindow::on_toolButton_3_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
     ui->toolButton_7->setChecked(false);
     ui->toolButton_3->setChecked(true);
 
@@ -86,12 +86,11 @@ void MainWindow::on_toolButton_3_clicked()
 //choose
 void MainWindow::on_toolButton_4_clicked()
 {
-    ClearSelect();
     ui->toolButton->setChecked(false);
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
     ui->toolButton_7->setChecked(false);
     ui->toolButton_4->setChecked(true);
 
@@ -107,7 +106,7 @@ void MainWindow::on_toolButton_5_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
     ui->toolButton_7->setChecked(false);
     ui->toolButton_5->setChecked(true);
 
@@ -116,31 +115,6 @@ void MainWindow::on_toolButton_5_clicked()
     SELECT = POLYGON;
 }
 
-
-//translate
-void MainWindow::on_toolButton_6_clicked()
-{
-    if(current == nullptr)
-    {
-       on_toolButton_4_clicked();
-       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
-       return;
-    }
-
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton_6->setChecked(true);
-
-    STATE = TRANSLATE;
-
-}
-
-
-extern bool rotate_start;
 //rotate
 void MainWindow::on_toolButton_7_clicked()
 {
@@ -155,7 +129,7 @@ void MainWindow::on_toolButton_7_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
+
 
     ui->toolButton_7->setChecked(true);
 
@@ -179,6 +153,8 @@ void MainWindow::ClearSelect()
 void MainWindow::on_pushButton_clicked()
 {
     graph.clear();
+    points_for_polygon.clear();
+    polygon_start = false;
     ui->widget->update();
 }
 
@@ -224,8 +200,13 @@ void MainWindow::on_toolButton_8_clicked()
        return;
     }
 
-    current->setFill(!current->getFill());
-
+    current->setFill(true);
     current->setColor(gproperty.color);
     ui->widget->update();
+}
+
+void MainWindow::setxy(int x, int y)
+{
+    ui->label->setText(QString("X:   " + QString("%1").arg(x)));
+    ui->label_2->setText(QString("Y:   " + QString("%1").arg(y)));
 }

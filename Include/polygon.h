@@ -57,43 +57,9 @@ public:
     }
 
 
-    void draw()
-    {
-        for(auto i = lines.begin(); i!= lines.end(); i++)
-        {
-            if(isSelected)
-            {
-                i->setSelect(true);
-                i->draw();
-            }
-            else
-            {
-                i->setSelect(false);
-                i->draw();
-            }
-        }
+    void draw();
 
-        if(isFilled)
-        {
-             glPointSize(gproperty.point_size + 5);
-             glBegin(GL_POINTS);
-             for(auto i:vertexes_inside)
-                  glVertex3f(i.x, i.y, 0);
-             glEnd();
-        }
-
-        glPointSize(gproperty.point_size);
-    }
-
-    bool containsPoint(double x, double y)
-    {
-        for(auto i = lines.begin(); i!=lines.end();i++)
-        {
-            if(i->containsPoint(x, y))
-                return true;
-        }
-        return false;
-    }
+    bool containsPoint(double x, double y);
 
     void drawborder(){}
 

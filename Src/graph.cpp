@@ -18,7 +18,7 @@ void Graph::draw()
     if(isSelected)
     {
       drawborder();
-      glPointSize(gproperty.point_size + 4);
+      glPointSize(gproperty.point_size + 3);
     }
 
     glBegin(GL_POINTS);
@@ -30,7 +30,7 @@ void Graph::draw()
 
     if(isFilled)
     {
-         glPointSize(gproperty.point_size + 10);
+         glPointSize(gproperty.point_size + 6);
          glBegin(GL_POINTS);
          for(auto i:vertexes_inside)
               glVertex3f(i.x, i.y, 0);
@@ -90,22 +90,6 @@ void Graph::setpixel_4_inside(int cx, int cy, int x, int y)
     vertexes_inside.push_back(Point(-x + cx, y + cy));
     vertexes_inside.push_back(Point(x + cx, -y + cy));
     vertexes_inside.push_back(Point(-x + cx, -y + cy));
-}
-
-void Graph::drawpixel_4(int cx, int cy, int x, int y, int point_size)
-{
-    glPointSize(point_size);
-
-    glBegin(GL_POINTS);
-        glVertex3f(x + cx, y + cy, 0);
-        glVertex3f(-x + cx, y + cy, 0);
-        glVertex3f(x + cx, -y + cy, 0);
-        glVertex3f(-x + cx, -y + cy, 0);
-    glEnd();
-
-    QColor c = property.color;
-    glColor3f(c.redF(), c.greenF(), c.blueF());
-    glPointSize(gproperty.point_size);
 }
 
 void drawControlPoint(Point &a)

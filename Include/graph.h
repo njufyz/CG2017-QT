@@ -10,18 +10,21 @@ class  Graph
 public:
     Graph() {}
     virtual ~Graph() {}
+
+    virtual void draw();
     virtual void drawborder() = 0;
     virtual bool containsPoint(double x, double y) = 0;
     virtual bool isPointInRect(double x, double y) = 0;
     virtual void translate(double x, double y) = 0;
     virtual void rotate(double x, double y, double theta) = 0;
 
-    virtual void draw();
-
-    void setSelect(bool set){
+    void setSelect(bool set)
+    {
         isSelected = set;
     }
-    void setFill(bool set){
+
+    void setFill(bool set)
+    {
         isFilled = set;
     }
 
@@ -30,20 +33,23 @@ public:
         property.color = c;
     }
 
+    void setProperty(Property &p)
+    {
+        this->property = p;
+    }
+
     bool getFill()
     {
         return isFilled;
     }
 
 protected:
-
+    Property property;
     QVector<Point> vertexes;
     QVector<Point> vertexes_inside;
-
     bool isSelected;
     bool isFilled;
-
-    Property property;
+    virtual void generateVertexes() = 0;
 
     void setpixel(int x, int y);
     void setpixel_inside(int x, int y);
@@ -54,9 +60,6 @@ protected:
     void setpixel_4(int cx, int cy, int x, int y);
     void setpixel_4_inside(int cx, int cy, int x, int y);
 
-    void drawpixel_4(int cx, int cy, int x, int y, int size);
-
-    virtual void generateVertexes() = 0;
 };
 
 

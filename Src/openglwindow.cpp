@@ -4,6 +4,7 @@
 
 #include<QVector>
 #include<memory>
+#include<QDebug>
 
 using std::shared_ptr;
 using fyz::Ellipse;
@@ -29,20 +30,12 @@ static Point rotate_first;
 static Point rotate_last;
 bool rotate_start = false;
 
-static QVector<Point> points_for_polygon;
-static bool polygon_start = false;
+QVector<Point> points_for_polygon;
+bool polygon_start = false;
 
-void mousePress_OnDraw(int x, int y);
-void mousePress_OnChoose(int x, int y);
-void mousePress_OnTranslate(int x, int y);
-void mousePress_OnRotate(int x, int y);
-
-void mouseMove_OnTranslate(int x, int y);
-void mouseMove_OnRotate(int x, int y);
-
-void mouseRelease_OnDraw(int x, int y);
-void mouseRelease_OnTranslate(int x, int y);
-
+void ClearSelect();
+bool searchCurrent(int x, int y);
+double rotate_angle(Point c, Point x1, Point x2);
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -85,7 +78,7 @@ void openglwindow::paintGL()
         case CIRCLE:Line(start, last).draw();
                     Circle(start, distance(start, last)).draw(); break;
 
-        case ELLIPSE: Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2), abs((last.x - start.x)/2),abs((start.y-last.y)/2)).draw();
+        case ELLIPSE: fyz::Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2), abs((last.x - start.x)/2),abs((start.y-last.y)/2)).draw();
                      break;
 
         case POLYGON: if(points_for_polygon.size() >=2)
@@ -152,13 +145,13 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
     last.x = x;
     last.y = y;
 
-    if(STATE == DRAW)
-   {        
-       mouseRelease_OnDraw(x, y);
-   }
-    if(STATE == TRANSLATE)
+    switch(STATE)
     {
-        mouseRelease_OnTranslate(x, y);
+         case DRAW :        mouseRelease_OnDraw(x, y);        break;
+         case CHOOSE:                                         break;
+         case TRANSLATE:    mouseRelease_OnTranslate(x, y);   break;
+         case ROTATE:       mouseRelease_OnRotate(x, y);      break;
+         default:                                             break;
     }
     start = last = Point(0, 0);
     update();
@@ -166,35 +159,39 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
 
 void openglwindow::mouseMoveEvent(QMouseEvent *e)
 {
+    if(e->buttons() & Qt::LeftButton)
+    {
     int x = e->x();
     int y = HEIGHT - e-> y();
 
     last.x = x;
     last.y = y;
 
-    if(STATE == TRANSLATE)
-        mouseMove_OnTranslate(x, y);
-
-    else if(STATE == ROTATE)
-        mouseMove_OnRotate(x, y);
-
+    switch(STATE)
+    {
+         case DRAW :
+         case CHOOSE:                                         break;
+         case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
+         case ROTATE:       mouseMove_OnRotate(x, y);         break;
+         default:                                             break;
+    }
     update();
+    }
 
+    emit getxy(e->x(), HEIGHT - e->y());
 }
 
 void openglwindow::changecolor(QColor &color)
 {
    double r = color.redF(), g = color.greenF(), b = color.blueF();
    glColor3f(r, g, b);
-
 }
 
-
-
-void mousePress_OnDraw(int x, int y)
+void openglwindow::mousePress_OnDraw(int x, int y)
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
+
     if(SELECT == POLYGON)
     {
         if(polygon_start == 1)
@@ -203,10 +200,11 @@ void mousePress_OnDraw(int x, int y)
             {
                 start = points_for_polygon[0];
                 points_for_polygon.push_back(start);
-                polygon_start = 0;
-                shared_ptr<Graph> p(new Polygon(points_for_polygon));
+                polygon_start = false;
+                shared_ptr<Graph> p(new fyz::Polygon(points_for_polygon));
                 p->setSelect(false);
                 graph.push_back(p);
+
                 points_for_polygon.clear();
             }
             else
@@ -223,15 +221,17 @@ void mousePress_OnDraw(int x, int y)
 }
 
 
-void mouseRelease_OnDraw(int x, int y)
+void openglwindow::mouseRelease_OnDraw(int x, int y)
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
+
     if(SELECT == LINE)
     {
         shared_ptr<Graph> p(new Line(start, last));
         p->setSelect(false);
         graph.push_back(p);
+        //emit clickchoose();
     }
 
 
@@ -240,11 +240,12 @@ void mouseRelease_OnDraw(int x, int y)
         shared_ptr<Graph> p(new Circle(start, distance(start, last)));
         p->setSelect(false);
         graph.push_back(p);
+
     }
 
      else if(SELECT == ELLIPSE)
     {
-        shared_ptr<Graph> p(new Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
+        shared_ptr<Graph> p(new fyz::Ellipse(Point((start.x + last.x)/2, (start.y +last.y)/2),
                                         abs((last.x - start.x)/2),
                                         abs((start.y-last.y)/2)));
         p->setSelect(false);
@@ -254,27 +255,28 @@ void mouseRelease_OnDraw(int x, int y)
 
 }
 
-void mousePress_OnChoose(int x, int y)
+void openglwindow::mousePress_OnChoose(int x, int y)
 {
-    foreach (auto g, graph)
+    if(current == nullptr)
     {
-        g->setSelect(false);
-    }
-
-    for(auto g = graph.end()-1; g >= graph.begin(); g--)
-    {
-        if((*g)->containsPoint(x, y))
-         {
-            (*g)->setSelect(true);
-            current = (*g);
+        if(!searchCurrent(x, y))
             return;
-         }
-
     }
-    current = nullptr;
+    if(current->containsPoint(x, y))
+    {
+        STATE =  TRANSLATE;
+        tran_first = Point(x, y);
+    }
+
+    else
+    {
+        ClearSelect();
+        mousePress_OnChoose(x, y);
+    }
+
 }
 
-void mousePress_OnTranslate(int x, int y)
+void openglwindow::mousePress_OnTranslate(int x, int y)
 {
     if(current==nullptr)
         return;
@@ -282,7 +284,7 @@ void mousePress_OnTranslate(int x, int y)
     tran_first = Point(x, y);
 }
 
-void mouseMove_OnTranslate(int x, int y)
+void openglwindow::mouseMove_OnTranslate(int x, int y)
 {
     if(current==nullptr)
         return;
@@ -295,15 +297,16 @@ void mouseMove_OnTranslate(int x, int y)
     current->translate(x, y);
 }
 
-void mouseRelease_OnTranslate(int x, int y)
+void openglwindow::mouseRelease_OnTranslate(int x, int y)
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
     if(current==nullptr)
         return;
+    STATE = CHOOSE;
 }
 
-void mousePress_OnRotate(int x, int y)
+void openglwindow::mousePress_OnRotate(int x, int y)
 {
    if(rotate_start == false)
    {
@@ -312,6 +315,58 @@ void mousePress_OnRotate(int x, int y)
    }
    else
        rotate_first = Point(x, y);
+}
+
+void openglwindow::mouseMove_OnRotate(int x, int y)
+{
+    if(current==nullptr)
+        return;
+
+    rotate_last = Point(x, y);
+    double theta = rotate_angle(rotate_point, rotate_first, rotate_last);
+    rotate_first = rotate_last;
+
+    current->rotate(rotate_point.x, rotate_point.y, theta);
+
+}
+
+void openglwindow::mouseRelease_OnRotate(int x, int y)
+{
+    static int cnt = -1;
+    cnt = (cnt + 1) % 2;
+    if(cnt == 0)   return;
+
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    if(current==nullptr)
+        return;
+    STATE = CHOOSE;
+
+    emit clickchoose();
+}
+
+bool searchCurrent(int x, int y)
+{
+    for(auto g = graph.end()-1; g >= graph.begin(); g--)
+    {
+        if((*g)->containsPoint(x, y))
+         {
+            (*g)->setSelect(true);
+            current = (*g);
+            return true;
+         }
+
+    }
+    return false;
+}
+
+void ClearSelect()
+{
+     foreach (auto g, graph)
+     {
+         g->setSelect(false);
+     }
+     current= nullptr;
 }
 
 double rotate_angle(Point c, Point x1, Point x2)
@@ -325,17 +380,4 @@ double rotate_angle(Point c, Point x1, Point x2)
     double angle2 = atan2(x2.y, x2.x);
 
     return angle2 - angle1;
-}
-
-void mouseMove_OnRotate(int x, int y)
-{
-    if(current==nullptr)
-        return;
-
-    rotate_last = Point(x, y);
-    double theta = rotate_angle(rotate_point, rotate_first, rotate_last);
-    rotate_first = rotate_last;
-
-    current->rotate(rotate_point.x, rotate_point.y, theta);
-
 }

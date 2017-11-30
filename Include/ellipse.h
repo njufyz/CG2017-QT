@@ -13,6 +13,7 @@ class Ellipse:
     int   rx;
     int   ry;
     Point lb, rb, rt, lt;
+
     double angle;
 
     void generateVertexes();

@@ -58,6 +58,7 @@ void Ellipse::MidpointEllipse()
         }
 
     }
+    //rotate(rotate_center.x, rotate_center.y, angle);
 }
 
 int Ellipse::fEllipse(double x, double y)
@@ -116,14 +117,7 @@ bool Ellipse::containsPoint(double x, double y)
     double x2 = (x - c.x) * (x - c.x);
     double y2 = (y - c.y) * (y - c.y);
 
-    if(rx >= ry)
-    {
-       return  (fabs(x2/a2 + y2/b2 - 1) <= 0.05) ;
-    }
-    else
-    {
-       return  (fabs(x2/b2 + y2/a2 - 1) <= 0.05) ;
-    }
+    return  (fabs(x2/a2 + y2/b2 - 1) <= (0.05 + isFilled * 0.1)) ;
 
 }
 
@@ -131,6 +125,7 @@ void Ellipse::translate(double x, double y)
 {
     c.x += x;
     c.y += y;
+
 
     lb.x += x;
     lb.y += y;
@@ -144,6 +139,13 @@ void Ellipse::translate(double x, double y)
     vertexes.clear();
     vertexes_inside.clear();
     generateVertexes();
+
+    for(auto &i : vertexes)
+        i = Rotate(i, c.x, c.y, angle);
+
+    for(auto &i : vertexes_inside)
+        i = Rotate(i, c.x, c.y, angle);
+
 }
 
 bool Ellipse::isPointInRect(double x, double y)
@@ -166,4 +168,5 @@ void Ellipse::rotate(double x, double y, double theta)
         i = Rotate(i, x, y, theta);
 
     angle += theta;
+
 }

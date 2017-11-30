@@ -23,6 +23,24 @@ public:
     void mouseMoveEvent(QMouseEvent * event);
 
     void changecolor(QColor &color);
+
+
+    void mousePress_OnDraw(int x, int y);
+    void mousePress_OnChoose(int x, int y);
+    void mousePress_OnTranslate(int x, int y);
+    void mousePress_OnRotate(int x, int y);
+
+    void mouseMove_OnTranslate(int x, int y);
+    void mouseMove_OnRotate(int x, int y);
+
+    void mouseRelease_OnDraw(int x, int y);
+    void mouseRelease_OnTranslate(int x, int y);
+    void mouseRelease_OnRotate(int x, int y);
+
+
+signals:
+    void clickchoose();
+    void getxy(int, int);
 };
 
 #endif // OPENGLWINDOW_H

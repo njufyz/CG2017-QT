@@ -6,6 +6,7 @@
 #include <QDebug>
 
 using fyz::Polygon;
+using fyz::Edge;
 
 void Polygon::translate(double x, double y)
 {
@@ -57,8 +58,8 @@ void Polygon::rotate(double x, double y, double theta)
 
 void Polygon::getMax_and_Min()
 {
-    ymax = std::max_element(points.begin(), points.end(), [](Point a, Point b)->bool{return a.y <= b.y;})->y;
-    ymin = std::min_element(points.begin(), points.end(), [](Point a, Point b)->bool{return a.y <= b.y;})->y;
+    ymax = std::max_element(points.begin(), points.end(), [](Point a, Point b)->bool{return a.y < b.y;})->y;
+    ymin = std::min_element(points.begin(), points.end(), [](Point a, Point b)->bool{return a.y < b.y;})->y;
 }
 
 
@@ -133,7 +134,7 @@ void Polygon::InsertAet(QList<Edge> &Net, QList<Edge> &Aet)
         Aet.push_back(i);
     std::sort(Aet.begin(), Aet.end(), [](Edge &a, Edge &b)->bool
     {
-        if(a.xi <= b.xi)        return true;
+        if(a.xi < b.xi)         return true;
         else                    return false;
      });
 
@@ -171,4 +172,45 @@ void Polygon::UpdateAet(QList<Edge> &Aet)
         i.xi += i.dx;
     }
 
+}
+
+void Polygon::draw()
+{
+    for(auto i = lines.begin(); i!= lines.end(); i++)
+    {
+        i->setProperty(property);
+        if(isSelected)
+        {
+            i->setSelect(true);
+            i->draw();
+        }
+        else
+        {
+            i->setSelect(false);
+            i->draw();
+        }
+    }
+
+    if(isFilled)
+    {
+        QColor c = property.color;
+        glColor3f(c.redF(), c.greenF(), c.blueF());
+        glPointSize(property.point_size + 2);
+        glBegin(GL_POINTS);
+         for(auto i:vertexes_inside)
+              glVertex3f(i.x, i.y, 0);
+         glEnd();
+    }
+
+    glPointSize(gproperty.point_size);
+}
+
+bool Polygon::containsPoint(double x, double y)
+{
+    for(auto i = lines.begin(); i!=lines.end();i++)
+    {
+        if(i->containsPoint(x, y))
+            return true;
+    }
+    return false;
 }

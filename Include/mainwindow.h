@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include<QDebug>
+#include<QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -14,7 +16,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
 
 private slots:
 
@@ -36,15 +37,19 @@ private slots:
 
     void on_toolButton_5_clicked();
 
-    void on_toolButton_6_clicked();
-
     void on_toolButton_7_clicked();
 
     void on_toolButton_8_clicked();
 
+    void setxy(int x, int y);
+
 private:
     Ui::MainWindow *ui;
     void  ClearSelect();
+
+signals:
+    void clickchoose();
+    void getxy(int , int);
 };
 
 #endif // MAINWINDOW_H

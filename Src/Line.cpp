@@ -79,7 +79,7 @@ void Line::BresenhamLine()
 
 void Line::drawborder()
 {
-    glPointSize(gproperty.point_size + 10);
+    glPointSize(property.point_size + 10);
     glColor3f(1.0, 0, 0);
 
     glBegin(GL_POINTS);
@@ -89,7 +89,7 @@ void Line::drawborder()
 
     double r = property.color.redF(), g = property.color.greenF(), b = property.color.blueF();
     glColor3f(r, g, b);
-    glPointSize(gproperty.point_size);
+    glPointSize(property.point_size);
 
 }
 
