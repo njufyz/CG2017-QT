@@ -1,6 +1,5 @@
 #include "Circle.h"
 #include"common.h"
-
 using fyz::Circle;
 
 void Circle::generateVertexes()
