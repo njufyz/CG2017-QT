@@ -164,53 +164,28 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
 {
     int x = e->x();
     int y = HEIGHT - e-> y();
+
+    //mouse press
     if(e->buttons() & Qt::LeftButton)
     {
-    last.x = x;
-    last.y = y;
+        last.x = x;
+        last.y = y;
 
-    switch(STATE)
-    {
-         case DRAW :
-         case CHOOSE:                                         break;
-         case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
-         case ROTATE:       mouseMove_OnRotate(x, y);         break;
-         default:                                             break;
+        switch(STATE)
+        {
+            case DRAW :
+            case CHOOSE:                                         break;
+            case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
+            case ROTATE:       mouseMove_OnRotate(x, y);         break;
+            default:                                             break;
+        }
+        update();
     }
-    update();
-    }
-
     emit getxy(e->x(), HEIGHT - e->y());
-
-    if(STATE == CHOOSE && locked == 0)
-    {
-        if(tmp != nullptr)
-        {
-            if(tmp->containsPoint(x, y))
-               return;
-            else
-            {
-               tmp->setSelect(false);
-               tmp = nullptr;
-            }
-        }
-        else
-        {
-            for(auto g = graph.end()-1; g >= graph.begin(); g--)
-            {
-             if((*g)->containsPoint(x, y))
-                {
-                 (*g)->setSelect(true);
-                 tmp = *g;
-                 break;
-                }
-            }
-        }
-         update();
-    }
-
+    mouseMove_OnCursor(x, y);
 
 }
+
 
 void openglwindow::changecolor(QColor &color)
 {
@@ -262,7 +237,6 @@ void openglwindow::mouseRelease_OnDraw(int x, int y)
         shared_ptr<Graph> p(new Line(start, last));
         p->setSelect(false);
         graph.push_back(p);
-        //emit clickchoose();
     }
 
 
@@ -302,6 +276,7 @@ void openglwindow::mousePress_OnChoose(int x, int y)
     else
     {
         ClearSelect();
+        setCursor(Qt::ArrowCursor);
         mousePress_OnChoose(x, y);
     }
 
@@ -358,6 +333,39 @@ void openglwindow::mouseMove_OnRotate(int x, int y)
     rotate_first = rotate_last;
 
     current->rotate(rotate_point.x, rotate_point.y, theta);
+
+}
+
+void openglwindow::mouseMove_OnCursor(int x, int y)
+{
+    if(STATE == CHOOSE && locked == 0)
+    {
+        if(tmp != nullptr)
+        {
+            if(tmp->containsPoint(x, y))
+               return;
+            else
+            {
+               tmp->setSelect(false);
+               tmp = nullptr;
+               setCursor(Qt::ArrowCursor);
+            }
+        }
+        else
+        {
+            for(auto g = graph.end()-1; g >= graph.begin(); g--)
+            {
+             if((*g)->containsPoint(x, y))
+                {
+                 (*g)->setSelect(true);
+                 tmp = *g;
+                 setCursor(Qt::CrossCursor);
+                 break;
+                }
+            }
+        }
+         update();
+    }
 
 }
 

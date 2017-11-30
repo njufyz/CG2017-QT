@@ -22,9 +22,11 @@ void Ellipse::MidpointEllipse()
     setpixel_4(cx, cy, rx, 0);
 
     int k = 0;
+
     for(; ry * ry * x <= rx * rx * y; x++ )
     {
         k = fEllipse(x + 1 , y - 0.5);
+
 
         for(int i = 0; i < y; i++)
             setpixel_4_inside(cx, cy, x, i);
@@ -43,10 +45,11 @@ void Ellipse::MidpointEllipse()
 
     for(; y>=0; y--)
     {
+        k = fEllipse(x + 0.5 , y - 1);
+
         for(int i = 0; i < y; i++)
             setpixel_4_inside(cx, cy, x, i);
 
-        k = fEllipse(x + 0.5 , y - 1);
         if(k > 0)
         {
             setpixel_4(cx, cy, x, y - 1);
@@ -58,7 +61,6 @@ void Ellipse::MidpointEllipse()
         }
 
     }
-    //rotate(rotate_center.x, rotate_center.y, angle);
 }
 
 int Ellipse::fEllipse(double x, double y)
