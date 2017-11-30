@@ -38,7 +38,7 @@ void ClearSelect();
 bool searchCurrent(int x, int y);
 double rotate_angle(Point c, Point x1, Point x2);
 
-static bool locked = false;
+bool locked = false;
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -269,6 +269,7 @@ void openglwindow::mousePress_OnChoose(int x, int y)
     }
     if(current->containsPoint(x, y))
     {
+        setCursor(Qt::CrossCursor);
         STATE =  TRANSLATE;
         tran_first = Point(x, y);
     }
@@ -371,16 +372,14 @@ void openglwindow::mouseMove_OnCursor(int x, int y)
 
 void openglwindow::mouseRelease_OnRotate(int x, int y)
 {
+    Q_UNUSED(x);
+    Q_UNUSED(y);
     static int cnt = -1;
     cnt = (cnt + 1) % 2;
     if(cnt == 0)   return;
-
-    Q_UNUSED(x);
-    Q_UNUSED(y);
     if(current==nullptr)
         return;
     STATE = CHOOSE;
-
     emit clickchoose();
 }
 

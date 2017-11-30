@@ -7,7 +7,6 @@
 
 namespace fyz{
 
-
 struct Edge
 {
     double xi;

@@ -31,6 +31,7 @@ extern std::shared_ptr<Graph> current;
 extern QVector<Point> points_for_polygon;
 extern bool polygon_start;
 extern bool rotate_start;
+extern bool locked;
 
 enum TYPE{LINE, CIRCLE, ELLIPSE, POLYGON};
 enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE, FILL};

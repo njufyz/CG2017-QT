@@ -119,7 +119,7 @@ bool Ellipse::containsPoint(double x, double y)
     double x2 = (x - c.x) * (x - c.x);
     double y2 = (y - c.y) * (y - c.y);
 
-    return  (fabs(x2/a2 + y2/b2 - 1) <= (0.05 + isFilled * 0.1)) ;
+    return  (fabs(x2/a2 + y2/b2 - 1) <= (0.08 + isFilled * 0.1)) ;
 
 }
 
@@ -127,7 +127,6 @@ void Ellipse::translate(double x, double y)
 {
     c.x += x;
     c.y += y;
-
 
     lb.x += x;
     lb.y += y;

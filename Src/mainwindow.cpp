@@ -147,6 +147,8 @@ void MainWindow::ClearSelect()
     }
     current = nullptr;
     ui->widget->update();
+    ui->widget->setCursor(Qt::ArrowCursor);
+    locked = false;
 }
 
 
