@@ -207,6 +207,6 @@ void MainWindow::on_toolButton_8_clicked()
 
 void MainWindow::setxy(int x, int y)
 {
-    ui->label->setText(QString("X:   " + QString("%1").arg(x)));
-    ui->label_2->setText(QString("Y:   " + QString("%1").arg(y)));
+    ui->label->setText(QString("X: " + QString("%1").arg(x)));
+    ui->label_2->setText(QString("Y: " + QString("%1").arg(y)));
 }

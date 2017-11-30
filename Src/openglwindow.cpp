@@ -15,6 +15,7 @@ using fyz::Point;
 
 QVector<shared_ptr<Graph>> graph;
 shared_ptr<Graph> current(nullptr);
+shared_ptr<Graph> tmp(nullptr);
 
 TYPE SELECT = LINE;
 STAT STATE = DRAW;
@@ -36,6 +37,8 @@ bool polygon_start = false;
 void ClearSelect();
 bool searchCurrent(int x, int y);
 double rotate_angle(Point c, Point x1, Point x2);
+
+static bool locked = false;
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -159,11 +162,10 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
 
 void openglwindow::mouseMoveEvent(QMouseEvent *e)
 {
-    if(e->buttons() & Qt::LeftButton)
-    {
     int x = e->x();
     int y = HEIGHT - e-> y();
-
+    if(e->buttons() & Qt::LeftButton)
+    {
     last.x = x;
     last.y = y;
 
@@ -179,6 +181,35 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
     }
 
     emit getxy(e->x(), HEIGHT - e->y());
+
+    if(STATE == CHOOSE && locked == 0)
+    {
+        if(tmp != nullptr)
+        {
+            if(tmp->containsPoint(x, y))
+               return;
+            else
+            {
+               tmp->setSelect(false);
+               tmp = nullptr;
+            }
+        }
+        else
+        {
+            for(auto g = graph.end()-1; g >= graph.begin(); g--)
+            {
+             if((*g)->containsPoint(x, y))
+                {
+                 (*g)->setSelect(true);
+                 tmp = *g;
+                 break;
+                }
+            }
+        }
+         update();
+    }
+
+
 }
 
 void openglwindow::changecolor(QColor &color)
@@ -352,11 +383,13 @@ bool searchCurrent(int x, int y)
         if((*g)->containsPoint(x, y))
          {
             (*g)->setSelect(true);
+            locked = true;
             current = (*g);
             return true;
          }
 
     }
+    locked = false;
     return false;
 }
 

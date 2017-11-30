@@ -106,7 +106,7 @@ bool Line::containsPoint(double x, double y)
         int  c = end.x * start.y - start.x * end.y;
         double dis = 1.0 * (a * x + b * y + c)/sqrt(a * a + b * b);
 
-        return fabs(dis) < 4;
+        return (fabs(dis) < 4) && ( y>= MIN(start.y, end.y) && y <= MAX(start.y, end.y));
     }
 }
 
