@@ -51,6 +51,8 @@ public:
 
     void rotate(double x, double y, double theta);
 
+    void scale(Point cc, double scale);
+
 
 private:
      void BresenhamLine();

@@ -71,6 +71,11 @@ void Polygon::fill()
     ProcessScanLineFill(Net);
 }
 
+void Polygon::scale(fyz::Point cc, double scale)
+{
+
+}
+
 void Polygon::InitNewEdgeTable(QVector<QList<Edge> > &Net)
 {
     Edge e;

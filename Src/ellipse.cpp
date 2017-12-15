@@ -171,3 +171,8 @@ void Ellipse::rotate(double x, double y, double theta)
     angle += theta;
 
 }
+
+void Ellipse::scale(fyz::Point cc, double scale)
+{
+
+}

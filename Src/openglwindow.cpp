@@ -31,6 +31,12 @@ static Point rotate_first;
 static Point rotate_last;
 bool rotate_start = false;
 
+Point scale_point;
+int scale_last = 50;
+int scale_cur = 50;
+
+bool scale_start = false;
+
 QVector<Point> points_for_polygon;
 bool polygon_start = false;
 
@@ -104,6 +110,11 @@ void openglwindow::paintGL()
         drawControlPoint(rotate_point);
     }
 
+    else if(STATE == SCALE)
+    {
+        drawControlPoint(scale_point);
+    }
+
 
 }
 
@@ -134,6 +145,7 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
          case CHOOSE:       mousePress_OnChoose(x, y);      break;
          case TRANSLATE:    mousePress_OnTranslate(x, y);   break;
          case ROTATE:       mousePress_OnRotate(x, y);      break;
+         case SCALE:        mousePress_OnScale(x, y);
          default:                                           break;
     }
 
@@ -324,6 +336,21 @@ void openglwindow::mousePress_OnRotate(int x, int y)
        rotate_first = Point(x, y);
 }
 
+void openglwindow::mousePress_OnScale(int x, int y)
+{
+    if(scale_start == false)
+    {
+        scale_point = Point(x, y);
+        scale_start = true;
+    }
+    else
+     {
+        scale_start == false;
+        STATE = CHOOSE;
+        emit clickchoose();
+     }
+}
+
 void openglwindow::mouseMove_OnRotate(int x, int y)
 {
     if(current==nullptr)
@@ -370,6 +397,11 @@ void openglwindow::mouseMove_OnCursor(int x, int y)
 
 }
 
+void openglwindow::mouseMove_OnScale(int x, int y)
+{
+
+}
+
 void openglwindow::mouseRelease_OnRotate(int x, int y)
 {
     Q_UNUSED(x);
@@ -382,6 +414,7 @@ void openglwindow::mouseRelease_OnRotate(int x, int y)
     STATE = CHOOSE;
     emit clickchoose();
 }
+
 
 bool searchCurrent(int x, int y)
 {

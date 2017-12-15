@@ -43,6 +43,10 @@ private slots:
 
     void setxy(int x, int y);
 
+    void on_toolButton_6_clicked();
+
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     void  ClearSelect();

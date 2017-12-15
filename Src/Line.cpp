@@ -2,7 +2,6 @@
 
 #include"common.h"
 #include"Line.h"
-
 using fyz::Line;
 
 void Line::generateVertexes()
@@ -132,50 +131,11 @@ void Line::rotate(double x, double y, double theta)
     generateVertexes();
 }
 
-//basic, not use
-/*void bresenham_line(int x1, int y1, int x2, int y2, QColor &c)
+void Line::scale(fyz::Point cc, double scale)
 {
-    int x = x1;
-    int y = y1;
-    int dx = x2 - x1;
-    int dy = y2 - y1;
-    int p = 2 * dy - dx;
-    for (; x <= x2; x++)
-    {
-        setpixel(x, y);
-        if (p >= 0)
-        {
-            y++;
-            p += 2 * (dy - dx);
-        }
-        else
-        {
-            p += 2 * dy;
-        }
-    }
+    start = Scale(cc, start, scale);
+    end = Scale(cc, end, scale);
+    vertexes.clear();
+    generateVertexes();
 }
-*/
 
-/*void DDALine(int x1, int y1, int x2, int y2, QColor &c)
-{
-    int dx = x2 - x1;
-    int dy = y2 - y1;
-    int steps = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
-
-    GLdouble delta_x = (GLdouble)dx / (GLdouble)steps;
-    GLdouble delta_y = (GLdouble)dy / (GLdouble)steps;
-    GLdouble x = x1;
-    GLdouble y = y1;
-
-    setpixel(x, y, c);
-
-    for (int k = 1; k <= steps; k++)
-    {
-        x += delta_x;
-        y += delta_y;
-        setpixel(x, y, c);
-    }
-    glFlush();
-
-}
-*/

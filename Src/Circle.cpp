@@ -115,3 +115,8 @@ void Circle::rotate(double xr, double yr, double theta)
     generateVertexes();
 }
 
+void Circle::scale(fyz::Point cc, double scale)
+{
+
+}
+

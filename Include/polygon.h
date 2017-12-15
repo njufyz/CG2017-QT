@@ -69,6 +69,8 @@ public:
     void rotate(double x, double y, double theta);
 
     void fill();
+
+    void scale(Point cc, double scale);
 };
 
 }

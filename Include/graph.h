@@ -17,6 +17,7 @@ public:
     virtual bool isPointInRect(double x, double y) = 0;
     virtual void translate(double x, double y) = 0;
     virtual void rotate(double x, double y, double theta) = 0;
+    virtual void scale(Point cc, double scale) = 0;
 
     void setSelect(bool set)
     {
@@ -71,6 +72,13 @@ static inline Point Rotate(Point cc, double xr, double yr, double theta)
      return Point(x2, y2);
 }
 
+static inline Point Scale(Point cc, Point s, double scale)
+{
+     double x2 = s.x * scale + cc.x * (1 - scale);
+     double y2 = s.y * scale + cc.y * (1 - scale);
+
+     return Point(x2, y2);
+}
 
 #endif
 

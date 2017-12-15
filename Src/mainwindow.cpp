@@ -21,12 +21,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolButton->setChecked(true);
 
     ui->widget->setMouseTracking(true);
+    ui->verticalSlider->close();
+
     STATE = DRAW;
     //Notice: Icon pictures all loaded in mainwindow.ui
 
     connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_toolButton_4_clicked()));
     connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
+
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -41,7 +45,7 @@ void MainWindow::on_toolButton_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
     ui->toolButton_7->setChecked(false);
     ui->toolButton->setChecked(true);
 
@@ -58,7 +62,7 @@ void MainWindow::on_toolButton_2_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
     ui->toolButton_7->setChecked(false);
     ui->toolButton_2->setChecked(true);
 
@@ -75,7 +79,7 @@ void MainWindow::on_toolButton_3_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
     ui->toolButton_7->setChecked(false);
     ui->toolButton_3->setChecked(true);
 
@@ -90,10 +94,14 @@ void MainWindow::on_toolButton_4_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_5->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
     ui->toolButton_7->setChecked(false);
     ui->toolButton_4->setChecked(true);
 
+    ui->verticalSlider->close();
+    scale_start = false;
+    scale_cur = scale_last = 50;
+    scale_point = Point(0, 0);
     STATE = CHOOSE;
 }
 
@@ -106,7 +114,7 @@ void MainWindow::on_toolButton_5_clicked()
     ui->toolButton_2->setChecked(false);
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
     ui->toolButton_7->setChecked(false);
     ui->toolButton_5->setChecked(true);
 
@@ -114,6 +122,31 @@ void MainWindow::on_toolButton_5_clicked()
     STATE = DRAW;
     SELECT = POLYGON;
 }
+
+
+//scale
+void MainWindow::on_toolButton_6_clicked()
+{
+    if(current == nullptr)
+    {
+       on_toolButton_4_clicked();
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+    ui->toolButton_3->setChecked(false);
+    ui->toolButton_4->setChecked(false);
+    ui->toolButton_5->setChecked(false);
+    ui->toolButton_7->setChecked(false);
+
+    ui->toolButton_6->setChecked(true);
+    ui->verticalSlider->setValue(50);
+    ui->verticalSlider->show();
+
+    STATE = SCALE;
+}
+
 
 //rotate
 void MainWindow::on_toolButton_7_clicked()
@@ -129,14 +162,12 @@ void MainWindow::on_toolButton_7_clicked()
     ui->toolButton_3->setChecked(false);
     ui->toolButton_4->setChecked(false);
     ui->toolButton_5->setChecked(false);
-
+    ui->toolButton_6->setChecked(false);
 
     ui->toolButton_7->setChecked(true);
 
     STATE = ROTATE;
     rotate_start = false;
-
-
 }
 
 void MainWindow::ClearSelect()
@@ -211,4 +242,13 @@ void MainWindow::setxy(int x, int y)
 {
     ui->label->setText(QString("X: " + QString("%1").arg(x)));
     ui->label_2->setText(QString("Y: " + QString("%1").arg(y)));
+}
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    scale_last = scale_cur;
+    scale_cur = value;
+    current->scale(scale_point, 1.0 * (scale_cur - scale_last) /10 + 1) ;
+    ui->widget->update();
+
 }

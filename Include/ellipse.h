@@ -51,7 +51,7 @@ public:
 
     void rotate(double x, double y, double theta);
 
-    //void draw();
+    void scale(Point cc, double scale);
 
 
 
