@@ -406,6 +406,8 @@ void openglwindow::mouseRelease_OnRotate(int x, int y)
     if(current==nullptr)
         return;
     STATE = CHOOSE;
+
+    rotate_first = rotate_last = rotate_point = Point(0, 0);
     emit clickchoose();
 }
 

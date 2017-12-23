@@ -111,7 +111,7 @@ void MainWindow::on_Button6_clicked()
     ClearButton(6);
     ui->verticalSlider->setValue(50);
     ui->verticalSlider->show();
-
+    scale_start = false;
     STATE = SCALE;
 }
 
@@ -196,6 +196,7 @@ void MainWindow::setxy(int x, int y)
 
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
+    scale_start = true;
     scale_last = scale_cur;
     scale_cur = value;
     current->scale(scale_point, 1.0 * (scale_cur - scale_last) /50 + 1) ;
@@ -234,5 +235,6 @@ void MainWindow::CloseSlide()
     scale_start = false;
     scale_cur = scale_last = 50;
     scale_point = Point(0, 0);
+    ui->widget->update();
 }
 

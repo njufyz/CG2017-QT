@@ -174,5 +174,29 @@ void Ellipse::rotate(double x, double y, double theta)
 
 void Ellipse::scale(fyz::Point cc, double scale)
 {
+    c = Scale(cc, c, scale);
+    rx *= scale;
+    ry *= scale;
+
+    lb = Point(c.x - rx - 1,c.y - ry - 1);
+    rb = Point(c.x + rx + 1,c.y - ry - 1);
+    rt = Point(c.x + rx + 1,c.y + ry + 1);
+    lt = Point(c.x - rx - 1,c.y + ry + 1);
+
+    lb = Rotate(lb, c.x, c.y, angle);
+    lt = Rotate(lt, c.x, c.y, angle);
+    rb = Rotate(rb, c.x, c.y, angle);
+    rt = Rotate(rt, c.x, c.y, angle);
+
+    vertexes.clear();
+    vertexes_inside.clear();
+    generateVertexes();
+
+    for(auto &i : vertexes)
+        i = Rotate(i, c.x, c.y, angle);
+
+    for(auto &i : vertexes_inside)
+        i = Rotate(i, c.x, c.y, angle);
+
 
 }
