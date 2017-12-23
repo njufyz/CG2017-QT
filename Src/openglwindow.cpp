@@ -34,7 +34,6 @@ bool rotate_start = false;
 Point scale_point;
 int scale_last = 50;
 int scale_cur = 50;
-
 bool scale_start = false;
 
 QVector<Point> points_for_polygon;
@@ -345,7 +344,7 @@ void openglwindow::mousePress_OnScale(int x, int y)
     }
     else
      {
-        scale_start == false;
+        scale_start = false;
         STATE = CHOOSE;
         emit clickchoose();
      }
@@ -394,11 +393,6 @@ void openglwindow::mouseMove_OnCursor(int x, int y)
         }
          update();
     }
-
-}
-
-void openglwindow::mouseMove_OnScale(int x, int y)
-{
 
 }
 

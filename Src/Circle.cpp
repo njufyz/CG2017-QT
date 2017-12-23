@@ -115,8 +115,21 @@ void Circle::rotate(double xr, double yr, double theta)
     generateVertexes();
 }
 
-void Circle::scale(fyz::Point cc, double scale)
+void Circle::scale(fyz::Point c, double scale)
 {
+    Point p(cc.x + r , cc.y);
 
+    cc = Scale(c, cc, scale);
+    p = Scale(c, p, scale);
+    r = distance(p, cc);
+
+    lb = Point(cc.x - r -1, cc.y - r - 1);
+    rb = Point(cc.x + r + 1,cc.y - r - 1);
+    rt = Point(cc.x + r + 1,cc.y + r + 1);
+    lt = Point(cc.x - r - 1,cc.y + r + 1);
+
+    vertexes.clear();
+    vertexes_inside.clear();
+    generateVertexes();
 }
 

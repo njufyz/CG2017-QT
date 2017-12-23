@@ -7,30 +7,42 @@
 #include<QMessageBox>
 
 Property gproperty;
+const int n_Button = 12;
+QPushButton *pushButton[n_Button + 1];
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
     setWindowTitle("CG2017-151220026");
-    ui->pushButton_3->setStyleSheet("background-color: rgb(0, 0, 0);");
-    ui->toolButton->setChecked(true);
 
+    ui->Button7->setStyleSheet("background-color: rgb(0, 0, 0);");
+    ui->Button1->setChecked(true);
     ui->widget->setMouseTracking(true);
     ui->verticalSlider->close();
 
     STATE = DRAW;
-    //Notice: Icon pictures all loaded in mainwindow.ui
 
-    connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_toolButton_4_clicked()));
+    connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_Button5_clicked()));
     connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
 
+    pushButton[0] = nullptr;
+    pushButton[1] = ui->Button1;
+    pushButton[2] = ui->Button2;
+    pushButton[3] = ui->Button3;
+    pushButton[4] = ui->Button4;
+    pushButton[5] = ui->Button5;
+    pushButton[6] = ui->Button6;
+    pushButton[7] = ui->Button7;
+    pushButton[8] = ui->Button8;
+    pushButton[9] = ui->Button9;
+    pushButton[10] = ui->Button10;
+    pushButton[11] = ui->Button11;
+    pushButton[12] = ui->Button12;
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -38,16 +50,10 @@ MainWindow::~MainWindow()
 }
 
 //line
-void MainWindow::on_toolButton_clicked()
+void MainWindow::on_Button1_clicked()
 {
     ClearSelect();
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton->setChecked(true);
+    ClearButton(1);
 
 
     STATE = DRAW;
@@ -55,16 +61,10 @@ void MainWindow::on_toolButton_clicked()
 }
 
 //circle
-void MainWindow::on_toolButton_2_clicked()
+void MainWindow::on_Button2_clicked()
 {
     ClearSelect();
-    ui->toolButton->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton_2->setChecked(true);
+    ClearButton(2);
 
 
     STATE = DRAW;
@@ -72,102 +72,134 @@ void MainWindow::on_toolButton_2_clicked()
 }
 
 //elliipse
-void MainWindow::on_toolButton_3_clicked()
+void MainWindow::on_Button3_clicked()
 {
     ClearSelect();
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton_3->setChecked(true);
-
+    ClearButton(3);
     STATE = DRAW;
     SELECT = ELLIPSE;
 }
 
-//choose
-void MainWindow::on_toolButton_4_clicked()
-{
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton_4->setChecked(true);
-
-    ui->verticalSlider->close();
-    scale_start = false;
-    scale_cur = scale_last = 50;
-    scale_point = Point(0, 0);
-    STATE = CHOOSE;
-}
-
-
 //polygon
-void MainWindow::on_toolButton_5_clicked()
+void MainWindow::on_Button4_clicked()
 {
     ClearSelect();
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-    ui->toolButton_5->setChecked(true);
+    ClearButton(4);
 
 
     STATE = DRAW;
     SELECT = POLYGON;
 }
 
+//choose
+void MainWindow::on_Button5_clicked()
+{
+    ClearButton(5);
+    CloseSlide();
+    STATE = CHOOSE;
+}
 
 //scale
-void MainWindow::on_toolButton_6_clicked()
+void MainWindow::on_Button6_clicked()
 {
     if(current == nullptr)
     {
-       on_toolButton_4_clicked();
+       on_Button5_clicked();
        QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
        return;
     }
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_7->setChecked(false);
-
-    ui->toolButton_6->setChecked(true);
+    ClearButton(6);
     ui->verticalSlider->setValue(50);
     ui->verticalSlider->show();
 
     STATE = SCALE;
 }
 
+//color
+void MainWindow::on_Button7_clicked()
+{
+    gproperty.color = QColorDialog::getColor(gproperty.color, this);
+
+    ui->Button7->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(QString::number(gproperty.color.red()),
+                                                                QString::number(gproperty.color.green()),
+                                                                QString::number(gproperty.color.blue())));
+    if(gproperty.color.isValid())
+        ui->widget->changecolor(gproperty.color);
+}
 
 //rotate
-void MainWindow::on_toolButton_7_clicked()
+void MainWindow::on_Button8_clicked()
 {
     if(current == nullptr)
     {
-       on_toolButton_4_clicked();
+       on_Button5_clicked();
        QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
        return;
     }
-    ui->toolButton->setChecked(false);
-    ui->toolButton_2->setChecked(false);
-    ui->toolButton_3->setChecked(false);
-    ui->toolButton_4->setChecked(false);
-    ui->toolButton_5->setChecked(false);
-    ui->toolButton_6->setChecked(false);
-
-    ui->toolButton_7->setChecked(true);
+   ClearButton(8);
 
     STATE = ROTATE;
     rotate_start = false;
+}
+
+//file
+void MainWindow::on_Button9_clicked()
+{
+    QString fileName =
+    QFileDialog::getSaveFileName(this,
+                                 QString("Save"),
+                                 QCoreApplication::applicationDirPath(),
+                                 tr("Config Files (*.jpg)"));
+    if(fileName.isNull()) return;
+    ClearButton(9);
+    QPixmap pixmap = ui->widget->grab();
+    pixmap.save(QString(fileName),"JPG");
+}
+
+//fill
+void MainWindow::on_Button10_clicked()
+{
+    if(current == nullptr)
+    {
+       on_Button5_clicked();
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+
+    current->setFill(true);
+    current->setColor(gproperty.color);
+    ui->widget->update();
+}
+
+//undo
+void MainWindow::on_Button11_clicked()
+{
+    if(!graph.empty())
+        graph.pop_back();
+    ui->widget->update();
+}
+
+//clear
+void MainWindow::on_Button12_clicked()
+{
+    graph.clear();
+    points_for_polygon.clear();
+    polygon_start = false;
+    ui->widget->update();
+}
+
+void MainWindow::setxy(int x, int y)
+{
+    ui->label->setText(QString("X: " + QString("%1").arg(x)));
+    ui->label_2->setText(QString("Y: " + QString("%1").arg(y)));
+}
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    scale_last = scale_cur;
+    scale_cur = value;
+    current->scale(scale_point, 1.0 * (scale_cur - scale_last) /50 + 1) ;
+    ui->widget->update();
 }
 
 void MainWindow::ClearSelect()
@@ -182,73 +214,25 @@ void MainWindow::ClearSelect()
     locked = false;
 }
 
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::ClearButton(int index)
 {
-    graph.clear();
-    points_for_polygon.clear();
-    polygon_start = false;
-    ui->widget->update();
-}
+    if(index != 6)
+       CloseSlide();
 
-void MainWindow::on_pushButton_2_clicked()
-{
-    if(!graph.empty())
-        graph.pop_back();
-    ui->widget->update();
-}
-
-void MainWindow::on_pushButton_3_clicked()
-{
-    gproperty.color = QColorDialog::getColor(gproperty.color, this);
-
-    ui->pushButton_3->setStyleSheet(QString("background-color: rgb(%1, %2, %3);").arg(QString::number(gproperty.color.red()),
-                                                                QString::number(gproperty.color.green()),
-                                                                QString::number(gproperty.color.blue())));
-    if(gproperty.color.isValid())
-        ui->widget->changecolor(gproperty.color);
-
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-    QString fileName =
-    QFileDialog::getSaveFileName(this,
-                                 QString("Save"),
-                                 QCoreApplication::applicationDirPath(),
-                                 tr("Config Files (*.jpg)"));
-    if(fileName.isNull()) return;
-
-    QPixmap pixmap = ui->widget->grab();
-    pixmap.save(QString(fileName),"JPG");
-
-}
-
-void MainWindow::on_toolButton_8_clicked()
-{
-    if(current == nullptr)
+    for(int i = 1; i <= n_Button; i++)
     {
-       on_toolButton_4_clicked();
-       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
-       return;
+        if(i != index)
+            pushButton[i]->setChecked(false);
+        else
+            pushButton[i]->setChecked(true);
     }
-
-    current->setFill(true);
-    current->setColor(gproperty.color);
-    ui->widget->update();
 }
 
-void MainWindow::setxy(int x, int y)
+void MainWindow::CloseSlide()
 {
-    ui->label->setText(QString("X: " + QString("%1").arg(x)));
-    ui->label_2->setText(QString("Y: " + QString("%1").arg(y)));
+    ui->verticalSlider->close();
+    scale_start = false;
+    scale_cur = scale_last = 50;
+    scale_point = Point(0, 0);
 }
 
-void MainWindow::on_verticalSlider_valueChanged(int value)
-{
-    scale_last = scale_cur;
-    scale_cur = value;
-    current->scale(scale_point, 1.0 * (scale_cur - scale_last) /10 + 1) ;
-    ui->widget->update();
-
-}

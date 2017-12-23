@@ -127,14 +127,15 @@ void Line::rotate(double x, double y, double theta)
    start = Rotate(start, x, y, theta);
    end = Rotate(end, x, y, theta);
 
-    vertexes.clear();
-    generateVertexes();
+   vertexes.clear();
+   generateVertexes();
 }
 
 void Line::scale(fyz::Point cc, double scale)
 {
     start = Scale(cc, start, scale);
     end = Scale(cc, end, scale);
+
     vertexes.clear();
     generateVertexes();
 }

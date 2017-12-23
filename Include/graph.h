@@ -80,5 +80,7 @@ static inline Point Scale(Point cc, Point s, double scale)
      return Point(x2, y2);
 }
 
+void drawControlPoint(Point &a);
+
 #endif
 

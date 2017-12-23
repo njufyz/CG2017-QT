@@ -19,37 +19,41 @@ public:
 
 private slots:
 
-    void on_toolButton_clicked();
-
-    void on_toolButton_2_clicked();
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_4_clicked();
-
-    void on_toolButton_3_clicked();
-
-    void on_toolButton_4_clicked();
-
-    void on_toolButton_5_clicked();
-
-    void on_toolButton_7_clicked();
-
-    void on_toolButton_8_clicked();
-
     void setxy(int x, int y);
 
-    void on_toolButton_6_clicked();
-
     void on_verticalSlider_valueChanged(int value);
+
+    void on_Button1_clicked();
+
+    void on_Button2_clicked();
+
+    void on_Button3_clicked();
+
+    void on_Button4_clicked();
+
+    void on_Button5_clicked();
+
+    void on_Button6_clicked();
+
+    void on_Button7_clicked();
+
+    void on_Button8_clicked();
+
+    void on_Button9_clicked();
+
+    void on_Button10_clicked();
+
+    void on_Button11_clicked();
+
+    void on_Button12_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;
     void  ClearSelect();
+    void  ClearButton(int i);
+    void  CloseSlide();
 
 signals:
     void clickchoose();

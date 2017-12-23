@@ -73,6 +73,23 @@ void Polygon::fill()
 
 void Polygon::scale(fyz::Point cc, double scale)
 {
+    lines.clear();
+
+    for(auto &i : points)
+    {
+       i = Scale(cc, i, scale);
+    }
+
+    for(auto &i : vertexes_inside)
+    {
+        i = Scale(cc, i, scale);
+    }
+
+    for(auto i = points.begin(), j = i + 1; j != points.end(); i++, j++)
+    {
+        Line* p = new Line(*i, *j);
+        lines.push_back(*p);
+    }
 
 }
 
