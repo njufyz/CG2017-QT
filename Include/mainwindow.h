@@ -21,6 +21,8 @@ private slots:
 
     void setxy(int x, int y);
 
+    void showslider();
+
     void on_verticalSlider_valueChanged(int value);
 
     void on_Button1_clicked();
@@ -49,6 +51,8 @@ private slots:
 
 
 
+    void on_verticalSlider_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
     void  ClearSelect();
@@ -58,6 +62,7 @@ private:
 signals:
     void clickchoose();
     void getxy(int , int);
+    void startscale();
 };
 
 #endif // MAINWINDOW_H

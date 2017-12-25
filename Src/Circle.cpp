@@ -7,6 +7,15 @@ void Circle::generateVertexes()
     MidpointCircle();
 }
 
+void Circle::setControlPoints()
+{
+    controlPoints[0] = Point(cc.x -r -1, cc.y - r - 1);
+    controlPoints[1] = Point(cc.x + r + 1,cc.y - r - 1);
+    controlPoints[2] = Point(cc.x + r + 1,cc.y + r + 1);
+    controlPoints[3] = Point(cc.x - r - 1,cc.y + r + 1);
+
+}
+
 void Circle::MidpointCircle()
 {
     int x0 = this->cc.x;
@@ -47,12 +56,10 @@ void Circle::MidpointCircle()
 }
 
 void Circle::drawborder()
-{
-    drawControlPoint(lb);
-    drawControlPoint(lt);
-    drawControlPoint(rb);
-    drawControlPoint(rt);
+{  
     drawControlPoint(cc);
+    for(auto &i:controlPoints)
+        drawControlPoint(i);
 
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
@@ -60,10 +67,8 @@ void Circle::drawborder()
     glColor3f(0.0, 0.0, 0.0);
 
     glBegin(GL_POLYGON);
-        glVertex3f(lb.x,lb.y, 0);
-        glVertex3f(rb.x,rb.y, 0);
-        glVertex3f(rt.x,rt.y, 0);
-        glVertex3f(lt.x,lt.y, 0);
+    for(auto i : controlPoints)
+        glVertex3f(i.x,i.y, 0);
     glEnd();
 
     double r = property.color.redF(), g = property.color.greenF(), b = property.color.blueF();
@@ -81,22 +86,18 @@ void Circle::translate(double x, double y)
     cc.x += x;
     cc.y += y;
 
-    lb.x += x;
-    lb.y += y;
-    rb.x += x;
-    rb.y += y;
-    rt.x += x;
-    rt.y += y;
-    lt.x += x;
-    lt.y += y;
-
+    for(auto &i : controlPoints)
+    {
+        i.x += x;
+        i.y += y;
+    }
     vertexes.clear();
     vertexes_inside.clear();
     generateVertexes();
 
 }
 
-bool Circle::isPointInRect(double x, double y)
+int Circle::containsControlPoint(double x, double y)
 {
     return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
 }
@@ -104,11 +105,7 @@ bool Circle::isPointInRect(double x, double y)
 void Circle::rotate(double xr, double yr, double theta)
 {
     cc = Rotate(cc, xr, yr, theta);
-
-    lb = Point(cc.x - r -1, cc.y - r - 1);
-    rb = Point(cc.x + r + 1,cc.y - r - 1);
-    rt = Point(cc.x + r + 1,cc.y + r + 1);
-    lt = Point(cc.x - r - 1,cc.y + r + 1);
+    setControlPoints();
 
     vertexes.clear();
     vertexes_inside.clear();
@@ -120,10 +117,7 @@ void Circle::scale(fyz::Point c, double scale)
     cc = Scale(c, cc, scale);
     r *= scale;
 
-    lb = Point(cc.x - r -1, cc.y - r - 1);
-    rb = Point(cc.x + r + 1,cc.y - r - 1);
-    rt = Point(cc.x + r + 1,cc.y + r + 1);
-    lt = Point(cc.x - r - 1,cc.y + r + 1);
+    setControlPoints();
 
     vertexes.clear();
     vertexes_inside.clear();

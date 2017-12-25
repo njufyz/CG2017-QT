@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_Button5_clicked()));
     connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
+    connect(ui->widget, SIGNAL(startscale()), this, SLOT(showslider()));
 
     pushButton[0] = nullptr;
     pushButton[1] = ui->Button1;
@@ -54,7 +55,6 @@ void MainWindow::on_Button1_clicked()
 {
     ClearSelect();
     ClearButton(1);
-
 
     STATE = DRAW;
     SELECT = LINE;
@@ -86,7 +86,6 @@ void MainWindow::on_Button4_clicked()
     ClearSelect();
     ClearButton(4);
 
-
     STATE = DRAW;
     SELECT = POLYGON;
 }
@@ -109,9 +108,7 @@ void MainWindow::on_Button6_clicked()
        return;
     }
     ClearButton(6);
-    ui->verticalSlider->setValue(50);
-    ui->verticalSlider->show();
-    scale_start = false;
+
     STATE = SCALE;
 }
 
@@ -194,9 +191,13 @@ void MainWindow::setxy(int x, int y)
     ui->label_2->setText(QString("Y: " + QString("%1").arg(y)));
 }
 
+void MainWindow::showslider()
+{
+    ui->verticalSlider->show();
+}
+
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
-    scale_start = true;
     scale_last = scale_cur;
     scale_cur = value;
     current->scale(scale_point, 1.0 * (scale_cur - scale_last) /50 + 1) ;
@@ -232,9 +233,14 @@ void MainWindow::ClearButton(int index)
 void MainWindow::CloseSlide()
 {
     ui->verticalSlider->close();
-    scale_start = false;
     scale_cur = scale_last = 50;
+    ui->verticalSlider->setValue(50);
     scale_point = Point(0, 0);
     ui->widget->update();
 }
 
+
+void MainWindow::on_verticalSlider_sliderReleased()
+{
+   on_Button5_clicked();
+}

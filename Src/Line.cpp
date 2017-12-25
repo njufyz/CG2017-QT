@@ -122,6 +122,11 @@ void Line::translate(double x, double y)
 
 }
 
+int Line::containsControlPoint(double x, double y)
+{
+
+}
+
 void Line::rotate(double x, double y, double theta)
 {
    start = Rotate(start, x, y, theta);

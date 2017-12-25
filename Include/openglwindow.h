@@ -40,7 +40,9 @@ public:
 
 signals:
     void clickchoose();
+    void startscale();
     void getxy(int, int);
+
 
 };
 

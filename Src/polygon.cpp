@@ -29,7 +29,7 @@ void Polygon::translate(double x, double y)
 
 }
 
-bool Polygon::isPointInRect(double x, double y)
+int Polygon::containsControlPoint(double x, double y)
 {
     return containsPoint(x, y);
 }

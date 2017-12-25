@@ -12,10 +12,9 @@ class Circle :
 
 	Point cc;
     int r;
-
-    Point lb, rb, rt, lt;           //border
-
+    Point controlPoints[4];
     void generateVertexes();
+    void setControlPoints();
 
 public:
 	Circle() {}
@@ -27,11 +26,7 @@ public:
         this->cc = cc;
         this->r = r;
 
-        lb = Point(cc.x -r -1, cc.y - r - 1);
-        rb = Point(cc.x + r + 1,cc.y - r - 1);
-        rt = Point(cc.x + r + 1,cc.y + r + 1);
-        lt = Point(cc.x - r - 1,cc.y + r + 1);
-
+        setControlPoints();
         generateVertexes();
     }
 
@@ -43,12 +38,8 @@ public:
 		cc = Point(cx, cy);
 		this->r = r;
 
-        lb = Point(cc.x -r -1, cc.y - r - 1);
-        rb = Point(cc.x + r + 1,cc.y - r - 1);
-        rt = Point(cc.x + r + 1,cc.y + r + 1);
-        lt = Point(cc.x - r - 1,cc.y + r + 1);
-
-         generateVertexes();
+        setControlPoints();
+        generateVertexes();
 	}
 
     void MidpointCircle();
@@ -61,7 +52,7 @@ public:
 
     void translate(double x, double y);
 
-    bool isPointInRect(double x, double y);
+    int containsControlPoint(double x, double y);
 
     void rotate(double x, double y, double theta);
 

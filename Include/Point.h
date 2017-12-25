@@ -25,5 +25,9 @@ static inline double distance2(Point &x0, Point &x1)
    return  ( (x1.x - x0.x) *  (x1.x - x0.x) + (x1.y - x0.y) *  (x1.y - x0.y));
 }
 
+static inline bool isOnPoint(Point &x, Point &y)
+{
+    return distance2(x, y) <= 16;
+}
 
 #endif

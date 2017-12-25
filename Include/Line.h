@@ -44,10 +44,7 @@ public:
 
     void translate(double x, double y);
 
-    bool isPointInRect(double x, double y)
-    {
-        return containsPoint(x, y);
-    }
+    int containsControlPoint(double x, double y);
 
     void rotate(double x, double y, double theta);
 

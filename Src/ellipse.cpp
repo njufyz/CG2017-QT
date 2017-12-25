@@ -149,7 +149,7 @@ void Ellipse::translate(double x, double y)
 
 }
 
-bool Ellipse::isPointInRect(double x, double y)
+int Ellipse::containsControlPoint(double x, double y)
 {
     return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
 }

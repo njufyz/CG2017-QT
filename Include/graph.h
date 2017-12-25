@@ -14,7 +14,7 @@ public:
     virtual void draw();
     virtual void drawborder() = 0;
     virtual bool containsPoint(double x, double y) = 0;
-    virtual bool isPointInRect(double x, double y) = 0;
+    virtual int containsControlPoint(double x, double y) = 0;
     virtual void translate(double x, double y) = 0;
     virtual void rotate(double x, double y, double theta) = 0;
     virtual void scale(Point cc, double scale) = 0;
