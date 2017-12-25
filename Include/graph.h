@@ -18,6 +18,7 @@ public:
     virtual void translate(double x, double y) = 0;
     virtual void rotate(double x, double y, double theta) = 0;
     virtual void scale(Point cc, double scale) = 0;
+    virtual void edit(int x, int y, int index) = 0;
 
     void setSelect(bool set)
     {
@@ -81,6 +82,7 @@ static inline Point Scale(Point cc, Point s, double scale)
 }
 
 void drawControlPoint(Point &a);
+bool PointCmp(const Point &a, const Point &b);
 
 #endif
 

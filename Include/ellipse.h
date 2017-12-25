@@ -3,7 +3,7 @@
 
 #include "graph.h"
 #include "common.h"
-
+#include<QVector>
 namespace fyz {
 
 class Ellipse:
@@ -12,10 +12,10 @@ class Ellipse:
     Point c;
     int   rx;
     int   ry;
-    Point lb, rb, rt, lt;
-
+    QVector<Point> controlPoints;
     double angle;
 
+    void setControlPoints();
     void generateVertexes();
 
 public:
@@ -30,13 +30,9 @@ public:
         this->c = c;
         this->rx = ra;
         this->ry = rb;
-
-        this->lb = Point(c.x - rx - 1,c.y - ry - 1);
-        this->rb = Point(c.x + rx + 1,c.y - ry - 1);
-        this->rt = Point(c.x + rx + 1,c.y + ry + 1);
-        this->lt = Point(c.x - rx - 1,c.y + ry + 1);
-
-         generateVertexes();
+        controlPoints.resize(4);
+        setControlPoints();
+        generateVertexes();
 
     }
     //override
@@ -52,6 +48,8 @@ public:
     void rotate(double x, double y, double theta);
 
     void scale(Point cc, double scale);
+
+    void edit(int x, int y, int index);
 
 
 

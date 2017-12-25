@@ -109,3 +109,12 @@ void drawControlPoint(Point &a)
     glPointSize(gproperty.point_size);
 
 }
+
+bool PointCmp(const Point &a, const Point &b)
+{
+    if(a.y < b.y)
+        return true;
+    else if(a.x < b.x)
+        return true;
+    else return false;
+}

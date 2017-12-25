@@ -124,7 +124,14 @@ void Line::translate(double x, double y)
 
 int Line::containsControlPoint(double x, double y)
 {
+    Point p(x, y);
 
+    if(isOnPoint(start, p))
+        return 0;
+    else if(isOnPoint(end, p))
+        return 1;
+
+    return -1;
 }
 
 void Line::rotate(double x, double y, double theta)
@@ -140,6 +147,18 @@ void Line::scale(fyz::Point cc, double scale)
 {
     start = Scale(cc, start, scale);
     end = Scale(cc, end, scale);
+
+    vertexes.clear();
+    generateVertexes();
+}
+
+#include<QDebug>
+void Line::edit(int x, int y, int index)
+{
+    if(index == 1)
+        end = Point(x, y);
+    else
+        start = Point(x, y);
 
     vertexes.clear();
     generateVertexes();

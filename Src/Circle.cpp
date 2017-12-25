@@ -1,7 +1,7 @@
 #include "Circle.h"
 #include"common.h"
 using fyz::Circle;
-
+#include<algorithm>
 void Circle::generateVertexes()
 {
     MidpointCircle();
@@ -99,7 +99,13 @@ void Circle::translate(double x, double y)
 
 int Circle::containsControlPoint(double x, double y)
 {
-    return (x >= cc.x - r) && (x <= cc.x + r) && (y >= cc.y - r) &&(y <= cc.y + r);
+    Point p(x, y);
+   for(int i =0 ; i < 4; i++)
+   {
+       if(isOnPoint(p, controlPoints[i]))
+           return i;
+   }
+   return -1;
 }
 
 void Circle::rotate(double xr, double yr, double theta)
@@ -118,6 +124,45 @@ void Circle::scale(fyz::Point c, double scale)
     r *= scale;
 
     setControlPoints();
+
+    vertexes.clear();
+    vertexes_inside.clear();
+    generateVertexes();
+}
+#include<QDebug>
+void Circle::edit(int x, int y, int index)
+{
+    /*
+     * pProject.X = (float)((k * pLine.X + pOut.X / k + pOut.Y - pLine.Y) / (1 / k + k));
+       pProject.Y = (float)(-1 / k * (pProject.X - pOut.X) + pOut.Y);
+    */
+    int forward = (index + 5) % 4;
+    int backward =(index + 3) % 4;
+    double px = 0, py = 0, k =1;
+    if(index == 1 || index == 3)
+    {
+       k = -1;
+    }
+    px = (k * controlPoints[index].x + x / k + y - controlPoints[index].y) / (1 / k + k);
+    py = -1 / k * (px - x) + y;
+
+    controlPoints[index].x = px;
+    controlPoints[index].y = py;
+
+    if(index == 1 || index == 3)
+    {
+        controlPoints[forward].x = px;
+        controlPoints[backward].y = py;
+    }
+    else
+    {
+        controlPoints[forward].y = py;
+        controlPoints[backward].x = px;
+    }
+
+    r =fabs(((controlPoints[1].x - controlPoints[0].x) - 2)/2);
+    cc.x = fabs((controlPoints[0].x + controlPoints[2].x)/2);
+    cc.y = fabs((controlPoints[0].y + controlPoints[2].y)/2);
 
     vertexes.clear();
     vertexes_inside.clear();

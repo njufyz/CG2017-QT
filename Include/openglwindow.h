@@ -31,10 +31,12 @@ public:
     void mouseMove_OnTranslate(int x, int y);
     void mouseMove_OnRotate(int x, int y);
     void mouseMove_OnCursor(int x, int y);
+    void mouseMove_OnEdit(int x, int y, int index);
 
     void mouseRelease_OnDraw(int x, int y);
     void mouseRelease_OnTranslate(int x, int y);
     void mouseRelease_OnRotate(int x, int y);
+    void mouseRelease_OnEdit(int x, int y);
 
     void changecolor(QColor &color);
 
@@ -45,5 +47,6 @@ signals:
 
 
 };
+
 
 #endif // OPENGLWINDOW_H

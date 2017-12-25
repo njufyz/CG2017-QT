@@ -5,6 +5,8 @@
 #include<QColorDialog>
 #include<QFileDialog>
 #include<QMessageBox>
+#include<QLabel>
+#include<QStatusBar>
 
 Property gproperty;
 const int n_Button = 12;
@@ -24,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->widget->setMouseTracking(true);
     ui->verticalSlider->close();
 
-    STATE = DRAW;
-
     connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_Button5_clicked()));
     connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
     connect(ui->widget, SIGNAL(startscale()), this, SLOT(showslider()));
@@ -43,6 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     pushButton[10] = ui->Button10;
     pushButton[11] = ui->Button11;
     pushButton[12] = ui->Button12;
+
+    STATE = DRAW;
+
+
 }
 
 MainWindow::~MainWindow()

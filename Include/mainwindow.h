@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include<QDebug>
 #include<QMouseEvent>
+#include<QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -55,6 +55,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     void  ClearSelect();
     void  ClearButton(int i);
     void  CloseSlide();

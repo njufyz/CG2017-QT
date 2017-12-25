@@ -3,6 +3,14 @@
 
 using fyz::Ellipse;
 
+void Ellipse::setControlPoints()
+{
+    controlPoints[0] = Point(c.x - rx - 1,c.y - ry - 1);
+    controlPoints[1] = Point(c.x + rx + 1,c.y - ry - 1);
+    controlPoints[2]= Point(c.x + rx + 1,c.y + ry + 1);
+    controlPoints[3]= Point(c.x - rx - 1,c.y + ry + 1);
+}
+
 void Ellipse::generateVertexes()
 {
     MidpointEllipse();
@@ -81,11 +89,9 @@ int Ellipse::fEllipse(double x, double y)
 
 void Ellipse::drawborder()
 {
-    drawControlPoint(lb);
-    drawControlPoint(lt);
-    drawControlPoint(rb);
-    drawControlPoint(rt);
     drawControlPoint(c);
+    for(auto &i:controlPoints)
+        drawControlPoint(i);
 
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     glEnable( GL_LINE_STIPPLE);
@@ -95,10 +101,8 @@ void Ellipse::drawborder()
 
 
     glBegin(GL_POLYGON);
-        glVertex3f(lb.x,lb.y, 0);
-        glVertex3f(rb.x,rb.y, 0);
-        glVertex3f(rt.x,rt.y, 0);
-        glVertex3f(lt.x,lt.y, 0);
+    for(auto i : controlPoints)
+        glVertex3f(i.x,i.y, 0);
     glEnd();
 
     double r = property.color.redF(), g = property.color.greenF(), b = property.color.blueF();
@@ -128,14 +132,11 @@ void Ellipse::translate(double x, double y)
     c.x += x;
     c.y += y;
 
-    lb.x += x;
-    lb.y += y;
-    rb.x += x;
-    rb.y += y;
-    rt.x += x;
-    rt.y += y;
-    lt.x += x;
-    lt.y += y;
+    for(auto &i : controlPoints)
+    {
+        i.x += x;
+        i.y += y;
+    }
 
     vertexes.clear();
     vertexes_inside.clear();
@@ -151,16 +152,20 @@ void Ellipse::translate(double x, double y)
 
 int Ellipse::containsControlPoint(double x, double y)
 {
-    return (x >= c.x -rx) && (x <= c.x + rx) && (y >= c.y - ry) && (y <= c.y + ry);
+    Point p(x, y);
+   for(int i =0 ; i < 4; i++)
+   {
+       if(isOnPoint(p, controlPoints[i]))
+           return i;
+   }
+   return -1;
 }
 
 void Ellipse::rotate(double x, double y, double theta)
 {
     c =  Rotate(c, x, y, theta);
-    lb = Rotate(lb, x, y, theta);
-    lt = Rotate(lt, x, y, theta);
-    rb = Rotate(rb, x, y, theta);
-    rt = Rotate(rt, x, y, theta);
+    for(auto &i : controlPoints)
+        i = Rotate(i, x, y, theta);
 
     for(auto &i : vertexes)
         i = Rotate(i, x, y, theta);
@@ -178,15 +183,48 @@ void Ellipse::scale(fyz::Point cc, double scale)
     rx *= scale;
     ry *= scale;
 
-    lb = Point(c.x - rx - 1,c.y - ry - 1);
-    rb = Point(c.x + rx + 1,c.y - ry - 1);
-    rt = Point(c.x + rx + 1,c.y + ry + 1);
-    lt = Point(c.x - rx - 1,c.y + ry + 1);
+   setControlPoints();
+   for(auto &i : controlPoints)
+       i = Rotate(i, c.x, c.y, angle);
 
-    lb = Rotate(lb, c.x, c.y, angle);
-    lt = Rotate(lt, c.x, c.y, angle);
-    rb = Rotate(rb, c.x, c.y, angle);
-    rt = Rotate(rt, c.x, c.y, angle);
+    vertexes.clear();
+    vertexes_inside.clear();
+    generateVertexes();
+
+    for(auto &i : vertexes)
+        i = Rotate(i, c.x, c.y, angle);
+
+    for(auto &i : vertexes_inside)
+        i = Rotate(i, c.x, c.y, angle);
+
+}
+
+void Ellipse::edit(int x, int y, int index)
+{
+    Point p(x, y);
+    p = Rotate(p, c.x, c.y, -angle);
+    x = p.x;
+    y = p.y;
+    for(auto &i : controlPoints)
+        i = Rotate(i, c.x, c.y, -angle);
+
+    int pre = (index + 5) % 4;
+    int post =(index + 3) % 4;
+    int ops = (index + 2) % 4;
+
+    controlPoints[index] = Point(x, y);
+    controlPoints[pre].y = y;
+    controlPoints[pre].x = controlPoints[ops].x;
+    controlPoints[post].x = x;
+    controlPoints[post].y = controlPoints[ops].y;
+
+    for(auto &i : controlPoints)
+        i = Rotate(i, c.x, c.y, angle);
+
+    rx = distance(controlPoints[0], controlPoints[1])/2;
+    ry = distance(controlPoints[1], controlPoints[2])/2;
+    c.x = 1.0 * (controlPoints[0].x + controlPoints[2].x)/2;
+    c.y = 1.0 * (controlPoints[0].y + controlPoints[2].y)/2;
 
     vertexes.clear();
     vertexes_inside.clear();

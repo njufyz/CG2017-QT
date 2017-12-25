@@ -3,7 +3,7 @@
 
 #include "graph.h"
 #include "common.h"
-
+#include<QVector>
 namespace fyz{
 
 class Circle :
@@ -12,7 +12,7 @@ class Circle :
 
 	Point cc;
     int r;
-    Point controlPoints[4];
+    QVector<Point> controlPoints;
     void generateVertexes();
     void setControlPoints();
 
@@ -25,7 +25,7 @@ public:
         this->property = gproperty;
         this->cc = cc;
         this->r = r;
-
+        controlPoints.resize(4);
         setControlPoints();
         generateVertexes();
     }
@@ -57,6 +57,8 @@ public:
     void rotate(double x, double y, double theta);
 
     void scale(Point cc, double scale);
+
+    void edit(int x, int y, int index);
 
 };
 

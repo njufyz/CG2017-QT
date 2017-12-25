@@ -39,11 +39,14 @@ int scale_cur = 50;
 QVector<Point> points_for_polygon;
 bool polygon_start = false;
 
+bool locked = false;
+
+int edit_index = -1;
+
 void ClearSelect();
 bool searchCurrent(int x, int y);
 double rotate_angle(Point c, Point x1, Point x2);
 
-bool locked = false;
 
 openglwindow::openglwindow(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -165,6 +168,7 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
          case CHOOSE:                                         break;
          case TRANSLATE:    mouseRelease_OnTranslate(x, y);   break;
          case ROTATE:       mouseRelease_OnRotate(x, y);      break;
+         case EDIT:         mouseRelease_OnEdit(x, y);        break;
          default:                                             break;
     }
     start = last = Point(0, 0);
@@ -188,6 +192,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
             case CHOOSE:                                         break;
             case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
             case ROTATE:       mouseMove_OnRotate(x, y);         break;
+            case EDIT:         mouseMove_OnEdit(x, y, edit_index);           break;
             default:                                             break;
         }
         update();
@@ -273,12 +278,18 @@ void openglwindow::mouseRelease_OnDraw(int x, int y)
 
 void openglwindow::mousePress_OnChoose(int x, int y)
 {
+
     if(current == nullptr)
     {
         if(!searchCurrent(x, y))
             return;
     }
-    if(current->containsPoint(x, y))
+    edit_index = current->containsControlPoint(x, y);
+    if(edit_index != -1)
+    {
+         STATE =  EDIT;
+    }
+    else if(current->containsPoint(x, y))
     {
         setCursor(Qt::CrossCursor);
         STATE =  TRANSLATE;
@@ -388,6 +399,13 @@ void openglwindow::mouseMove_OnCursor(int x, int y)
 
 }
 
+void openglwindow::mouseMove_OnEdit(int x, int y, int index)
+{
+    if(current == nullptr)
+        return;
+    current->edit(x, y, index);
+}
+
 void openglwindow::mouseRelease_OnRotate(int x, int y)
 {
     Q_UNUSED(x);
@@ -401,6 +419,14 @@ void openglwindow::mouseRelease_OnRotate(int x, int y)
 
     rotate_first = rotate_last = rotate_point = Point(0, 0);
     emit clickchoose();
+}
+
+void openglwindow::mouseRelease_OnEdit(int x, int y)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    STATE = CHOOSE;
+    edit_index = -1;
 }
 
 

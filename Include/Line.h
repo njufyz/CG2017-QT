@@ -50,6 +50,8 @@ public:
 
     void scale(Point cc, double scale);
 
+    void edit(int x, int y, int index);
+
 
 private:
      void BresenhamLine();

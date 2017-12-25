@@ -31,7 +31,14 @@ void Polygon::translate(double x, double y)
 
 int Polygon::containsControlPoint(double x, double y)
 {
-    return containsPoint(x, y);
+   Point p(x, y);
+   for(int i =0; i<points.size() - 1; i++)
+   {
+        if(isOnPoint(points[i], p))
+            return i;
+   }
+   return -1;
+
 }
 
 void Polygon::rotate(double x, double y, double theta)
@@ -91,6 +98,22 @@ void Polygon::scale(fyz::Point cc, double scale)
         lines.push_back(*p);
     }
 
+}
+
+void Polygon::edit(int x, int y, int index)
+{
+    points[index] = Point(x, y);
+    if(index == 0)
+        points[points.size()-1] = Point(x, y);
+    lines.clear();
+    vertexes_inside.clear();
+    for(auto i = points.begin(), j = i + 1; j != points.end(); i++, j++)
+    {
+        Line* p = new Line(*i, *j);
+        lines.push_back(*p);
+    }
+    getMax_and_Min();
+    fill();
 }
 
 void Polygon::InitNewEdgeTable(QVector<QList<Edge> > &Net)
