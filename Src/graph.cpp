@@ -12,6 +12,7 @@
 
 void Graph::draw()
 {
+
     QColor c = property.color;
     glColor3f(c.redF(), c.greenF(), c.blueF());
 
@@ -36,7 +37,6 @@ void Graph::draw()
               glVertex3f(i.x, i.y, 0);
          glEnd();
     }
-
 
     glPointSize(gproperty.point_size);
 }

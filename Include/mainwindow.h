@@ -53,6 +53,8 @@ private slots:
 
     void on_verticalSlider_sliderReleased();
 
+    void on_Button13_clicked();
+
 private:
     Ui::MainWindow *ui;
 

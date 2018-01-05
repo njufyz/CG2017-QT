@@ -9,7 +9,7 @@
 #include<QStatusBar>
 
 Property gproperty;
-const int n_Button = 12;
+const int n_Button = 13;
 QPushButton *pushButton[n_Button + 1];
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pushButton[10] = ui->Button10;
     pushButton[11] = ui->Button11;
     pushButton[12] = ui->Button12;
+    pushButton[13] = ui->Button13;
 
     STATE = DRAW;
 
@@ -92,6 +93,17 @@ void MainWindow::on_Button4_clicked()
 
     STATE = DRAW;
     SELECT = POLYGON;
+}
+
+//bezier
+void MainWindow::on_Button13_clicked()
+{
+    ClearSelect();
+    ClearButton(13);
+
+
+    STATE = DRAW;
+    SELECT = BEZIER;
 }
 
 //choose
@@ -248,3 +260,5 @@ void MainWindow::on_verticalSlider_sliderReleased()
 {
    on_Button5_clicked();
 }
+
+

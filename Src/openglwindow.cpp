@@ -12,6 +12,7 @@ using fyz::Polygon;
 using fyz::Circle;
 using fyz::Line;
 using fyz::Point;
+using fyz::Bezier;
 
 QVector<shared_ptr<Graph>> graph;
 shared_ptr<Graph> current(nullptr);
@@ -72,8 +73,15 @@ void openglwindow::initializeGL()
 
 }
 
+#include<assert.h>
 void openglwindow::paintGL()
 {
+    Bezier *pyz = new Bezier();
+    pyz->addContorlPoint(Point(100, 100));
+    pyz->addContorlPoint(Point(200, 200));
+    pyz->addContorlPoint(Point(400, 250));
+    pyz->draw();
+
     foreach (auto g, graph)
     {
         g->draw();

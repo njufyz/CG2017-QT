@@ -1,7 +1,9 @@
 #include "Circle.h"
 #include"common.h"
-using fyz::Circle;
 #include<algorithm>
+
+using fyz::Circle;
+
 void Circle::generateVertexes()
 {
     MidpointCircle();
@@ -129,13 +131,10 @@ void Circle::scale(fyz::Point c, double scale)
     vertexes_inside.clear();
     generateVertexes();
 }
-#include<QDebug>
+
 void Circle::edit(int x, int y, int index)
 {
-    /*
-     * pProject.X = (float)((k * pLine.X + pOut.X / k + pOut.Y - pLine.Y) / (1 / k + k));
-       pProject.Y = (float)(-1 / k * (pProject.X - pOut.X) + pOut.Y);
-    */
+
     int forward = (index + 5) % 4;
     int backward =(index + 3) % 4;
     double px = 0, py = 0, k =1;

@@ -22,6 +22,7 @@ extern Property gproperty;
 #include "Circle.h"
 #include "ellipse.h"
 #include "polygon.h"
+#include "bezier.h"
 
 #define HEIGHT 500
 #define WIDTH 500
@@ -36,7 +37,7 @@ extern int scale_cur;
 extern int scale_last;
 extern Point scale_point;
 
-enum TYPE{LINE, CIRCLE, ELLIPSE, POLYGON};
+enum TYPE{LINE, CIRCLE, ELLIPSE, POLYGON, BEZIER};
 enum STAT{DRAW, CHOOSE, TRANSLATE, ROTATE, FILL, SCALE, EDIT};
 
 extern TYPE SELECT;

@@ -12,5 +12,6 @@
         <file>pic/rorate.png</file>
         <file>pic/fill.png</file>
         <file>pic/scale.png</file>
+        <file>pic/bezier.png</file>
     </qresource>
 </RCC>
