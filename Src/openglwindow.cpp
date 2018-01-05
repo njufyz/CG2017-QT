@@ -44,9 +44,12 @@ bool locked = false;
 
 int edit_index = -1;
 
+QVector<Point> points_for_bezier;
+
 void ClearSelect();
 bool searchCurrent(int x, int y);
 double rotate_angle(Point c, Point x1, Point x2);
+
 
 
 openglwindow::openglwindow(QWidget *parent)
@@ -68,20 +71,13 @@ void openglwindow::initializeGL()
     gluOrtho2D(0.0, WIDTH, 0.0, HEIGHT);
     glMatrixMode(GL_MODELVIEW);
 
-    gproperty.point_size = 2;
+    gproperty.point_size = 2.5;
     gproperty.color = Qt::black;
 
 }
 
-#include<assert.h>
 void openglwindow::paintGL()
 {
-    Bezier *pyz = new Bezier();
-    pyz->addContorlPoint(Point(100, 100));
-    pyz->addContorlPoint(Point(200, 200));
-    pyz->addContorlPoint(Point(400, 250));
-    pyz->draw();
-
     foreach (auto g, graph)
     {
         g->draw();
@@ -110,6 +106,10 @@ void openglwindow::paintGL()
                       else if(!points_for_polygon.isEmpty())
                                 drawControlPoint(points_for_polygon[0]);
                     break;
+
+        case BEZIER:
+
+            Bezier(points_for_bezier).draw();  break;
 
         default: break;
         }
@@ -155,7 +155,7 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
          case CHOOSE:       mousePress_OnChoose(x, y);      break;
          case TRANSLATE:    mousePress_OnTranslate(x, y);   break;
          case ROTATE:       mousePress_OnRotate(x, y);      break;
-         case SCALE:        mousePress_OnScale(x, y);
+         case SCALE:        mousePress_OnScale(x, y);       break;
          default:                                           break;
     }
 
@@ -205,6 +205,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
         }
         update();
     }
+
     emit getxy(e->x(), HEIGHT - e->y());
     mouseMove_OnCursor(x, y);
 
@@ -215,6 +216,21 @@ void openglwindow::changecolor(QColor &color)
 {
    double r = color.redF(), g = color.greenF(), b = color.blueF();
    glColor3f(r, g, b);
+}
+
+void openglwindow::clearPoints()
+{
+    if(points_for_bezier.size() > 1)
+    {
+        shared_ptr<Graph> p(new Bezier(points_for_bezier));
+        p->setSelect(false);
+        graph.push_back(p);
+    }
+
+    points_for_bezier.clear();
+    points_for_polygon.clear();
+    polygon_start = false;
+
 }
 
 void openglwindow::mousePress_OnDraw(int x, int y)
@@ -248,6 +264,9 @@ void openglwindow::mousePress_OnDraw(int x, int y)
         }
 
     }
+
+    else if(SELECT == BEZIER)
+        points_for_bezier.push_back(start);
 }
 
 

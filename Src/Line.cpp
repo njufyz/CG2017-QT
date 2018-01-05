@@ -9,6 +9,7 @@ void Line::generateVertexes()
     BresenhamLine();
 }
 
+
 void Line::BresenhamLine()
 {
     int x0 = this->start.x;
@@ -17,62 +18,72 @@ void Line::BresenhamLine()
     int y1 = this->end.y;
 
 
-    int x = x0;
-    int y = y0;
+//    int x = x0;
+//    int y = y0;
 
-    int stepx = 1, stepy = 1;
+//    int stepx = 1, stepy = 1;
 
-    int dx = x1 - x0;
-    int dy = y1 - y0;
+//    int dx = x1 - x0;
+//    int dy = y1 - y0;
 
 
-    if (dx < 0)
-    {
-        dx = -dx;
-        stepx = -1;
-    }
+//    if (dx < 0)
+//    {
+//        dx = -dx;
+//        stepx = -1;
+//    }
 
-    if (dy < 0)
-    {
-        dy = -dy;
-        stepy = -1;
-    }
+//    if (dy < 0)
+//    {
+//        dy = -dy;
+//        stepy = -1;
+//    }
 
-    if (dx > dy)
-    {
+//    if (dx > dy)
+//    {
 
-        int p = 2 * dy - dx;
-        for(;x != x1; x += stepx)
-       {
-           setpixel(x, y);
-           if (p >= 0)
-           {
-              y += stepy;
-              p += 2 * (dy - dx);
-           }
-           else
-           {
-               p += 2 * dy;
-           }
-        }
+//        int p = 2 * dy - dx;
+//        for(;x != x1; x += stepx)
+//       {
+//           setpixel(x, y);
+//           if (p >= 0)
+//           {
+//              y += stepy;
+//              p += 2 * (dy - dx);
+//           }
+//           else
+//           {
+//               p += 2 * dy;
+//           }
+//        }
 
-     }
-    else
-    {
-        int p = 2 * dx - dy;
-        for (; y != y1; y += stepy)
-        {
-            setpixel(x, y);
-            if (p >= 0)
-            {
-                x += stepx;
-                p += 2 * (dx - dy);
-            }
-           else
-            {
-                p += 2 * dx;
-            }
-        }
+//     }
+//    else
+//    {
+//        int p = 2 * dx - dy;
+//        for (; y != y1; y += stepy)
+//        {
+//            setpixel(x, y);
+//            if (p >= 0)
+//            {
+//                x += stepx;
+//                p += 2 * (dx - dy);
+//            }
+//           else
+//            {
+//                p += 2 * dx;
+//            }
+//        }
+//    }
+
+    int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+    int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+
+    while (setpixel(x0, y0), x0 != x1 || y0 != y1) {
+        int e2 = err;
+        if (e2 > -dx) { err -= dy; x0 += sx; }
+        if (e2 <  dy) { err += dx; y0 += sy; }
     }
 }
 
@@ -152,7 +163,6 @@ void Line::scale(fyz::Point cc, double scale)
     generateVertexes();
 }
 
-#include<QDebug>
 void Line::edit(int x, int y, int index)
 {
     if(index == 1)

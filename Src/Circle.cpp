@@ -73,6 +73,7 @@ void Circle::drawborder()
         glVertex3f(i.x,i.y, 0);
     glEnd();
 
+    glDisable( GL_LINE_STIPPLE);
     double r = property.color.redF(), g = property.color.greenF(), b = property.color.blueF();
     glColor3f(r, g, b);
 

@@ -49,8 +49,6 @@ private slots:
 
     void on_Button12_clicked();
 
-
-
     void on_verticalSlider_sliderReleased();
 
     void on_Button13_clicked();
@@ -66,6 +64,7 @@ signals:
     void clickchoose();
     void getxy(int , int);
     void startscale();
+    void switchButton();
 };
 
 #endif // MAINWINDOW_H

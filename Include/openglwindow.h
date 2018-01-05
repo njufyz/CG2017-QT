@@ -44,7 +44,10 @@ signals:
     void clickchoose();
     void startscale();
     void getxy(int, int);
+    void switchButton();
 
+private slots:
+    void clearPoints();
 
 };
 

@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->widget, SIGNAL(clickchoose()), this, SLOT(on_Button5_clicked()));
     connect(ui->widget, SIGNAL(getxy(int,int)), this, SLOT(setxy(int,int)));
     connect(ui->widget, SIGNAL(startscale()), this, SLOT(showslider()));
+    connect(this, SIGNAL(switchButton()), ui->widget, SLOT(clearPoints()));
 
     pushButton[0] = nullptr;
     pushButton[1] = ui->Button1;
@@ -244,6 +245,8 @@ void MainWindow::ClearButton(int index)
         else
             pushButton[i]->setChecked(true);
     }
+
+     emit switchButton();
 }
 
 void MainWindow::CloseSlide()
