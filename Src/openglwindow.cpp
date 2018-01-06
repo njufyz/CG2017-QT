@@ -65,7 +65,8 @@ void openglwindow::initializeGL()
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glColor3f(0.0, 0.0, 0.0);
-    glPointSize(2.0);
+    glPointSize(2.5);
+    glLineWidth(2.5);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, WIDTH, 0.0, HEIGHT);
@@ -127,6 +128,8 @@ void openglwindow::paintGL()
 
     else if(STATE == CLIP)
     {
+        if(last.x == 0 &&  last.y == 0)
+            return;
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
         glEnable( GL_LINE_STIPPLE);
         glLineStipple( 2.0, 0x0F0F);
@@ -143,6 +146,7 @@ void openglwindow::paintGL()
         glDisable( GL_LINE_STIPPLE);
         double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
         glColor3f(r, g, b);
+        glPointSize(gproperty.point_size);
     }
 
 
@@ -197,6 +201,7 @@ void openglwindow::mouseReleaseEvent(QMouseEvent *e)
          case TRANSLATE:    mouseRelease_OnTranslate(x, y);   break;
          case ROTATE:       mouseRelease_OnRotate(x, y);      break;
          case EDIT:         mouseRelease_OnEdit(x, y);        break;
+         case CLIP:         mouseRelease_OnClip(x, y);        break;
          default:                                             break;
     }
     start = last = Point(0, 0);
@@ -221,7 +226,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
             case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
             case ROTATE:       mouseMove_OnRotate(x, y);         break;
             case EDIT:         mouseMove_OnEdit(x, y, edit_index);           break;
-            case CLIP:         mouseMove_OnClip(x, y);           break;
+
             default:                                             break;
         }
         update();
@@ -454,13 +459,6 @@ void openglwindow::mouseMove_OnEdit(int x, int y, int index)
     current->edit(x, y, index);
 }
 
-#include<QDebug>
-void openglwindow::mouseMove_OnClip(int x, int y)
-{
-
-
-}
-
 void openglwindow::mouseRelease_OnRotate(int x, int y)
 {
     Q_UNUSED(x);
@@ -482,6 +480,20 @@ void openglwindow::mouseRelease_OnEdit(int x, int y)
     Q_UNUSED(y);
     STATE = CHOOSE;
     edit_index = -1;
+}
+
+void openglwindow::mouseRelease_OnClip(int x, int y)
+{
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    QVector<Point>rect;
+    rect.push_back(start);
+    rect.push_back(Point(last.x, start.y));
+    rect.push_back(last);
+    rect.push_back(Point(start.x, last.y));
+    current->clip(rect);
+    emit clickchoose();
+    update();
 }
 
 

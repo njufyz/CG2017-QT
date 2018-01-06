@@ -59,8 +59,6 @@ short encode(Point &p,QVector<Point>Rect)
 }
 
 bool Line::clip(QVector<Point>Rect){
-
-
     short code1, code2;
     bool done = false;
     double k = 0;
@@ -75,7 +73,11 @@ bool Line::clip(QVector<Point>Rect){
         code2 = encode(end, Rect);
 
         if(accept(code1,code2))         //当前直线能完全绘制
+        {
+            vertexes.clear();
+            generateVertexes();
             return true;
+        }
 
         else
         {
@@ -119,4 +121,5 @@ bool Line::clip(QVector<Point>Rect){
             }
         }
     }
+    return true;
 }
