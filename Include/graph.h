@@ -19,6 +19,7 @@ public:
     virtual void rotate(double x, double y, double theta) = 0;
     virtual void scale(Point cc, double scale) = 0;
     virtual void edit(int x, int y, int index) = 0;
+    virtual bool clip(QVector<Point> Rect);
 
     void setSelect(bool set)
     {

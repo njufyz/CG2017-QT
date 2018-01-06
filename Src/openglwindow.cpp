@@ -125,6 +125,26 @@ void openglwindow::paintGL()
         drawControlPoint(scale_point);
     }
 
+    else if(STATE == CLIP)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+        glEnable( GL_LINE_STIPPLE);
+        glLineStipple( 2.0, 0x0F0F);
+        glColor3f(0.0, 0.0, 0.0);
+
+        glBegin(GL_POLYGON);
+        glVertex3f(start.x,start.y, 0);
+        glVertex3f(last.x, start.y, 0);
+        glVertex3f(last.x,last.y, 0);
+        glVertex3f(start.x, last.y, 0);
+        glEnd();
+        update();
+
+        glDisable( GL_LINE_STIPPLE);
+        double r = gproperty.color.redF(), g = gproperty.color.greenF(), b = gproperty.color.blueF();
+        glColor3f(r, g, b);
+    }
+
 
 }
 
@@ -201,6 +221,7 @@ void openglwindow::mouseMoveEvent(QMouseEvent *e)
             case TRANSLATE:    mouseMove_OnTranslate(x, y);      break;
             case ROTATE:       mouseMove_OnRotate(x, y);         break;
             case EDIT:         mouseMove_OnEdit(x, y, edit_index);           break;
+            case CLIP:         mouseMove_OnClip(x, y);           break;
             default:                                             break;
         }
         update();
@@ -431,6 +452,13 @@ void openglwindow::mouseMove_OnEdit(int x, int y, int index)
     if(current == nullptr)
         return;
     current->edit(x, y, index);
+}
+
+#include<QDebug>
+void openglwindow::mouseMove_OnClip(int x, int y)
+{
+
+
 }
 
 void openglwindow::mouseRelease_OnRotate(int x, int y)

@@ -53,6 +53,8 @@ private slots:
 
     void on_Button13_clicked();
 
+    void on_Button14_clicked();
+
 private:
     Ui::MainWindow *ui;
 

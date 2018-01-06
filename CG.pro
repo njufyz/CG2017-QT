@@ -21,7 +21,8 @@ SOURCES += Src/Circle.cpp \
     Src/graph.cpp \
     Src/ellipse.cpp \
     Src/polygon.cpp \
-    Src/bezier.cpp
+    Src/bezier.cpp \
+    Src/clip.cpp
 
 HEADERS  += Include/Circle.h \
     Include/common.h \
@@ -33,7 +34,8 @@ HEADERS  += Include/Circle.h \
     Include/property.h \
     Include/ellipse.h \
     Include/polygon.h \
-    Include/bezier.h
+    Include/bezier.h \
+    Include/clip.h
 
 FORMS    += mainwindow.ui
 

@@ -8,7 +8,7 @@
 #endif
 
 #include<QColor>
-
+#include<QMessageBox>
 
 void Graph::draw()
 {
@@ -39,6 +39,11 @@ void Graph::draw()
     }
 
     glPointSize(gproperty.point_size);
+}
+
+bool Graph::clip(QVector<fyz::Point> Rect)
+{
+    return true;
 }
 
 void Graph::setpixel(int x, int y)

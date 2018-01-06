@@ -9,7 +9,7 @@
 #include<QStatusBar>
 
 Property gproperty;
-const int n_Button = 13;
+const int n_Button = 14;
 QPushButton *pushButton[n_Button + 1];
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pushButton[11] = ui->Button11;
     pushButton[12] = ui->Button12;
     pushButton[13] = ui->Button13;
+    pushButton[14] = ui->Button14;
 
     STATE = DRAW;
 
@@ -170,6 +171,20 @@ void MainWindow::on_Button9_clicked()
     pixmap.save(QString(fileName),"JPG");
 }
 
+//clip
+void MainWindow::on_Button14_clicked()
+{
+    if(current == nullptr)
+    {
+       on_Button5_clicked();
+       QMessageBox::warning(NULL, "warning", "No graph selected!", QMessageBox::Ok);
+       return;
+    }
+    ClearButton(14);
+
+    STATE = CLIP;
+}
+
 //fill
 void MainWindow::on_Button10_clicked()
 {
@@ -263,5 +278,6 @@ void MainWindow::on_verticalSlider_sliderReleased()
 {
    on_Button5_clicked();
 }
+
 
 

@@ -7,10 +7,11 @@ namespace fyz{
 class Line :
     public Graph
 {
-    Point start;
-    Point end;
+     Point start;
+     Point end;
 
     void generateVertexes();
+    void BresenhamLine();
 
 public:
 	Line() {}
@@ -36,6 +37,7 @@ public:
          generateVertexes();
 	}
 
+
      //override
 
     void drawborder();
@@ -52,9 +54,8 @@ public:
 
     void edit(int x, int y, int index);
 
+    bool clip(QVector<Point>Rect);
 
-private:
-     void BresenhamLine();
 };
 
 }
