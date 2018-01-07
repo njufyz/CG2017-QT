@@ -116,6 +116,7 @@ void Polygon::edit(int x, int y, int index)
     fill();
 }
 
+
 void Polygon::InitNewEdgeTable(QVector<QList<Edge> > &Net)
 {
     Edge e;

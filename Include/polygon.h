@@ -73,6 +73,9 @@ public:
     void scale(Point cc, double scale);
 
     void edit(int x, int y, int index);
+
+    bool clip(QVector<Point> Rect);
+
 };
 
 }

@@ -3,6 +3,7 @@
 #include<iostream>
 #include<QVector>
 #include<memory>
+#include<algorithm>
 
 
 using std::shared_ptr;
@@ -570,6 +571,7 @@ void openglwindow::mouseRelease_OnEdit(int x, int y)
     edit_index = -1;
 }
 
+#include<QDebug>
 void openglwindow::mouseRelease_OnClip(int x, int y)
 {
     Q_UNUSED(x);
@@ -579,7 +581,18 @@ void openglwindow::mouseRelease_OnClip(int x, int y)
     rect.push_back(Point(last.x, start.y));
     rect.push_back(last);
     rect.push_back(Point(start.x, last.y));
-    current->clip(rect);
+
+    if(current->clip(rect) == false)
+    {
+       for(auto i = graph.begin(); i<graph.end();i++)
+           if(*i == current)
+           {
+               graph.erase(i);
+               break;
+           }
+    }
+
+    current = nullptr;
     emit clickchoose();
     update();
 }

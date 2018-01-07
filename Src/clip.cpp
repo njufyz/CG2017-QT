@@ -93,7 +93,7 @@ bool Line::clip(QVector<Point>Rect){
                 }
                 //计算斜率
                 if(start.x != end.x)
-                    k = k = (end.y - start.y)/(end.x - start.x);
+                     k = (end.y - start.y)/(end.x - start.x);
                 //开始裁剪,以下与运算若结果为真，
                 //则start在边界外，此时将start移向直线与该边界的交点
                 if(code1 & leftBitCode)
@@ -123,3 +123,164 @@ bool Line::clip(QVector<Point>Rect){
     }
     return true;
 }
+
+QVector<Point> sutherlandL(double border, QVector<fyz::Point> p);
+QVector<Point> sutherlandR(double border, QVector<fyz::Point> p);
+QVector<Point> sutherlandT(double border, QVector<fyz::Point> p);
+QVector<Point> sutherlandB(double border, QVector<fyz::Point> p);
+#include<QDebug>
+bool fyz::Polygon::clip(QVector<fyz::Point> Rect)
+{
+    double right = std::max_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.x < b.x);})->x;
+    double left = std::min_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.x < b.x);})->x;
+    double top = std::max_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.y < b.y);})->y;
+    double bottom = std::min_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.y < b.y);})->y;
+
+    QVector<Point> P = points;
+    P = sutherlandL(left, P);
+    P = sutherlandT(top, P);
+    P = sutherlandR(right, P);
+    P = sutherlandB(bottom, P);
+
+    points = P;
+    qDebug() << P.size();
+
+    lines.clear();
+    vertexes_inside.clear();
+    for(auto i = points.begin(), j = i + 1; j != points.end(); i++, j++)
+    {
+        Line* p = new Line(*i, *j);
+        lines.push_back(*p);
+    }
+    qDebug()<<"finish";
+    getMax_and_Min();
+    fill();
+    return true;
+
+}
+//0 1 2 0 size = 4
+QVector<Point> sutherlandL(double border, QVector<fyz::Point> p)
+{
+    QVector<Point> newP;
+    double k = 0;
+    for(int i =0; i<p.size()-1; i++)
+    {
+        int j = i + 1;
+        if(p[i].x < border && p[j].x < border)
+            continue;
+        else if(p[i].x < border && p[j].x >= border)
+        {
+            k = (p[j].y - p[i].y)/(p[j].x - p[i].x);
+            double y = p[i].y + k * (border - p[i].x);
+            newP.push_back(Point(border, y));
+            newP.push_back(p[j]);
+        }
+        else if(p[i].x >= border && p[j].x < border)
+        {
+            k = (p[j].y - p[i].y)/(p[j].x - p[i].x);
+            double y = p[i].y + k * (border - p[i].x);
+            newP.push_back(Point(border, y));
+        }
+        else if(p[i].x >= border && p[j].x >= border)
+        {
+            newP.push_back(p[j]);
+        }
+    }
+    newP.push_back(newP[0]);
+    return newP;
+}
+
+QVector<Point> sutherlandR(double border, QVector<fyz::Point> p)
+{
+    QVector<Point> newP;
+    double k = 0;
+    for(int i =0; i<p.size()-1; i++)
+    {
+        int j = i + 1;
+        if(p[i].x > border && p[j].x > border)
+            continue;
+        else if(p[i].x >= border && p[j].x < border)
+        {
+            k = (p[j].y - p[i].y)/(p[j].x - p[i].x);
+            double y = p[i].y + k * (border - p[i].x);
+            newP.push_back(Point(border, y));
+            newP.push_back(p[j]);
+        }
+        else if(p[i].x < border && p[j].x >= border)
+        {
+            k = (p[j].y - p[i].y)/(p[j].x - p[i].x);
+            double y = p[i].y + k * (border - p[i].x);
+            newP.push_back(Point(border, y));
+        }
+        else if(p[i].x <= border && p[j].x <= border)
+        {
+            newP.push_back(p[j]);
+        }
+    }
+    newP.push_back(newP[0]);
+    return newP;
+}
+
+QVector<Point> sutherlandT(double border, QVector<fyz::Point> p)
+{
+    QVector<Point> newP;
+    double k = 0;
+    for(int i =0; i<p.size()-1; i++)
+    {
+        int j = i + 1;
+        if(p[i].y > border && p[j].y > border)
+            continue;
+        else if(p[i].y > border && p[j].y <= border)
+        {
+            k = (p[j].x - p[i].x)/(p[j].y - p[i].y);
+            double x = p[i].x + k * (border - p[i].y);
+            newP.push_back(Point(x, border));
+            newP.push_back(p[j]);
+        }
+        else if(p[i].y < border && p[j].y >= border)
+        {
+            k = (p[j].x - p[i].x)/(p[j].y - p[i].y);
+            double x = p[i].x + k * (border - p[i].y);
+            newP.push_back(Point(x, border));
+        }
+        else if(p[i].y <= border && p[j].y <= border)
+        {
+            newP.push_back(p[j]);
+        }
+    }
+    newP.push_back(newP[0]);
+    return newP;
+}
+
+
+QVector<Point> sutherlandB(double border, QVector<fyz::Point> p)
+{
+    QVector<Point> newP;
+    double k = 0;
+    for(int i =0; i<p.size()-1; i++)
+    {
+        int j = i + 1;
+        if(p[i].y < border && p[j].y < border)
+            continue;
+        else if(p[i].y <= border && p[j].y > border)
+        {
+            k = (p[j].x - p[i].x)/(p[j].y - p[i].y);
+            double x = p[i].x + k * (border - p[i].y);
+            newP.push_back(Point(x, border));
+            newP.push_back(p[j]);
+        }
+        else if(p[i].y >= border && p[j].y < border)
+        {
+            k = (p[j].x - p[i].x)/(p[j].y - p[i].y);
+            double x = p[i].x + k * (border - p[i].y);
+            newP.push_back(Point(x, border));
+        }
+        else if(p[i].y > border && p[j].y > border)
+        {
+            newP.push_back(p[j]);
+        }
+    }
+    newP.push_back(newP[0]);
+    return newP;
+}
+
