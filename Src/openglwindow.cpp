@@ -1,10 +1,9 @@
 #include "openglwindow.h"
 #include"common.h"
 #include<iostream>
-
 #include<QVector>
 #include<memory>
-#include<QDebug>
+
 
 using std::shared_ptr;
 using fyz::Ellipse;
@@ -17,6 +16,10 @@ using fyz::Bezier;
 QVector<shared_ptr<Graph>> graph;
 shared_ptr<Graph> current(nullptr);
 shared_ptr<Graph> tmp(nullptr);
+
+
+double AngleX = 45.0f;
+double AngleY = 315.0f;
 
 TYPE SELECT = LINE;
 STAT STATE = DRAW;
@@ -70,8 +73,8 @@ void openglwindow::initializeGL()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, WIDTH, 0.0, HEIGHT);
-    glMatrixMode(GL_MODELVIEW);
 
+    glMatrixMode(GL_MODELVIEW);
     gproperty.point_size = 2.5;
     gproperty.color = Qt::black;
 
@@ -79,10 +82,12 @@ void openglwindow::initializeGL()
 
 void openglwindow::paintGL()
 {
-    foreach (auto g, graph)
-    {
-        g->draw();
-    }
+
+    if(SELECT != CUBE)
+     foreach (auto g, graph)
+        {
+            g->draw();
+        }
 
     if(STATE == DRAW)
     {
@@ -112,8 +117,11 @@ void openglwindow::paintGL()
 
             Bezier(points_for_bezier).draw();  break;
 
+        case CUBE:
+             showCube();     break;
+
         default: break;
-        }
+    }
     }
 
     else if(STATE == ROTATE)
@@ -152,6 +160,87 @@ void openglwindow::paintGL()
 
 }
 
+void openglwindow::showCube()
+{
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DITHER);
+    glShadeModel(GL_SMOOTH);
+    float aspect = 1;
+    float nRange = 100.0f;
+
+    glViewport(0, 0, 500, 500);
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    glOrtho(-nRange, nRange, -nRange * aspect, nRange * aspect, -nRange, nRange);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPushMatrix();
+    {
+        float pos = 50.0;
+        glRotatef(AngleX, 1.0f, 0.0f, 0.0f);
+        glRotatef(AngleY, 0.0f, 1.0f, 0.0f);
+
+        glBegin(GL_POLYGON);
+        glColor3ub(136u, 176u, 75u);
+        glVertex3f(pos, pos, -pos);
+        glVertex3f(pos, -pos, -pos);
+        glVertex3f(-pos, -pos, -pos);
+        glVertex3f(-pos, pos, -pos);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glColor3f(1.0, 1.0, 0.0);
+        glVertex3f(pos, -pos, -pos);
+        glVertex3f(pos, -pos, pos);
+        glVertex3f(-pos, -pos, pos);
+        glVertex3f(-pos, -pos, -pos);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+
+        glColor3ub(255u, 235u, 205u);
+        glVertex3f(pos, pos, pos);
+        glVertex3f(pos, pos, -pos);
+        glVertex3f(pos, -pos, -pos);
+        glVertex3f(pos, -pos, pos);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glColor3f(0.0f, 1.0f, 1.0f);
+        glVertex3f(-pos, pos, pos);
+        glVertex3f(-pos, pos, -pos);
+        glVertex3f(-pos, -pos, -pos);
+        glVertex3f(-pos, -pos, pos);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(pos, pos, pos);
+        glVertex3f(pos, -pos, pos);
+        glVertex3f(-pos, -pos, pos);
+        glVertex3f(-pos, pos, pos);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+        glColor3ub(185u, 205u, 246u);
+        glVertex3f(pos, pos, -pos);
+        glVertex3f(pos, pos, pos);
+        glVertex3f(-pos, pos, pos);
+        glVertex3f(-pos, pos, -pos);
+        glEnd();
+    }
+    glPopMatrix();
+
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+
+    glMatrixMode(GL_MODELVIEW);
+
+}
+
 void openglwindow::resizeGL(int width, int height)
 {
     glMatrixMode(GL_PROJECTION);
@@ -182,7 +271,6 @@ void openglwindow::mousePressEvent(QMouseEvent *e)
          case SCALE:        mousePress_OnScale(x, y);       break;
          default:                                           break;
     }
-
 }
 
 

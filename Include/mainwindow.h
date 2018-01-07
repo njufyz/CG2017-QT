@@ -17,6 +17,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void keyPressEvent(QKeyEvent *event);
+
 private slots:
 
     void setxy(int x, int y);
@@ -59,10 +61,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Form* form;
     void  ClearSelect();
     void  ClearButton(int i);
     void  CloseSlide();
+
 
 signals:
     void clickchoose();

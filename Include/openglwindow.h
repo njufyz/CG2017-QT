@@ -3,7 +3,7 @@
 
 #include <QOpenGLWidget>
 #include<QMouseEvent>
-
+#include<QKeyEvent>
 
 class openglwindow : public QOpenGLWidget
 {
@@ -16,6 +16,8 @@ public:
     void initializeGL();
     void resizeGL(int width, int height);
     void paintGL();
+
+    void showCube();
 
     void mousePressEvent(QMouseEvent * event);
     void mouseReleaseEvent(QMouseEvent * event);

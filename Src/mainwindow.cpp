@@ -58,6 +58,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+#include<QDebug>
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+   if(SELECT != CUBE)
+        return;
+   switch(event->key()){
+   case Qt::Key_Up : AngleX -= 5; break;
+   case Qt::Key_Down: AngleX += 5; break;
+   case Qt::Key_Left:AngleY -= 5; break;
+   case Qt::Key_Right:AngleY +=5; break;
+   defalut: break;
+   }
+   this->ui->widget->update();
+
+
+}
+
 //line
 void MainWindow::on_Button1_clicked()
 {
@@ -112,10 +129,8 @@ void MainWindow::on_Button13_clicked()
 //cube
 void MainWindow::on_Button15_clicked()
 {
-    on_Button5_clicked();
-    form = new Form();
-    form->show();
-
+    ClearButton(15);
+    SELECT = CUBE;
 }
 
 
