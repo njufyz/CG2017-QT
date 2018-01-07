@@ -6,7 +6,6 @@
 
 
 class openglwindow : public QOpenGLWidget
-
 {
     Q_OBJECT
 

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include<QMouseEvent>
 #include<QLabel>
-
+#include "form.h"
 namespace Ui {
 class MainWindow;
 }
@@ -55,9 +55,11 @@ private slots:
 
     void on_Button14_clicked();
 
+    void on_Button15_clicked();
+
 private:
     Ui::MainWindow *ui;
-
+    Form* form;
     void  ClearSelect();
     void  ClearButton(int i);
     void  CloseSlide();

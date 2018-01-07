@@ -43,6 +43,7 @@ void Graph::draw()
 
 bool Graph::clip(QVector<fyz::Point> Rect)
 {
+    Q_UNUSED(Rect);
     return true;
 }
 

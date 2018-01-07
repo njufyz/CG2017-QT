@@ -24,6 +24,7 @@ extern Property gproperty;
 #include "polygon.h"
 #include "bezier.h"
 #include "clip.h"
+#include "form.h"
 
 #define HEIGHT 500
 #define WIDTH 500

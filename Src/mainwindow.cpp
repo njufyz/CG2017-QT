@@ -9,7 +9,7 @@
 #include<QStatusBar>
 
 Property gproperty;
-const int n_Button = 14;
+const int n_Button = 15;
 QPushButton *pushButton[n_Button + 1];
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pushButton[12] = ui->Button12;
     pushButton[13] = ui->Button13;
     pushButton[14] = ui->Button14;
+    pushButton[15] = ui->Button15;
 
     STATE = DRAW;
 
@@ -107,6 +108,16 @@ void MainWindow::on_Button13_clicked()
     STATE = DRAW;
     SELECT = BEZIER;
 }
+
+//cube
+void MainWindow::on_Button15_clicked()
+{
+    on_Button5_clicked();
+    form = new Form();
+    form->show();
+
+}
+
 
 //choose
 void MainWindow::on_Button5_clicked()
@@ -217,6 +228,7 @@ void MainWindow::on_Button12_clicked()
     ui->widget->update();
 }
 
+
 void MainWindow::setxy(int x, int y)
 {
     ui->label->setText(QString("X: " + QString("%1").arg(x)));
@@ -278,6 +290,4 @@ void MainWindow::on_verticalSlider_sliderReleased()
 {
    on_Button5_clicked();
 }
-
-
 

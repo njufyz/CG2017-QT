@@ -14,5 +14,6 @@
         <file>pic/scale.png</file>
         <file>pic/bezier.png</file>
         <file>pic/clip.png</file>
+        <file>pic/cube.png</file>
     </qresource>
 </RCC>

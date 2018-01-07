@@ -22,7 +22,9 @@ SOURCES += Src/Circle.cpp \
     Src/ellipse.cpp \
     Src/polygon.cpp \
     Src/bezier.cpp \
-    Src/clip.cpp
+    Src/clip.cpp \
+    Src/form.cpp \
+    Src/cube.cpp
 
 HEADERS  += Include/Circle.h \
     Include/common.h \
@@ -35,9 +37,12 @@ HEADERS  += Include/Circle.h \
     Include/ellipse.h \
     Include/polygon.h \
     Include/bezier.h \
-    Include/clip.h
+    Include/clip.h \
+    Include/form.h \
+    Include/cube.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    form.ui
 
 RESOURCES += \
     res.qrc
