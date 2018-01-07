@@ -220,6 +220,22 @@ void Polygon::UpdateAet(QList<Edge> &Aet)
 
 }
 
+bool Polygon::insidePolygon(fyz::Point p)
+{
+    int nvert = points.size();
+   // int pnpoly(int nvert, float *vertx, float *verty, float p.x, float p.y)
+
+      int i, j, c = 0;
+      for (i = 0, j = nvert-1; i < nvert; j = i++)
+      {
+        if ( ((points[i].y>p.y) != (points[j].y>p.y)) &&
+         (p.x < (points[j].x-p.x) * (p.y-points[i].y) / (points[j].y-points[i].y) + p.x) )
+           c = !c;
+      }
+      return c;
+
+}
+
 void Polygon::draw()
 {
     for(auto i = lines.begin(); i!= lines.end(); i++)

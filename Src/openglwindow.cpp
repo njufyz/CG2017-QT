@@ -590,9 +590,10 @@ void openglwindow::mouseRelease_OnClip(int x, int y)
                graph.erase(i);
                break;
            }
+        current = nullptr;
     }
 
-    current = nullptr;
+
     emit clickchoose();
     update();
 }

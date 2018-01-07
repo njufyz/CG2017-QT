@@ -55,6 +55,7 @@ public:
         return (abs(a.x - points[0].x) <= 4 ) && (abs(a.y - points[0].y) <= 4);
     }
 
+    bool insidePolygon(Point p);
 
     void draw();
 

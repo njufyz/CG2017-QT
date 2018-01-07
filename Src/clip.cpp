@@ -131,6 +131,33 @@ QVector<Point> sutherlandB(double border, QVector<fyz::Point> p);
 #include<QDebug>
 bool fyz::Polygon::clip(QVector<fyz::Point> Rect)
 {
+
+//    bool startclip = false;
+//    for(int i = 0; i< points.size() -1; i++)
+//    {
+//        short code1 = encode(points[i], Rect);
+//        short code2 = encode(points[i+1], Rect);
+//        if(!reject(code1, code2))
+//        {
+//            startclip = true;
+//            break;
+//        }
+//    }
+//    if(startclip == false)
+//        return false;
+    bool startclip = false;
+    for(int i =0; i<Rect.size(); i++)
+        if(insidePolygon(Rect[i]))
+        {
+            startclip = true;
+            break;
+        }
+    if(startclip == false)
+    {
+        qDebug()<<"not in";
+        return false;
+    }
+
     double right = std::max_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.x < b.x);})->x;
     double left = std::min_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.x < b.x);})->x;
     double top = std::max_element(Rect.begin(),Rect.end(), [](Point a, Point b)->bool {return (a.y < b.y);})->y;
@@ -143,22 +170,20 @@ bool fyz::Polygon::clip(QVector<fyz::Point> Rect)
     P = sutherlandB(bottom, P);
 
     points = P;
-    qDebug() << P.size();
-
     lines.clear();
     vertexes_inside.clear();
+
     for(auto i = points.begin(), j = i + 1; j != points.end(); i++, j++)
     {
         Line* p = new Line(*i, *j);
         lines.push_back(*p);
     }
-    qDebug()<<"finish";
     getMax_and_Min();
     fill();
     return true;
 
 }
-//0 1 2 0 size = 4
+
 QVector<Point> sutherlandL(double border, QVector<fyz::Point> p)
 {
     QVector<Point> newP;
